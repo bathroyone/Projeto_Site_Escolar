@@ -270,7 +270,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Sexo *</label>
                                     <select name="sexo" required
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all appearance-none bg-white">
+                                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-azul-principal transition-all bg-white text-gray-800 font-medium">
                                         <option value="">Selecione</option>
                                         <option value="M">Masculino</option>
                                         <option value="F">Feminino</option>
@@ -359,7 +359,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Estado *</label>
                                     <select name="estado" required
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all appearance-none bg-white">
+                                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-azul-principal transition-all bg-white text-gray-800 font-medium">
                                         <option value="">Selecione</option>
                                         <option value="AC">Acre</option>
                                         <option value="AL">Alagoas</option>

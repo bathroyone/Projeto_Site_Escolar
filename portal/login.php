@@ -137,15 +137,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 <form method="POST" action="">
                     <div class="mb-4">
-                        <label for="tipo_usuario" class="block text-sm font-semibold text-gray-700 mb-2">Tipo de Usuário</label>
-                        <select id="tipo_usuario" name="tipo_usuario" required onchange="updateLabel()"
-                            class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-azul-principal bg-white text-gray-800 font-medium">
-                            <option value="">-- Selecione o tipo de usuário --</option>
-                            <option value="aluno">👨‍🎓 Aluno</option>
-                            <option value="professor">👨‍🏫 Professor</option>
-                            <option value="secretaria">👩‍💼 Secretaria</option>
-                            <option value="admin">🔐 Administrador</option>
-                        </select>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3">Tipo de Usuário</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button type="button" onclick="selecionarTipo('aluno')" id="btn-aluno"
+                                class="tipo-btn p-3 rounded-xl border-2 border-gray-200 hover:border-azul-principal hover:bg-azul-principal/5 transition-all text-center">
+                                <i class="fas fa-user-graduate text-2xl mb-1 text-blue-600"></i>
+                                <p class="text-sm font-semibold text-gray-700">Aluno</p>
+                            </button>
+                            <button type="button" onclick="selecionarTipo('professor')" id="btn-professor"
+                                class="tipo-btn p-3 rounded-xl border-2 border-gray-200 hover:border-azul-principal hover:bg-azul-principal/5 transition-all text-center">
+                                <i class="fas fa-chalkboard-teacher text-2xl mb-1 text-green-600"></i>
+                                <p class="text-sm font-semibold text-gray-700">Professor</p>
+                            </button>
+                            <button type="button" onclick="selecionarTipo('secretaria')" id="btn-secretaria"
+                                class="tipo-btn p-3 rounded-xl border-2 border-gray-200 hover:border-azul-principal hover:bg-azul-principal/5 transition-all text-center">
+                                <i class="fas fa-user-tie text-2xl mb-1 text-purple-600"></i>
+                                <p class="text-sm font-semibold text-gray-700">Secretaria</p>
+                            </button>
+                            <button type="button" onclick="selecionarTipo('admin')" id="btn-admin"
+                                class="tipo-btn p-3 rounded-xl border-2 border-gray-200 hover:border-azul-principal hover:bg-azul-principal/5 transition-all text-center">
+                                <i class="fas fa-user-shield text-2xl mb-1 text-red-600"></i>
+                                <p class="text-sm font-semibold text-gray-700">Administrador</p>
+                            </button>
+                        </div>
+                        <input type="hidden" id="tipo_usuario" name="tipo_usuario" required>
                     </div>
                     
                     <div class="mb-4">
@@ -215,25 +230,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        function updateLabel() {
-            const tipoUsuario = document.getElementById('tipo_usuario').value;
-            const loginLabel = document.getElementById('login_label');
+        function selecionarTipo(tipo) {
+            // Atualizar campo hidden
+            document.getElementById('tipo_usuario').value = tipo;
             
-            switch(tipoUsuario) {
+            // Atualizar estilo dos botões
+            document.querySelectorAll('.tipo-btn').forEach(btn => {
+                btn.classList.remove('border-azul-principal', 'bg-azul-principal/10');
+                btn.classList.add('border-gray-200');
+            });
+            
+            const btnSelecionado = document.getElementById('btn-' + tipo);
+            btnSelecionado.classList.remove('border-gray-200');
+            btnSelecionado.classList.add('border-azul-principal', 'bg-azul-principal/10');
+            
+            // Atualizar label
+            const loginLabel = document.getElementById('login_label');
+            const loginInput = document.getElementById('login_field');
+            
+            switch(tipo) {
                 case 'aluno':
                     loginLabel.textContent = 'CPF';
+                    loginInput.placeholder = 'Digite seu CPF (com ou sem pontuação)';
                     break;
                 case 'professor':
                     loginLabel.textContent = 'Matrícula';
+                    loginInput.placeholder = 'Digite sua matrícula';
                     break;
                 case 'secretaria':
                     loginLabel.textContent = 'Matrícula';
+                    loginInput.placeholder = 'Digite sua matrícula';
                     break;
                 case 'admin':
                     loginLabel.textContent = 'Usuário';
+                    loginInput.placeholder = 'Digite seu usuário';
                     break;
                 default:
                     loginLabel.textContent = 'Email/CPF/Matrícula';
+                    loginInput.placeholder = 'Digite seu login';
+            }
+            
+            // Focar no campo de login
+            loginInput.focus();
+        }
+
+        function updateLabel() {
+            // Função mantida para compatibilidade
+            const tipoUsuario = document.getElementById('tipo_usuario').value;
+            if (tipoUsuario) {
+                selecionarTipo(tipoUsuario);
             }
         }
     </script>

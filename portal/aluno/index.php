@@ -360,7 +360,7 @@ if (count($notas) > 0) {
 
         <!-- Ações Rápidas -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-10">
-            <a href="#boletim" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+            <a href="boletim.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
                 <div class="flex flex-col items-center text-center">
                     <div class="w-16 h-16 bg-gradient-to-br from-azul-principal to-azul-claro rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
                         <i class="fas fa-chart-bar text-white text-2xl"></i>
@@ -370,35 +370,181 @@ if (count($notas) > 0) {
                 </div>
             </a>
             
-            <a href="#trabalhos" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+            <a href="historico_notas.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-history text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Histórico</h3>
+                    <p class="text-sm text-gray-500">Evolução de notas</p>
+                </div>
+            </a>
+            
+            <a href="diario_classe.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-teal-600 to-teal-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-book text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Diário de Classe</h3>
+                    <p class="text-sm text-gray-500">Aulas digitais</p>
+                </div>
+            </a>
+            
+            <a href="entrega_trabalhos.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
                 <div class="flex flex-col items-center text-center">
                     <div class="w-16 h-16 bg-gradient-to-br from-verde-complementar to-verde-claro rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-folder-open text-white text-2xl"></i>
+                        <i class="fas fa-upload text-white text-2xl"></i>
                     </div>
-                    <h3 class="font-bold text-gray-800 text-lg mb-2">Trabalhos</h3>
-                    <p class="text-sm text-gray-500">Correções e materiais</p>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Entregar Trabalhos</h3>
+                    <p class="text-sm text-gray-500">Upload de arquivos</p>
                 </div>
             </a>
-            
-            <a href="#grade" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
-                <div class="flex flex-col items-center text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-purple-600 to-purple-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-calendar-alt text-white text-2xl"></i>
+        </div>
+
+        <!-- Mais Ações -->
+        <div class="mb-8 sm:mb-10">
+            <h2 class="text-xl font-display font-bold text-azul-principal mb-6">Todos os Módulos</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <a href="provas_resultados.php" class="glass-card rounded-2xl p-4 transition-all duration-300 hover:shadow-xl group text-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-red-400 rounded-xl flex items-center justify-center shadow-lg mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-file-signature text-white text-lg"></i>
                     </div>
-                    <h3 class="font-bold text-gray-800 text-lg mb-2">Grade de Aulas</h3>
-                    <p class="text-sm text-gray-500">Horários semanais</p>
-                </div>
-            </a>
-            
-            <a href="#avisos" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
-                <div class="flex flex-col items-center text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-bell text-white text-2xl"></i>
+                    <h3 class="font-semibold text-gray-800 text-sm">Provas</h3>
+                </a>
+                
+                <a href="calendario.php" class="glass-card rounded-2xl p-4 transition-all duration-300 hover:shadow-xl group text-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-400 rounded-xl flex items-center justify-center shadow-lg mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-calendar text-white text-lg"></i>
                     </div>
-                    <h3 class="font-bold text-gray-800 text-lg mb-2">Avisos</h3>
-                    <p class="text-sm text-gray-500">Comunicados recentes</p>
-                </div>
-            </a>
+                    <h3 class="font-semibold text-gray-800 text-sm">Calendário</h3>
+                </a>
+                
+                <a href="notificacoes.php" class="glass-card rounded-2xl p-4 transition-all duration-300 hover:shadow-xl group text-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-pink-400 rounded-xl flex items-center justify-center shadow-lg mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-bell text-white text-lg"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-sm">Notificações</h3>
+                </a>
+                
+                <a href="materiais.php" class="glass-card rounded-2xl p-4 transition-all duration-300 hover:shadow-xl group text-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-cyan-400 rounded-xl flex items-center justify-center shadow-lg mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-folder text-white text-lg"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-sm">Materiais</h3>
+                </a>
+                
+                <a href="forum.php" class="glass-card rounded-2xl p-4 transition-all duration-300 hover:shadow-xl group text-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-400 rounded-xl flex items-center justify-center shadow-lg mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-comments text-white text-lg"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-sm">Fórum</h3>
+                </a>
+                
+                <a href="frequencia.php" class="glass-card rounded-2xl p-4 transition-all duration-300 hover:shadow-xl group text-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-400 rounded-xl flex items-center justify-center shadow-lg mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-user-check text-white text-lg"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-sm">Frequência</h3>
+                </a>
+                
+                <a href="perfil.php" class="glass-card rounded-2xl p-4 transition-all duration-300 hover:shadow-xl group text-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-violet-500 to-violet-400 rounded-xl flex items-center justify-center shadow-lg mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-user text-white text-lg"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-sm">Perfil</h3>
+                </a>
+                
+                <a href="solicitacoes_documentos.php" class="glass-card rounded-2xl p-4 transition-all duration-300 hover:shadow-xl group text-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-rose-500 to-rose-400 rounded-xl flex items-center justify-center shadow-lg mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-file-alt text-white text-lg"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-sm">Documentos</h3>
+                </a>
+                
+                <a href="horarios.php" class="glass-card rounded-2xl p-4 transition-all duration-300 hover:shadow-xl group text-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-400 rounded-xl flex items-center justify-center shadow-lg mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-clock text-white text-lg"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-sm">Horários</h3>
+                </a>
+                
+                <a href="chat_professores.php" class="glass-card rounded-2xl p-4 transition-all duration-300 hover:shadow-xl group text-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-sky-500 to-sky-400 rounded-xl flex items-center justify-center shadow-lg mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-comment-dots text-white text-lg"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-sm">Chat</h3>
+                </a>
+                
+                <a href="biblioteca.php" class="glass-card rounded-2xl p-4 transition-all duration-300 hover:shadow-xl group text-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-lime-500 to-lime-400 rounded-xl flex items-center justify-center shadow-lg mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-book-open text-white text-lg"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-sm">Biblioteca</h3>
+                </a>
+                
+                <a href="mensalidades.php" class="glass-card rounded-2xl p-4 transition-all duration-300 hover:shadow-xl group text-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-fuchsia-500 to-fuchsia-400 rounded-xl flex items-center justify-center shadow-lg mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-dollar-sign text-white text-lg"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-sm">Mensalidades</h3>
+                </a>
+                
+                <a href="feedback.php" class="glass-card rounded-2xl p-4 transition-all duration-300 hover:shadow-xl group text-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-400 rounded-xl flex items-center justify-center shadow-lg mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-star text-white text-lg"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-sm">Feedback</h3>
+                </a>
+                
+                <a href="eventos.php" class="glass-card rounded-2xl p-4 transition-all duration-300 hover:shadow-xl group text-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-400 rounded-xl flex items-center justify-center shadow-lg mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-calendar-check text-white text-lg"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-sm">Eventos</h3>
+                </a>
+                
+                <a href="avisos.php" class="glass-card rounded-2xl p-4 transition-all duration-300 hover:shadow-xl group text-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-slate-500 to-slate-400 rounded-xl flex items-center justify-center shadow-lg mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-bullhorn text-white text-lg"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-sm">Avisos</h3>
+                </a>
+                
+                <a href="trabalhos_grupo.php" class="glass-card rounded-2xl p-4 transition-all duration-300 hover:shadow-xl group text-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-zinc-500 to-zinc-400 rounded-xl flex items-center justify-center shadow-lg mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-users text-white text-lg"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-sm">Grupos</h3>
+                </a>
+                
+                <a href="objetivos.php" class="glass-card rounded-2xl p-4 transition-all duration-300 hover:shadow-xl group text-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-stone-500 to-stone-400 rounded-xl flex items-center justify-center shadow-lg mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-bullseye text-white text-lg"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-sm">Objetivos</h3>
+                </a>
+                
+                <a href="progresso_anual.php" class="glass-card rounded-2xl p-4 transition-all duration-300 hover:shadow-xl group text-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-neutral-500 to-neutral-400 rounded-xl flex items-center justify-center shadow-lg mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-chart-line text-white text-lg"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-sm">Progresso</h3>
+                </a>
+                
+                <a href="recursos_aprendizagem.php" class="glass-card rounded-2xl p-4 transition-all duration-300 hover:shadow-xl group text-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-teal-500 to-teal-400 rounded-xl flex items-center justify-center shadow-lg mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-lightbulb text-white text-lg"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-sm">Recursos</h3>
+                </a>
+                
+                <a href="suporte.php" class="glass-card rounded-2xl p-4 transition-all duration-300 hover:shadow-xl group text-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-gray-500 to-gray-400 rounded-xl flex items-center justify-center shadow-lg mb-3 mx-auto group-hover:scale-110 transition-transform">
+                        <i class="fas fa-headset text-white text-lg"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 text-sm">Suporte</h3>
+                </a>
+            </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-10">
