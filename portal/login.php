@@ -26,8 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE matricula = ? AND tipo_usuario = 'professor' AND ativo = TRUE");
                 $stmt->execute([$login_field]);
             } elseif ($tipo_usuario === 'aluno') {
-                $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE cpf = ? AND tipo_usuario = 'aluno' AND ativo = TRUE");
-                $stmt->execute([$login_field]);
+                // Remover pontuação do CPF para comparação
+                $cpf_limpo = preg_replace('/[^0-9]/', '', $login_field);
+                $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE REPLACE(REPLACE(cpf, '.', ''), '-', '') = ? AND tipo_usuario = 'aluno' AND ativo = TRUE");
+                $stmt->execute([$cpf_limpo]);
             } elseif ($tipo_usuario === 'secretaria') {
                 $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE matricula = ? AND tipo_usuario = 'secretaria' AND ativo = TRUE");
                 $stmt->execute([$login_field]);
@@ -137,12 +139,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="mb-4">
                         <label for="tipo_usuario" class="block text-sm font-semibold text-gray-700 mb-2">Tipo de Usuário</label>
                         <select id="tipo_usuario" name="tipo_usuario" required onchange="updateLabel()"
-                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent appearance-none bg-white">
-                            <option value="">Selecione</option>
-                            <option value="aluno">Aluno</option>
-                            <option value="professor">Professor</option>
-                            <option value="secretaria">Secretaria</option>
-                            <option value="admin">Administrador</option>
+                            class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-azul-principal bg-white text-gray-800 font-medium">
+                            <option value="">-- Selecione o tipo de usuário --</option>
+                            <option value="aluno">👨‍🎓 Aluno</option>
+                            <option value="professor">👨‍🏫 Professor</option>
+                            <option value="secretaria">👩‍💼 Secretaria</option>
+                            <option value="admin">🔐 Administrador</option>
                         </select>
                     </div>
                     
