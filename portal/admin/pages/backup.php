@@ -20,17 +20,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             mkdir($backup_dir, 0755, true);
         }
         
-        $command = "mysqldump --user=" . DB_USER . " --password=" . DB_PASS . " --host=" . DB_HOST . " " . $dbname . " > " . $backup_file;
-        system($command, $output);
+        // Usar mysqldump do XAMPP
+        $xampp_mysql = 'C:\\xampp\\mysql\\bin\\mysqldump.exe';
+        if (file_exists($xampp_mysql)) {
+            $command = '"' . $xampp_mysql . '" --user=' . DB_USER . ' --password=' . DB_PASS . ' --host=' . DB_HOST . ' ' . $dbname . ' > "' . $backup_file . '"';
+            system($command, $output);
+        } else {
+            // Fallback: backup via PHP
+            $tables = $pdo->query("SHOW TABLES")->fetchAll(PDO::FETCH_COLUMN);
+            $sql = '';
+            
+            foreach ($tables as $table) {
+                $createTable = $pdo->query("SHOW CREATE TABLE `$table`")->fetch();
+                $sql .= $createTable['Create Table'] . ";\n\n";
+                
+                $rows = $pdo->query("SELECT * FROM `$table`")->fetchAll(PDO::FETCH_ASSOC);
+                if (!empty($rows)) {
+                    $columns = array_keys($rows[0]);
+                    $sql .= "INSERT INTO `$table` (`" . implode('`,`', $columns) . "`) VALUES\n";
+                    
+                    foreach ($rows as $row) {
+                        $values = array_map(function($val) {
+                            return $val === null ? 'NULL' : "'" . addslashes($val) . "'";
+                        }, $row);
+                        $sql .= "(" . implode(',', $values) . "),\n";
+                    }
+                    $sql = rtrim($sql, ",\n") . ";\n\n";
+                }
+            }
+            
+            file_put_contents($backup_file, $sql);
+        }
         
         if (file_exists($backup_file)) {
             $success = 'Backup realizado com sucesso!';
+            
+            // Recarregar lista de backups
+            $backups = array_diff(scandir($backup_dir), array('.', '..'));
+            rsort($backups);
         } else {
             $error = 'Erro ao realizar backup.';
         }
     } catch (Exception $e) {
         error_log("Erro ao fazer backup: " . $e->getMessage());
-        $error = 'Erro ao realizar backup.';
+        $error = 'Erro ao realizar backup: ' . $e->getMessage();
     }
 }
 
@@ -38,13 +71,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['backup_file']) && $_FILES['backup_file']['error'] === UPLOAD_ERR_OK) {
     try {
         $backup_file = $_FILES['backup_file']['tmp_name'];
-        $command = "mysql --user=" . DB_USER . " --password=" . DB_PASS . " --host=" . DB_HOST . " " . DB_NAME . " < " . $backup_file;
-        system($command, $output);
+        
+        // Usar mysql do XAMPP
+        $xampp_mysql = 'C:\\xampp\\mysql\\bin\\mysql.exe';
+        if (file_exists($xampp_mysql)) {
+            $command = '"' . $xampp_mysql . '" --user=' . DB_USER . ' --password=' . DB_PASS . ' --host=' . DB_HOST . ' ' . DB_NAME . ' < "' . $backup_file . '"';
+            system($command, $output);
+        } else {
+            // Fallback: restore via PHP
+            $sql = file_get_contents($backup_file);
+            $pdo->exec($sql);
+        }
         
         $success = 'Restore realizado com sucesso!';
     } catch (Exception $e) {
         error_log("Erro ao fazer restore: " . $e->getMessage());
-        $error = 'Erro ao realizar restore.';
+        $error = 'Erro ao realizar restore: ' . $e->getMessage();
     }
 }
 

@@ -1,6 +1,35 @@
 <?php
-require_once '../../config.php';
+require_once '../config.php';
 requireAdmin();
+
+// Exportar logs
+if (isset($_GET['action']) && $_GET['action'] === 'exportar') {
+    try {
+        $pdo = getDBConnection();
+        $stmt = $pdo->query("SELECT * FROM audit_logs ORDER BY timestamp DESC");
+        $logs = $stmt->fetchAll();
+        
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="logs_auditoria_' . date('Y-m-d_H-i-s') . '.csv"');
+        
+        $output = fopen('php://output', 'w');
+        fputcsv($output, ['ID', 'Data/Hora', 'Usuário', 'Ação', 'Detalhes', 'IP']);
+        foreach ($logs as $log) {
+            fputcsv($output, [
+                $log['id'],
+                $log['timestamp'],
+                $log['usuario'] ?? 'Sistema',
+                $log['action'],
+                $log['detalhes'] ?? '',
+                $log['ip'] ?? ''
+            ]);
+        }
+        fclose($output);
+        exit();
+    } catch (PDOException $e) {
+        error_log("Erro ao exportar logs: " . $e->getMessage());
+    }
+}
 
 // Obter logs de auditoria
 $logs = [];
@@ -16,9 +45,9 @@ try {
 <div class="mb-6">
     <div class="flex items-center justify-between">
         <h2 class="text-xl font-semibold text-gray-800">Logs de Auditoria</h2>
-        <button class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+        <a href="?action=exportar" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
             <i class="fas fa-download mr-2"></i>Exportar
-        </button>
+        </a>
     </div>
 </div>
 

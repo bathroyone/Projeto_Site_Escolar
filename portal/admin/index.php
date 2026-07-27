@@ -43,8 +43,8 @@ $admin_id = $_SESSION['usuario_id'];
 <body class="bg-gray-50 min-h-screen">
     <div class="flex">
         <!-- Sidebar -->
-        <aside class="w-64 bg-white border-r border-gray-200 min-h-screen fixed left-0 top-0 z-30 hidden lg:block">
-            <div class="p-6">
+        <aside class="w-64 bg-white border-r border-gray-200 h-screen fixed left-0 top-0 z-30 hidden lg:block flex flex-col">
+            <div class="p-6 flex-shrink-0">
                 <div class="flex items-center gap-3 mb-8">
                     <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center">
                         <i class="fas fa-shield-alt text-white"></i>
@@ -54,80 +54,68 @@ $admin_id = $_SESSION['usuario_id'];
                         <p class="text-xs text-gray-500">Administração</p>
                     </div>
                 </div>
-                
-                <nav class="space-y-1 flex-1 overflow-y-auto">
-                    <a href="#" onclick="loadContent('dashboard')" class="nav-link flex items-center gap-3 px-4 py-3 bg-primary-50 text-primary-700 rounded-lg font-medium" data-page="dashboard">
-                        <i class="fas fa-home"></i>
-                        <span>Dashboard</span>
-                    </a>
-                    <a href="#" onclick="loadContent('usuarios')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="usuarios">
-                        <i class="fas fa-users"></i>
-                        <span>Usuários</span>
-                    </a>
-                    <a href="#" onclick="loadContent('turmas')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="turmas">
-                        <i class="fas fa-chalkboard"></i>
-                        <span>Turmas</span>
-                    </a>
-                    <a href="#" onclick="loadContent('disciplinas')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="disciplinas">
-                        <i class="fas fa-book"></i>
-                        <span>Disciplinas</span>
-                    </a>
-                    <a href="#" onclick="loadContent('matriculas')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="matriculas">
-                        <i class="fas fa-user-plus"></i>
-                        <span>Matrículas</span>
-                    </a>
-                    <a href="#" onclick="loadContent('financeiro')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="financeiro">
-                        <i class="fas fa-dollar-sign"></i>
-                        <span>Financeiro</span>
-                    </a>
-                    <a href="#" onclick="loadContent('relatorios')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="relatorios">
-                        <i class="fas fa-chart-bar"></i>
-                        <span>Relatórios</span>
-                    </a>
-                    <a href="#" onclick="loadContent('audit_logs')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="audit_logs">
-                        <i class="fas fa-history"></i>
-                        <span>Audit Logs</span>
-                    </a>
-                    <a href="#" onclick="loadContent('arquivos')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="arquivos">
-                        <i class="fas fa-folder"></i>
-                        <span>Arquivos</span>
-                    </a>
-                    <a href="#" onclick="loadContent('backup')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="backup">
-                        <i class="fas fa-database"></i>
-                        <span>Backup/Restore</span>
-                    </a>
-                    <a href="#" onclick="loadContent('permissoes')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="permissoes">
-                        <i class="fas fa-lock"></i>
-                        <span>Permissões</span>
-                    </a>
-                    <a href="#" onclick="loadContent('notificacoes')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="notificacoes">
-                        <i class="fas fa-bell"></i>
-                        <span>Notificações</span>
-                    </a>
-                    <a href="#" onclick="loadContent('analytics')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="analytics">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Analytics</span>
-                    </a>
-                    <a href="#" onclick="loadContent('integracoes')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="integracoes">
-                        <i class="fas fa-plug"></i>
-                        <span>Integrações</span>
-                    </a>
-                    <a href="#" onclick="loadContent('suporte')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="suporte">
-                        <i class="fas fa-headset"></i>
-                        <span>Suporte</span>
-                    </a>
-                    <a href="#" onclick="loadContent('horarios')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="horarios">
-                        <i class="fas fa-clock"></i>
-                        <span>Horários</span>
-                    </a>
-                    <a href="#" onclick="loadContent('patrimonio')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="patrimonio">
-                        <i class="fas fa-box"></i>
-                        <span>Patrimônio</span>
-                    </a>
-                </nav>
             </div>
             
-            <div class="absolute bottom-0 left-0 right-0 p-6 border-t border-gray-200">
+            <nav class="space-y-1 flex-1 overflow-y-auto px-6">
+                <a href="?page=dashboard" class="nav-link flex items-center gap-3 px-4 py-3 bg-primary-50 text-primary-700 rounded-lg font-medium" data-page="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="?page=usuarios" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="usuarios">
+                    <i class="fas fa-users"></i>
+                    <span>Usuários</span>
+                </a>
+                <a href="?page=turmas" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="turmas">
+                    <i class="fas fa-chalkboard"></i>
+                    <span>Turmas</span>
+                </a>
+                <a href="?page=arquivos" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="arquivos">
+                    <i class="fas fa-folder"></i>
+                    <span>Arquivos</span>
+                </a>
+                <a href="?page=backup" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="backup">
+                    <i class="fas fa-database"></i>
+                    <span>Backup/Restore</span>
+                </a>
+                <a href="?page=audit_logs" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="audit_logs">
+                    <i class="fas fa-history"></i>
+                    <span>Audit Logs</span>
+                </a>
+                <a href="?page=permissoes" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="permissoes">
+                    <i class="fas fa-lock"></i>
+                    <span>Permissões</span>
+                </a>
+                <a href="?page=notificacoes" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="notificacoes">
+                    <i class="fas fa-bell"></i>
+                    <span>Notificações</span>
+                </a>
+                <a href="?page=relatorios" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="relatorios">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Relatórios</span>
+                </a>
+                <a href="?page=analytics" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="analytics">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="?page=integracoes" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="integracoes">
+                    <i class="fas fa-plug"></i>
+                    <span>Integrações</span>
+                </a>
+                <a href="?page=suporte" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="suporte">
+                    <i class="fas fa-headset"></i>
+                    <span>Suporte</span>
+                </a>
+                <a href="?page=horarios" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="horarios">
+                    <i class="fas fa-clock"></i>
+                    <span>Horários</span>
+                </a>
+                <a href="?page=patrimonio" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="patrimonio">
+                    <i class="fas fa-box"></i>
+                    <span>Patrimônio</span>
+                </a>
+            </nav>
+            
+            <div class="p-6 border-t border-gray-200 flex-shrink-0">
                 <a href="../logout.php" class="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Sair</span>
@@ -166,94 +154,57 @@ $admin_id = $_SESSION['usuario_id'];
             <div class="p-6">
                 <!-- Content Container -->
                 <div id="content-container">
-                    <!-- Loading State -->
-                    <div id="loading" class="flex items-center justify-center py-12">
-                        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
-                    </div>
+                    <?php
+                    $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
+                    $allowed_pages = ['dashboard', 'usuarios', 'turmas', 'arquivos', 'backup', 'audit_logs', 'permissoes', 'notificacoes', 'relatorios', 'analytics', 'integracoes', 'suporte', 'horarios', 'patrimonio'];
+                    
+                    if (in_array($page, $allowed_pages)) {
+                        include "pages/$page.php";
+                    } else {
+                        echo '<div class="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
+                            <i class="fas fa-exclamation-triangle text-red-500 text-4xl mb-4"></i>
+                            <p class="text-red-700">Página não encontrada</p>
+                        </div>';
+                    }
+                    ?>
                 </div>
             </div>
         </main>
     </div>
 
     <script>
-        let currentPage = 'dashboard';
-
-        function loadContent(page) {
-            // Update active nav link
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('bg-primary-50', 'text-primary-700', 'font-medium');
-                link.classList.add('text-gray-600');
-            });
-            
-            const activeLink = document.querySelector(`.nav-link[data-page="${page}"]`);
-            if (activeLink) {
-                activeLink.classList.add('bg-primary-50', 'text-primary-700', 'font-medium');
-                activeLink.classList.remove('text-gray-600');
-            }
-
-            // Show loading
-            document.getElementById('loading').classList.remove('hidden');
-            document.getElementById('content-container').innerHTML = `
-                <div id="loading" class="flex items-center justify-center py-12">
-                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
-                </div>
-            `;
-
-            // Update page title
+        // Update active nav link based on current page
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = '<?php echo isset($_GET['page']) ? $_GET['page'] : 'dashboard'; ?>';
             const titles = {
                 'dashboard': 'Painel Administrativo',
                 'usuarios': 'Gerenciar Usuários',
                 'turmas': 'Gerenciar Turmas',
-                'disciplinas': 'Gerenciar Disciplinas',
-                'matriculas': 'Gerenciar Matrículas',
-                'financeiro': 'Financeiro',
-                'relatorios': 'Relatórios',
-                'audit_logs': 'Logs de Auditoria',
                 'arquivos': 'Gerenciar Arquivos',
                 'backup': 'Backup e Restore',
+                'audit_logs': 'Logs de Auditoria',
                 'permissoes': 'Gestão de Permissões',
                 'notificacoes': 'Notificações',
+                'relatorios': 'Relatórios',
                 'analytics': 'Analytics',
                 'integracoes': 'Integrações',
                 'suporte': 'Suporte',
                 'horarios': 'Horários',
                 'patrimonio': 'Patrimônio'
             };
-            document.getElementById('page-title').textContent = titles[page] || 'Painel Administrativo';
-
-            // Load content via AJAX
-            fetch(`pages/${page}.php`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Page not found');
-                    }
-                    return response.text();
-                })
-                .then(html => {
-                    document.getElementById('content-container').innerHTML = html;
-                    currentPage = page;
-                    
-                    // Execute scripts in the loaded content
-                    const scripts = document.getElementById('content-container').querySelectorAll('script');
-                    scripts.forEach(script => {
-                        const newScript = document.createElement('script');
-                        newScript.textContent = script.textContent;
-                        document.head.appendChild(newScript);
-                    });
-                })
-                .catch(error => {
-                    document.getElementById('content-container').innerHTML = `
-                        <div class="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
-                            <i class="fas fa-exclamation-triangle text-red-500 text-4xl mb-4"></i>
-                            <p class="text-red-700">Erro ao carregar conteúdo: ${error.message}</p>
-                        </div>
-                    `;
-                });
-        }
-
-        // Load dashboard on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            loadContent('dashboard');
+            document.getElementById('page-title').textContent = titles[currentPage] || 'Painel Administrativo';
+            
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('bg-primary-50', 'text-primary-700', 'font-medium');
+                link.classList.add('text-gray-600');
+            });
+            
+            const activeLink = document.querySelector(`.nav-link[data-page="${currentPage}"]`);
+            if (activeLink) {
+                activeLink.classList.add('bg-primary-50', 'text-primary-700', 'font-medium');
+                activeLink.classList.remove('text-gray-600');
+            }
         });
     </script>
 </body>
