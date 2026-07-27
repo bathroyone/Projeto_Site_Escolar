@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Livros de literatura de cordel - Biblioteca Virtual do I.M.A - Instituto Machado de Assis">
+  <title>Livros de Literatura de Cordel | Biblioteca Virtual</title>
+  <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            azul: {
+              principal: '#0a2463',
+              escuro: '#051435',
+              claro: '#1e3a8a'
+            },
+            amarelo: {
+              destaque: '#ffd700',
+              claro: '#ffed4a'
+            },
+            verde: {
+              complementar: '#2d6a4f',
+              claro: '#40916c'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Poppins', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    .card-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .card-hover:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(6, 59, 122, 0.15); }
+    .hero-pattern { background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+    .animate-fade-in { animation: fadeIn 0.6s ease-out forwards; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .book-card { position: relative; overflow: hidden; }
+    .book-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #13843b, #15a048); }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-blue-50 to-white min-h-screen">
+  
+  <header class="glass fixed top-0 left-0 right-0 z-50 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <a href="../index.html" class="flex items-center gap-3 group">
+          <img src="../img/logo.jpg" alt="Logo CEAA" class="h-14 w-auto transition-transform group-hover:scale-105">
+          <div class="flex flex-col">
+            <span class="text-azul-principal font-bold text-xs tracking-wide">I.M.A</span>
+            <span class="text-amarelo-destaque font-extrabold text-base">INSTITUTO MACHADO DE ASSIS</span>
+          </div>
+        </a>
+        <nav class="hidden md:flex items-center gap-2">
+          <a href="../index.html" class="px-4 py-2 rounded-full text-azul-principal font-semibold hover:bg-azul-principal hover:text-white transition-all duration-300">Voltar à Página Inicial</a>
+        </nav>
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-azul-principal hover:bg-blue-100 transition-colors">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="fixed inset-0 z-50 md:hidden">
+      <div id="menu-overlay" class="absolute inset-0 bg-black/50 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+      <div id="menu-drawer" class="absolute left-0 top-0 h-full w-80 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300">
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-8">
+            <img src="../img/logo.jpg" alt="Logo CEAA" class="h-12">
+            <button id="close-menu" class="p-2 rounded-lg hover:bg-gray-100">
+              <i class="fas fa-times text-xl text-azul-principal"></i>
+            </button>
+          </div>
+          <nav class="flex flex-col gap-4">
+            <a href="../index.html" class="px-4 py-3 rounded-lg text-azul-principal font-semibold hover:bg-blue-50 transition-colors">Voltar à Página Inicial</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-20">
+    <section class="relative h-[400px] md:h-[500px] bg-gradient-to-br from-amarelo-destaque to-orange-400 overflow-hidden hero-pattern">
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute top-0 left-0 w-full h-full">
+        <div class="absolute top-20 left-10 w-32 h-32 bg-amarelo-destaque/20 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 right-10 w-48 h-48 bg-verde-complementar/20 rounded-full blur-3xl"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-amarelo-destaque/30 rounded-full blur-3xl"></div>
+      </div>
+      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-center text-center">
+        <div class="animate-fade-in">
+          <span class="inline-block bg-amarelo-destaque text-azul-escuro font-black rounded-full px-6 py-2 mb-6 text-sm shadow-lg">Biblioteca Virtual</span>
+          <h1 class="font-display font-bold text-4xl md:text-6xl text-white mb-4 drop-shadow-lg">LIVROS DE LITERATURA DE CORDEL</h1>
+          <p class="text-lg md:text-xl text-white/90 font-medium">Livros gratuitos para estudar, aprender e viajar pelo conhecimento.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-8 relative overflow-hidden">
+        <div class="absolute right-8 bottom-[-20px] text-8xl font-black text-azul-principal/5 pointer-events-none">CEAA</div>
+        <div class="text-center mb-8">
+          <span class="text-verde-complementar font-bold text-sm uppercase tracking-wider">Acesse os livros</span>
+          <h2 class="text-3xl md:text-4xl font-display font-bold text-azul-principal mt-2 mb-4">Livros de Literatura de Cordel</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto">Escolha uma capa abaixo para abrir o livro em PDF ou o material disponível.</p>
+          <div class="mt-6">
+            <a href="livro.html" class="inline-flex items-center px-6 py-3 bg-azul-principal text-white rounded-full font-semibold hover:bg-azul-escuro transition-all duration-300 shadow-md hover:shadow-lg">
+              <i class="fas fa-arrow-left mr-2"></i>Voltar para Categorias
+            </a>
+          </div>
+        </div>
+        <div class="max-w-2xl mx-auto mb-12">
+          <div class="relative">
+            <input type="search" id="buscaLivros" placeholder="Buscar livro nesta página..." class="w-full px-6 py-4 pl-14 rounded-full border-2 border-gray-200 focus:border-verde-complementar focus:outline-none transition-colors text-lg">
+            <i class="fas fa-search absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl"></i>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="livros">
+        <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <a href="img/literatura_cordel/A%20Carta%20do%20Pistoleiro%20Mainha%20%c3%83%c2%a0%20Sociedade.html" class="block">
+            <img src="img/literatura_cordel/1.jpg" alt="A CARTA DO PISTOLEIRO MAINHA À SOCIEDADE" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Cordel</span>
+              <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">A CARTA DO PISTOLEIRO MAINHA À SOCIEDADE</h3>
+              <p class="text-gray-500 text-xs mb-3">Literatura de Cordel</p>
+              <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+            </div>
+          </a>
+        </article>
+        <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <a href="img/literatura_cordel/A%20Chegada%20de%20Lampi%c3%83%c2%a3o%20no%20C%c3%83%c2%a9u.html" class="block">
+            <img src="img/literatura_cordel/2.jpg" alt="A CHEGADA DE LAMPIÃO NO CÉU" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Cordel</span>
+              <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">A CHEGADA DE LAMPIÃO NO CÉU</h3>
+              <p class="text-gray-500 text-xs mb-3">Literatura de Cordel</p>
+              <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+            </div>
+          </a>
+        </article>
+        <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <a href="img/literatura_cordel/A%20Filha%20do%20Pescador.pdf" class="block">
+            <img src="img/literatura_cordel/3.jpg" alt="A FILHA DO PESCADOR" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Cordel</span>
+              <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">A FILHA DO PESCADOR</h3>
+              <p class="text-gray-500 text-xs mb-3">Literatura de Cordel</p>
+              <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+            </div>
+          </a>
+        </article>
+        <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <a href="img/literatura_cordel/A%20For%c3%83%c2%a7a%20do%20Amor%20Alonso%20e%20Marina.html" class="block">
+            <img src="img/literatura_cordel/4.jpg" alt="A FORÇA DO AMOR ALONSO E MARINA" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Cordel</span>
+              <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">A FORÇA DO AMOR ALONSO E MARINA</h3>
+              <p class="text-gray-500 text-xs mb-3">Literatura de Cordel</p>
+              <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+            </div>
+          </a>
+        </article>
+        <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <a href="img/literatura_cordel/A%20Mulher%20Roubada.pdf" class="block">
+            <img src="img/literatura_cordel/5.jpg" alt="A MULHER ROUBADA" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Cordel</span>
+              <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">A MULHER ROUBADA</h3>
+              <p class="text-gray-500 text-xs mb-3">Literatura de Cordel</p>
+              <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+            </div>
+          </a>
+        </article>
+        <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <a href="img/literatura_cordel/A%20Seca%20do%20Cear%c3%83%c2%a1.html" class="block">
+            <img src="img/literatura_cordel/6.jpg" alt="A SECA DO CEARÁ" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Cordel</span>
+              <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">A SECA DO CEARÁ</h3>
+              <p class="text-gray-500 text-xs mb-3">Literatura de Cordel</p>
+              <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+            </div>
+          </a>
+        </article>
+        <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <a href="img/literatura_cordel/A%20Terr%c3%83%c2%advel%20Hist%c3%83%c2%b3ria%20da%20Perna%20Cabeluda.html" class="block">
+            <img src="img/literatura_cordel/7.jpg" alt="A TERRÍVEL HISTÓRIA DA PERNA CABELUDA" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Cordel</span>
+              <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">A TERRÍVEL HISTÓRIA DA PERNA CABELUDA</h3>
+              <p class="text-gray-500 text-xs mb-3">Literatura de Cordel</p>
+              <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+            </div>
+          </a>
+        </article>
+        <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <a href="img/literatura_cordel/Ant%c3%83%c2%b4nio%20Silvino%20O%20Rei%20dos%20Cangaceiros.html" class="block">
+            <img src="img/literatura_cordel/8.jpg" alt="ANTÔNIO SILVINO O REI DOS CANGACEIROS" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Cordel</span>
+              <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">ANTÔNIO SILVINO O REI DOS CANGACEIROS</h3>
+              <p class="text-gray-500 text-xs mb-3">Literatura de Cordel</p>
+              <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+            </div>
+          </a>
+        </article>
+        <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <a href="img/literatura_cordel/Ant%c3%83%c2%b4nio%20Silvino%20Vida%2c%20Crimes%20e%20Julgamento.html" class="block">
+            <img src="img/literatura_cordel/9.jpg" alt="ANTÔNIO SILVINO VIDA, CRIMES E JULGAMENTO" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Cordel</span>
+              <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">ANTÔNIO SILVINO VIDA, CRIMES E JULGAMENTO</h3>
+              <p class="text-gray-500 text-xs mb-3">Literatura de Cordel</p>
+              <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+            </div>
+          </a>
+        </article>
+        <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <a href="img/literatura_cordel/As%20Proezas%20de%20um%20Namorado%20Mofino.pdf" class="block">
+            <img src="img/literatura_cordel/10.jpg" alt="AS PROEZAS DE UM NAMORADO MOFINO" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Cordel</span>
+              <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">AS PROEZAS DE UM NAMORADO MOFINO</h3>
+              <p class="text-gray-500 text-xs mb-3">Literatura de Cordel</p>
+              <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+            </div>
+          </a>
+        </article>
+        <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <a href="img/literatura_cordel/Coxinha%20de%20Macaxeira.pdf" class="block">
+            <img src="img/literatura_cordel/11.jpg" alt="COXINHA DE MACAXEIRA" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Cordel</span>
+              <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">COXINHA DE MACAXEIRA</h3>
+              <p class="text-gray-500 text-xs mb-3">Literatura de Cordel</p>
+              <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+            </div>
+          </a>
+        </article>
+        <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <a href="img/literatura_cordel/Nossos%20Cord%c3%83%c2%a9is.html" class="block">
+            <img src="img/literatura_cordel/12.jpg" alt="NOSSOS CORDÉIS" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Cordel</span>
+              <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">NOSSOS CORDÉIS</h3>
+              <p class="text-gray-500 text-xs mb-3">Literatura de Cordel</p>
+              <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+            </div>
+          </a>
+        </article>
+        <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <a href="img/literatura_cordel/O%20Casamento%20do%20Bode%20com%20a%20Raposa.pdf" class="block">
+            <img src="img/literatura_cordel/13.jpg" alt="O CASAMENTO DO BODE COM A RAPOSA" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Cordel</span>
+              <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">O CASAMENTO DO BODE COM A RAPOSA</h3>
+              <p class="text-gray-500 text-xs mb-3">Literatura de Cordel</p>
+              <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+            </div>
+          </a>
+        </article>
+        <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <a href="img/literatura_cordel/O%20Coronav%c3%83%c2%adrus.html" class="block">
+            <img src="img/literatura_cordel/14.jpg" alt="O CORONAVÍRUS" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Cordel</span>
+              <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">O CORONAVÍRUS</h3>
+              <p class="text-gray-500 text-xs mb-3">Literatura de Cordel</p>
+              <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+            </div>
+          </a>
+        </article>
+        <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+          <a href="img/literatura_cordel/O%20Dia%20que%20o%20SUS%20Visitou%20o%20Cidad%c3%83%c2%a3o.html" class="block">
+            <img src="img/literatura_cordel/15.jpg" alt="O DIA QUE O SUS VISITOU O CIDADÃO" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Cordel</span>
+              <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">O DIA QUE O SUS VISITOU O CIDADÃO</h3>
+              <p class="text-gray-500 text-xs mb-3">Literatura de Cordel</p>
+              <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+            </div>
+          </a>
+        </article>
+    </section>
+    <section class="bg-gradient-to-r from-azul-principal to-verde-complementar text-white rounded-3xl shadow-xl p-8 md:p-12 text-center mb-8">
+      <h2 class="text-2xl md:text-4xl font-display font-bold mb-2">Já são <span class="text-amarelo-destaque">28 anos</span> de experiência na área da educação</h2>
+    </section>
+    <section class="bg-white rounded-3xl shadow-xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-6">
+      <h2 class="text-xl md:text-2xl font-display font-bold text-azul-principal">Estamos de braços abertos para recebê-los!</h2>
+      <a href="https://www.google.com.br/maps/@-22.7082858,-43.0302b8?hl=pt-BR" class="px-6 py-3 bg-amarelo-destaque text-azul-escuro rounded-full font-bold hover:bg-amarelo-claro transition-colors whitespace-nowrap">Como Chegar</a>
+    </section>
+  </main>
+  <footer class="bg-azul-escuro text-white py-12" id="contact">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-8">
+        <h2 class="text-2xl font-display font-bold text-amarelo-destaque mb-4">I.M.A - Instituto Machado de Assis</h2>
+        <p class="mb-2"><a href="https://www.google.com.br/maps/@-22.7082858,-43.0302b8?hl=pt-BR" class="hover:text-amarelo-destaque transition-colors">INSTITUTO MACHADO DE ASSIS, Quadra 4, lote 14 - Parque Bar�o do Amap� - Duque de Caxias - RJ 25235-475</a></p>
+        <p class="mb-2">ima.instituto@gmail.com</p>
+        <p><a href="tel:+5521991513581" class="hover:text-amarelo-destaque transition-colors">(21) 98855-0912 / (21) 3672-0169</a> | <a href="tel:+5521992550848" class="hover:text-amarelo-destaque transition-colors">(21) 3672-0169</a></p>
+      </div>
+      <div class="flex justify-center gap-4 mb-8">
+        <a href="https://www.facebook.com/ceaabrasil" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-amarelo-destaque hover:text-azul-escuro transition-all" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/ceaa.colegiobrasiloficial" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-amarelo-destaque hover:text-azul-escuro transition-all" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-amarelo-destaque hover:text-azul-escuro transition-all" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-amarelo-destaque hover:text-azul-escuro transition-all" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      </div>
+      <p class="text-center text-sm opacity-80">&copy; Copyright 2024 desenvolvido por Roberto Monteiro. All Rights Reserved.</p>
+    </div>
+  </footer>
+  <a href="https://api.whatsapp.com/send" class="fixed bottom-20 right-4 w-12 h-12 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition-colors z-30" aria-label="WhatsApp"><i class="fab fa-whatsapp text-xl"></i></a>
+  <a href="#inicio" class="fixed bottom-4 right-4 w-12 h-12 bg-amarelo-destaque text-azul-escuro rounded-full flex items-center justify-center shadow-lg hover:bg-amarelo-claro transition-colors z-30" aria-label="Voltar ao topo">↑</a>
+  <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const menuDrawer = document.getElementById('menu-drawer');
+    const closeMenu = document.getElementById('close-menu');
+
+    function openMenu() {
+      mobileMenu.classList.remove('hidden');
+      setTimeout(() => {
+        menuOverlay.classList.remove('opacity-0');
+        menuDrawer.classList.remove('-translate-x-full');
+      }, 10);
+    }
+
+    function closeMenuFn() {
+      menuOverlay.classList.add('opacity-0');
+      menuDrawer.classList.add('-translate-x-full');
+      setTimeout(() => {
+        mobileMenu.classList.add('hidden');
+      }, 300);
+    }
+
+    mobileMenuBtn.addEventListener('click', openMenu);
+    closeMenu.addEventListener('click', closeMenuFn);
+    menuOverlay.addEventListener('click', closeMenuFn);
+
+    // Live search
+    const campo = document.getElementById('buscaLivros');
+    const cards = Array.from(document.querySelectorAll('.book-card'));
+
+    campo.addEventListener('input', function() {
+      const termo = this.value.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
+      cards.forEach(card => {
+        const texto = card.textContent.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+        card.style.display = texto.includes(termo) ? '' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>

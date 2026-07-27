@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Biblioteca Virtual do I.M.A - Instituto Machado de Assis">
+  <title>Biblioteca Virtual | I.M.A - Instituto Machado de Assis</title>
+  <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            azul: {
+              principal: '#0a2463',
+              escuro: '#051435',
+              claro: '#1e3a8a'
+            },
+            amarelo: {
+              destaque: '#ffd700',
+              claro: '#ffed4a'
+            },
+            verde: {
+              complementar: '#2d6a4f',
+              claro: '#40916c'
+            },
+            preto: {
+              principal: '#000000',
+              escuro: '#1a1a1a'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Poppins', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .card-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(6, 59, 122, 0.15);
+    }
+    .hero-pattern {
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.6s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .book-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .book-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--tw-gradient-from), var(--tw-gradient-to));
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-blue-50 to-white min-h-screen">
+  
+  <header class="glass fixed top-0 left-0 right-0 z-50 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <a href="../index.html" class="flex items-center gap-3 group">
+          <img src="../img/logo.jpg" alt="Logo I.M.A" class="h-14 w-auto transition-transform group-hover:scale-105">
+          <div class="flex flex-col">
+            <span class="text-azul-principal font-bold text-xs tracking-wide">I.M.A</span>
+            <span class="text-amarelo-destaque font-extrabold text-base">INSTITUTO MACHADO DE ASSIS</span>
+          </div>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-2">
+          <a href="../index.html" class="px-4 py-2 rounded-full text-azul-principal font-semibold hover:bg-azul-principal hover:text-white transition-all duration-300">Início</a>
+          <a href="#categorias" class="px-4 py-2 rounded-full text-azul-principal font-semibold hover:bg-azul-principal hover:text-white transition-all duration-300">Categorias</a>
+        </nav>
+
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-azul-principal hover:bg-blue-100 transition-colors">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="fixed inset-0 z-50 md:hidden">
+      <div id="menu-overlay" class="absolute inset-0 bg-black/50 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+      <div id="menu-drawer" class="absolute left-0 top-0 h-full w-80 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300">
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-8">
+            <img src="../img/logo.jpg" alt="Logo I.M.A" class="h-12">
+            <button id="close-menu" class="p-2 rounded-lg hover:bg-gray-100">
+              <i class="fas fa-times text-xl text-azul-principal"></i>
+            </button>
+          </div>
+          <nav class="flex flex-col gap-4">
+            <a href="../index.html" class="px-4 py-3 rounded-lg text-azul-principal font-semibold hover:bg-blue-50 transition-colors">Início</a>
+            <a href="#categorias" class="px-4 py-3 rounded-lg text-azul-principal font-semibold hover:bg-blue-50 transition-colors">Categorias</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-20">
+    
+    <section class="relative h-[500px] md:h-[600px] bg-gradient-to-br from-azul-principal via-azul-escuro to-verde-complementar overflow-hidden hero-pattern">
+      <div class="absolute inset-0 bg-black/30"></div>
+      
+      <div class="absolute top-0 left-0 w-full h-full">
+        <div class="absolute top-20 left-10 w-32 h-32 bg-amarelo-destaque/20 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 right-10 w-48 h-48 bg-verde-complementar/20 rounded-full blur-3xl"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-azul-principal/30 rounded-full blur-3xl"></div>
+      </div>
+      
+      <div class="relative h-full flex items-center justify-center text-center px-4">
+        <div class="max-w-4xl animate-fade-in">
+          <div class="flex items-center justify-center gap-3 mb-6">
+            <div class="w-16 h-1 bg-amarelo-destaque rounded-full"></div>
+            <span class="inline-block px-5 py-2 bg-amarelo-destaque text-azul-escuro rounded-full font-bold text-sm shadow-lg">
+              <i class="fas fa-book-open mr-2"></i>Biblioteca Virtual
+            </span>
+            <div class="w-16 h-1 bg-amarelo-destaque rounded-full"></div>
+          </div>
+          <h1 class="text-5xl md:text-7xl font-display font-bold text-white mb-6 leading-tight">
+            I.M.A - Instituto Machado de Assis
+          </h1>
+          <p class="text-xl md:text-3xl text-white/90 mb-8 font-light">
+            Livros gratuitos para estudar, aprender e viajar pelo conhecimento.
+          </p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <a href="#categorias" class="px-8 py-4 bg-amarelo-destaque text-azul-escuro rounded-full font-bold hover:bg-amarelo-claro transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+              <i class="fas fa-search mr-2"></i>Explorar Livros
+            </a>
+            <a href="../index.html" class="px-8 py-4 bg-white/20 backdrop-blur-sm text-white rounded-full font-semibold hover:bg-white/30 transition-all duration-300 border border-white/30">
+              <i class="fas fa-home mr-2"></i>Voltar ao Site
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent"></div>
+    </section>
+
+    <section id="categorias" class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <span class="text-verde-complementar font-bold text-sm uppercase tracking-wider">Biblioteca Virtual</span>
+          <h2 class="text-3xl md:text-4xl font-display font-bold text-azul-principal mt-2 mb-4">
+            Categorias de livros
+          </h2>
+          <p class="text-gray-600 max-w-2xl mx-auto">
+            Todos os livros contidos nesta biblioteca estão disponíveis como amostra grátis, domínio público ou material gratuito.
+          </p>
+        </div>
+
+        <div class="max-w-2xl mx-auto mb-12">
+          <div class="relative">
+            <input type="search" id="buscaLivros" placeholder="Buscar categoria ou livro..." class="w-full px-6 py-4 pl-14 rounded-full border-2 border-gray-200 focus:border-azul-principal focus:outline-none transition-colors text-lg">
+            <i class="fas fa-search absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl"></i>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="gradeLivros">
+          <article class="book-card bg-white rounded-3xl shadow-xl overflow-hidden card-hover" data-busca="livro infantil 03 a 05 anos 06 a 08 anos 08 a 12 anos">
+            <div class="bg-gradient-to-br from-verde-complementar to-verde-claro p-6">
+              <div class="flex items-center gap-4">
+                <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+                  <i class="fas fa-child text-white text-2xl"></i>
+                </div>
+                <h3 class="font-display font-bold text-white text-2xl">Livro Infantil</h3>
+              </div>
+            </div>
+            <div class="p-6 space-y-3">
+              <a href="livro1.html" class="block px-4 py-3 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl text-azul-principal font-semibold hover:from-verde-complementar hover:to-verde-claro hover:text-white transition-all duration-300 border border-green-200 hover:border-transparent">03 a 05 anos</a>
+              <a href="livro2.html" class="block px-4 py-3 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl text-azul-principal font-semibold hover:from-verde-complementar hover:to-verde-claro hover:text-white transition-all duration-300 border border-green-200 hover:border-transparent">06 a 08 anos</a>
+              <a href="livro3.html" class="block px-4 py-3 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl text-azul-principal font-semibold hover:from-verde-complementar hover:to-verde-claro hover:text-white transition-all duration-300 border border-green-200 hover:border-transparent">08 a 12 anos</a>
+            </div>
+          </article>
+
+          <article class="book-card bg-white rounded-3xl shadow-xl overflow-hidden card-hover" data-busca="livro didático educação infantil ensino fundamental ensino médio enem">
+            <div class="bg-gradient-to-br from-azul-principal to-azul-claro p-6">
+              <div class="flex items-center gap-4">
+                <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+                  <i class="fas fa-book text-white text-2xl"></i>
+                </div>
+                <h3 class="font-display font-bold text-white text-2xl">Livro Didático</h3>
+              </div>
+            </div>
+            <div class="p-6 space-y-3">
+              <a href="livro4.html" class="block px-4 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl text-azul-principal font-semibold hover:from-azul-principal hover:to-azul-claro hover:text-white transition-all duration-300 border border-blue-200 hover:border-transparent">Educação Infantil</a>
+              <a href="livro5.html" class="block px-4 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl text-azul-principal font-semibold hover:from-azul-principal hover:to-azul-claro hover:text-white transition-all duration-300 border border-blue-200 hover:border-transparent">Ensino Fundamental</a>
+              <a href="livro6.html" class="block px-4 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl text-azul-principal font-semibold hover:from-azul-principal hover:to-azul-claro hover:text-white transition-all duration-300 border border-blue-200 hover:border-transparent">Ensino Médio</a>
+              <a href="livro7.html" class="block px-4 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl text-azul-principal font-semibold hover:from-azul-principal hover:to-azul-claro hover:text-white transition-all duration-300 border border-blue-200 hover:border-transparent">ENEM</a>
+            </div>
+          </article>
+
+          <article class="book-card bg-white rounded-3xl shadow-xl overflow-hidden card-hover" data-busca="livro das ciências ciências biológicas ciências exatas ciências humanas">
+            <div class="bg-gradient-to-br from-amarelo-destaque to-orange-400 p-6">
+              <div class="flex items-center gap-4">
+                <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+                  <i class="fas fa-flask text-white text-2xl"></i>
+                </div>
+                <h3 class="font-display font-bold text-azul-escuro text-2xl">Ciências</h3>
+              </div>
+            </div>
+            <div class="p-6 space-y-3">
+              <a href="livro8.html" class="block px-4 py-3 bg-gradient-to-r from-yellow-50 to-amber-50 rounded-xl text-azul-principal font-semibold hover:from-amarelo-destaque hover:to-orange-400 hover:text-azul-escuro transition-all duration-300 border border-yellow-200 hover:border-transparent">Ciências Biológicas</a>
+              <a href="livro9.html" class="block px-4 py-3 bg-gradient-to-r from-yellow-50 to-amber-50 rounded-xl text-azul-principal font-semibold hover:from-amarelo-destaque hover:to-orange-400 hover:text-azul-escuro transition-all duration-300 border border-yellow-200 hover:border-transparent">Ciências Exatas</a>
+              <a href="livro10.html" class="block px-4 py-3 bg-gradient-to-r from-yellow-50 to-amber-50 rounded-xl text-azul-principal font-semibold hover:from-amarelo-destaque hover:to-orange-400 hover:text-azul-escuro transition-all duration-300 border border-yellow-200 hover:border-transparent">Ciências Humanas</a>
+            </div>
+          </article>
+
+          <article class="book-card bg-white rounded-3xl shadow-xl overflow-hidden card-hover" data-busca="literatura brasileira estrangeira cordel">
+            <div class="bg-gradient-to-br from-purple-600 to-pink-500 p-6">
+              <div class="flex items-center gap-4">
+                <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+                  <i class="fas fa-pencil text-white text-2xl"></i>
+                </div>
+                <h3 class="font-display font-bold text-white text-2xl">Literatura</h3>
+              </div>
+            </div>
+            <div class="p-6 space-y-3">
+              <a href="livro11.html" class="block px-4 py-3 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl text-azul-principal font-semibold hover:from-purple-600 hover:to-pink-500 hover:text-white transition-all duration-300 border border-purple-200 hover:border-transparent">Literatura Brasileira</a>
+              <a href="livro12.html" class="block px-4 py-3 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl text-azul-principal font-semibold hover:from-purple-600 hover:to-pink-500 hover:text-white transition-all duration-300 border border-purple-200 hover:border-transparent">Literatura Estrangeira</a>
+              <a href="livro13.html" class="block px-4 py-3 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl text-azul-principal font-semibold hover:from-purple-600 hover:to-pink-500 hover:text-white transition-all duration-300 border border-purple-200 hover:border-transparent">Literatura de Cordel</a>
+            </div>
+          </article>
+
+          <article class="book-card bg-white rounded-3xl shadow-xl overflow-hidden card-hover" data-busca="para diversão paradidáticos formando cidadãos ação aventura romance">
+            <div class="bg-gradient-to-br from-pink-500 to-rose-400 p-6">
+              <div class="flex items-center gap-4">
+                <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+                  <i class="fas fa-star text-white text-2xl"></i>
+                </div>
+                <h3 class="font-display font-bold text-white text-2xl">Diversão</h3>
+              </div>
+            </div>
+            <div class="p-6 space-y-3">
+              <a href="livro14.html" class="block px-4 py-3 bg-gradient-to-r from-pink-50 to-rose-50 rounded-xl text-azul-principal font-semibold hover:from-pink-500 hover:to-rose-400 hover:text-white transition-all duration-300 border border-pink-200 hover:border-transparent">Paradidáticos</a>
+              <a href="livro15.html" class="block px-4 py-3 bg-gradient-to-r from-pink-50 to-rose-50 rounded-xl text-azul-principal font-semibold hover:from-pink-500 hover:to-rose-400 hover:text-white transition-all duration-300 border border-pink-200 hover:border-transparent">Ação e Aventura</a>
+              <a href="livro16.html" class="block px-4 py-3 bg-gradient-to-r from-pink-50 to-rose-50 rounded-xl text-azul-principal font-semibold hover:from-pink-500 hover:to-rose-400 hover:text-white transition-all duration-300 border border-pink-200 hover:border-transparent">Romance</a>
+            </div>
+          </article>
+
+          <article class="book-card bg-white rounded-3xl shadow-xl overflow-hidden card-hover" data-busca="para família cursos religioso receitas">
+            <div class="bg-gradient-to-br from-orange-500 to-amber-500 p-6">
+              <div class="flex items-center gap-4">
+                <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+                  <i class="fas fa-home text-white text-2xl"></i>
+                </div>
+                <h3 class="font-display font-bold text-white text-2xl">Família</h3>
+              </div>
+            </div>
+            <div class="p-6 space-y-3">
+              <a href="livro17.html" class="block px-4 py-3 bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl text-azul-principal font-semibold hover:from-orange-500 hover:to-amber-500 hover:text-white transition-all duration-300 border border-orange-200 hover:border-transparent">Cursos</a>
+              <a href="livro18.html" class="block px-4 py-3 bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl text-azul-principal font-semibold hover:from-orange-500 hover:to-amber-500 hover:text-white transition-all duration-300 border border-orange-200 hover:border-transparent">Religioso</a>
+              <a href="livro19.html" class="block px-4 py-3 bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl text-azul-principal font-semibold hover:from-orange-500 hover:to-amber-500 hover:text-white transition-all duration-300 border border-orange-200 hover:border-transparent">Receitas</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 bg-gradient-to-r from-azul-principal to-verde-complementar">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-4">
+          Já são <span class="text-amarelo-destaque">28 anos</span> de experiência na educação
+        </h2>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-azul-escuro text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-3 gap-12">
+        <div>
+          <div class="flex items-center gap-3 mb-6">
+            <img src="../img/logo.jpg" alt="Logo I.M.A" class="h-12">
+            <div>
+              <span class="font-bold text-sm">I.M.A</span>
+              <span class="block font-extrabold text-amarelo-destaque">INSTITUTO MACHADO DE ASSIS</span>
+            </div>
+          </div>
+          <p class="text-white/70 mb-2">
+            Estrada do Amapá (Lote 17, Quadra 04)<br>
+            Parque Barão do Amapá - Duque de Caxias - RJ 25235-475
+          </p>
+          <p class="text-white/70">ima.instituto@gmail.com</p>
+        </div>
+        <div>
+          <h3 class="font-display font-bold text-lg mb-4">Links Rápidos</h3>
+          <ul class="space-y-2">
+            <li><a href="../index.html" class="text-white/70 hover:text-amarelo-destaque transition-colors">Início</a></li>
+            <li><a href="#categorias" class="text-white/70 hover:text-amarelo-destaque transition-colors">Categorias</a></li>
+            <li><a href="#livros" class="text-white/70 hover:text-amarelo-destaque transition-colors">Livros</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-display font-bold text-lg mb-4">Contato</h3>
+          <p class="text-white/70 mb-2">
+            <i class="fas fa-phone mr-2"></i>(21) 98855-0912 / (21) 3672-0169
+          </p>
+        </div>
+      </div>
+      <div class="border-t border-white/10 mt-12 pt-8 text-center">
+        <p class="text-white/50 text-sm">
+          © 2026 I.M.A - Instituto Machado de Assis. Todos os direitos reservados.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/5521988550912" target="_blank" class="fixed bottom-6 right-6 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-50">
+    <i class="fab fa-whatsapp text-white text-2xl"></i>
+  </a>
+
+  <button id="back-to-top" class="fixed bottom-6 left-6 w-12 h-12 bg-amarelo-destaque rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-50 opacity-0 invisible">
+    <i class="fas fa-arrow-up text-azul-escuro"></i>
+  </button>
+
+  <script>
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const menuDrawer = document.getElementById('menu-drawer');
+    const closeMenuBtn = document.getElementById('close-menu');
+
+    function openMenu() {
+      mobileMenu.classList.remove('hidden');
+      setTimeout(() => {
+        menuOverlay.classList.remove('opacity-0');
+        menuDrawer.classList.remove('-translate-x-full');
+      }, 10);
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      menuOverlay.classList.add('opacity-0');
+      menuDrawer.classList.add('-translate-x-full');
+      setTimeout(() => {
+        mobileMenu.classList.add('hidden');
+      }, 300);
+      document.body.style.overflow = '';
+    }
+
+    mobileMenuBtn.addEventListener('click', openMenu);
+    closeMenuBtn.addEventListener('click', closeMenu);
+    menuOverlay.addEventListener('click', closeMenu);
+
+    const buscaLivros = document.getElementById('buscaLivros');
+    const cards = Array.from(document.querySelectorAll('#gradeLivros article'));
+
+    buscaLivros.addEventListener('input', function() {
+      const termo = this.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+      cards.forEach(card => {
+        const texto = (card.textContent + ' ' + card.dataset.busca).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        card.style.display = texto.includes(termo) ? '' : 'none';
+      });
+    });
+
+    const backToTop = document.getElementById('back-to-top');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 500) {
+        backToTop.classList.remove('opacity-0', 'invisible');
+      } else {
+        backToTop.classList.add('opacity-0', 'invisible');
+      }
+    });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+
+</body>
+
+</html>

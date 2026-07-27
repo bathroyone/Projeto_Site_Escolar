@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Livros infantis de 03 a 05 anos - Biblioteca Virtual do I.M.A - Instituto Machado de Assis">
+  <title>Livros Infantis 03 a 05 anos | Biblioteca Virtual</title>
+  <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            azul: {
+              principal: '#0a2463',
+              escuro: '#051435',
+              claro: '#1e3a8a'
+            },
+            amarelo: {
+              destaque: '#ffd700',
+              claro: '#ffed4a'
+            },
+            verde: {
+              complementar: '#2d6a4f',
+              claro: '#40916c'
+            },
+            preto: {
+              principal: '#000000',
+              escuro: '#1a1a1a'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Poppins', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .card-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(6, 59, 122, 0.15);
+    }
+    .hero-pattern {
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.6s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .book-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .book-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #13843b, #15a048);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-blue-50 to-white min-h-screen">
+  
+  <header class="glass fixed top-0 left-0 right-0 z-50 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <a href="../index.html" class="flex items-center gap-3 group">
+          <img src="../img/logo.jpg" alt="Logo I.M.A" class="h-14 w-auto transition-transform group-hover:scale-105">
+          <div class="flex flex-col">
+            <span class="text-azul-principal font-bold text-xs tracking-wide">I.M.A</span>
+            <span class="text-amarelo-destaque font-extrabold text-base">INSTITUTO MACHADO DE ASSIS</span>
+          </div>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-2">
+          <a href="livro.html" class="px-4 py-2 rounded-full text-azul-principal font-semibold hover:bg-azul-principal hover:text-white transition-all duration-300">Biblioteca</a>
+          <a href="#acervo" class="px-4 py-2 rounded-full text-azul-principal font-semibold hover:bg-azul-principal hover:text-white transition-all duration-300">Livros 03 a 05</a>
+        </nav>
+
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-azul-principal hover:bg-blue-100 transition-colors">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="fixed inset-0 z-50 md:hidden">
+      <div id="menu-overlay" class="absolute inset-0 bg-black/50 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+      <div id="menu-drawer" class="absolute left-0 top-0 h-full w-80 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300">
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-8">
+            <img src="../img/logo.jpg" alt="Logo I.M.A" class="h-12">
+            <button id="close-menu" class="p-2 rounded-lg hover:bg-gray-100">
+              <i class="fas fa-times text-xl text-azul-principal"></i>
+            </button>
+          </div>
+          <nav class="flex flex-col gap-4">
+            <a href="livro.html" class="px-4 py-3 rounded-lg text-azul-principal font-semibold hover:bg-blue-50 transition-colors">Biblioteca</a>
+            <a href="#acervo" class="px-4 py-3 rounded-lg text-azul-principal font-semibold hover:bg-blue-50 transition-colors">Livros 03 a 05</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-20">
+    
+    <section class="relative h-[400px] md:h-[500px] bg-gradient-to-br from-verde-complementar to-verde-claro overflow-hidden hero-pattern">
+      <div class="absolute inset-0 bg-black/20"></div>
+      
+      <div class="absolute top-0 left-0 w-full h-full">
+        <div class="absolute top-20 left-10 w-32 h-32 bg-amarelo-destaque/20 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 right-10 w-48 h-48 bg-azul-principal/20 rounded-full blur-3xl"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-verde-complementar/30 rounded-full blur-3xl"></div>
+      </div>
+      
+      <div class="relative h-full flex items-center justify-center text-center px-4">
+        <div class="max-w-4xl animate-fade-in">
+          <div class="flex items-center justify-center gap-3 mb-6">
+            <div class="w-16 h-1 bg-amarelo-destaque rounded-full"></div>
+            <span class="inline-block px-5 py-2 bg-amarelo-destaque text-azul-escuro rounded-full font-bold text-sm shadow-lg">
+              <i class="fas fa-book-open mr-2"></i>Biblioteca Virtual
+            </span>
+            <div class="w-16 h-1 bg-amarelo-destaque rounded-full"></div>
+          </div>
+          <h1 class="text-5xl md:text-7xl font-display font-bold text-white mb-4 leading-tight">
+            Livros Infantis
+          </h1>
+          <p class="text-xl md:text-3xl text-white/90 mb-8 font-light">
+            Acervo de 03 a 05 anos
+          </p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <a href="livro.html#infantil" class="px-8 py-4 bg-white/20 backdrop-blur-sm text-white rounded-full font-semibold hover:bg-white/30 transition-all duration-300 border border-white/30">
+              <i class="fas fa-arrow-left mr-2"></i>Voltar para categorias
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent"></div>
+    </section>
+
+    <section id="acervo" class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <span class="text-verde-complementar font-bold text-sm uppercase tracking-wider">Acervo</span>
+          <h2 class="text-3xl md:text-4xl font-display font-bold text-azul-principal mt-2 mb-4">
+            Livros infantis de 03 a 05 anos
+          </h2>
+          <p class="text-gray-600 max-w-2xl mx-auto">
+            Clique na capa ou no botão para abrir o livro em PDF.
+          </p>
+        </div>
+
+        <div class="max-w-2xl mx-auto mb-12">
+          <div class="relative">
+            <input type="search" id="buscaAcervo" placeholder="Buscar livro pelo nome..." class="w-full px-6 py-4 pl-14 rounded-full border-2 border-gray-200 focus:border-verde-complementar focus:outline-none transition-colors text-lg">
+            <i class="fas fa-search absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl"></i>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="gradeAcervo">
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/Pula-pra-ca-pula-pra-la.pdf" class="block">
+              <img src="img/03a05/1.jpg" alt="Capa do livro Pula pra ca pula pra la" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">Pula pra ca pula pra la</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/A%20ARVORE%20DE%20AGULHA.pdf" class="block">
+              <img src="img/03a05/2.jpg" alt="Capa do livro A ARVORE DE AGULHA" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">A ARVORE DE AGULHA</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/A%20CASA.pdf" class="block">
+              <img src="img/03a05/3.jpg" alt="Capa do livro A CASA" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">A CASA</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/A%20RAPOSA%20E%20AS%20PERAS%20VERDES.pdf" class="block">
+              <img src="img/03a05/4.jpg" alt="Capa do livro A RAPOSA E AS PERAS VERDES" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">A RAPOSA E AS PERAS VERDES</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/A%20TARTARUGA%20BILICA%20E%20O%20COELHO%20FELPUDO.pdf" class="block">
+              <img src="img/03a05/5.jpg" alt="Capa do livro A TARTARUGA BILICA E O COELHO FELPUDO" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">A TARTARUGA BILICA E O COELHO FELPUDO</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/A%20ULTIMA%20FORMIGA.pdf" class="block">
+              <img src="img/03a05/6.jpg" alt="Capa do livro A ULTIMA FORMIGA" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">A ULTIMA FORMIGA</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/A%20ROSA%20ORGULHOSA.pdf" class="block">
+              <img src="img/03a05/7.jpg" alt="Capa do livro A ROSA ORGULHOSA" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">A ROSA ORGULHOSA</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/BRINCANDO%20COM%20AS%20CRIAN%c3%83%c2%87AS.html" class="block">
+              <img src="img/03a05/8.jpg" alt="Capa do livro BRINCANDO COM AS CRIANÇAS" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">BRINCANDO COM AS CRIANÇAS</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/CANTA%20PASSARINHO.pdf" class="block">
+              <img src="img/03a05/9.jpg" alt="Capa do livro CANTA PASSARINHO" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">CANTA PASSARINHO</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/CARA%20DE%20QUE.pdf" class="block">
+              <img src="img/03a05/10.jpg" alt="Capa do livro CARA DE QUE" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">CARA DE QUE</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/FESTA%20DOS%20QUITUTES.pdf" class="block">
+              <img src="img/03a05/11.jpg" alt="Capa do livro FESTA DOS QUITUTES" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">FESTA DOS QUITUTES</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/LAGARTA%20BUGUELA%20BORBOLETA%20BELA.pdf" class="block">
+              <img src="img/03a05/12.jpg" alt="Capa do livro LAGARTA BUGUELA BORBOLETA BELA" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">LAGARTA BUGUELA BORBOLETA BELA</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/Pula-pra-ca-pula-pra-la.pdf" class="block">
+              <img src="img/03a05/13.jpg" alt="Capa do livro Pula pra ca pula pra la" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">Pula pra ca pula pra la</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/O%20CANTO%20DO%20MACACO%20BUGTO.pdf" class="block">
+              <img src="img/03a05/14.jpg" alt="Capa do livro O CANTO DO MACACO BUGTO" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">O CANTO DO MACACO BUGTO</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/O%20CARRO%20VRUM.pdf" class="block">
+              <img src="img/03a05/15.jpg" alt="Capa do livro O CARRO VRUM" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">O CARRO VRUM</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/O%20CRAVO%20E%20A%20ROSA.pdf" class="block">
+              <img src="img/03a05/16.jpg" alt="Capa do livro O CRAVO E A ROSA" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">O CRAVO E A ROSA</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/O%20LIVRO%20DOS%20SORRISOS.pdf" class="block">
+              <img src="img/03a05/17.jpg" alt="Capa do livro O LIVRO DOS SORRISOS" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">O LIVRO DOS SORRISOS</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/O%20PINHEIRO%20DE%20NATAL.pdf" class="block">
+              <img src="img/03a05/18.jpg" alt="Capa do livro O PINHEIRO DE NATAL" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">O PINHEIRO DE NATAL</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/O%20TREM%20DA%20INF%c3%83%c2%82NCIA.html" class="block">
+              <img src="img/03a05/19.jpg" alt="Capa do livro O TREM DA INFÂNCIA" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">O TREM DA INFÂNCIA</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/O%20URSO%20N%c3%83%c2%83O%20QUER%20COMER.html" class="block">
+              <img src="img/03a05/20.jpg" alt="Capa do livro O URSO NÃO QUER COMER" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">O URSO NÃO QUER COMER</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/O%20LOBO%20DE%20CAUDA%20AMARELA.pdf" class="block">
+              <img src="img/03a05/21.jpg" alt="Capa do livro O LOBO DE CAUDA AMARELA" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">O LOBO DE CAUDA AMARELA</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/REINACOES%20DE%20NARIZINHO%20MONTEIRO%20LOBATO.pdf" class="block">
+              <img src="img/03a05/22.jpg" alt="Capa do livro REINACOES DE NARIZINHO MONTEIRO LOBATO" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">REINACOES DE NARIZINHO MONTEIRO LOBATO</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/SACI%20E%20O%20CURUPIRA.pdf" class="block">
+              <img src="img/03a05/23.jpg" alt="Capa do livro SACI E O CURUPIRA" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">SACI E O CURUPIRA</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+          <article class="book-card bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <a href="img/03a05/ZEL%20E%20O%20POTE%20DE%20MEL.pdf" class="block">
+              <img src="img/03a05/24.jpg" alt="Capa do livro ZEL E O POTE DE MEL" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <span class="inline-block px-3 py-1 bg-verde-complementar/10 text-verde-complementar rounded-full text-xs font-bold mb-2">Livro Infantil</span>
+                <h3 class="font-display font-bold text-azul-principal text-sm mb-1 line-clamp-2">ZEL E O POTE DE MEL</h3>
+                <p class="text-gray-500 text-xs mb-3">03 a 05 anos</p>
+                <span class="block w-full py-2 bg-azul-principal text-white text-center rounded-lg text-sm font-semibold hover:bg-azul-escuro transition-colors">Acessar livro</span>
+              </div>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 bg-gradient-to-r from-azul-principal to-verde-complementar">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-4">
+          Já são <span class="text-amarelo-destaque">28 anos</span> de experiência na educação
+        </h2>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-azul-escuro text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-3 gap-12">
+        <div>
+          <div class="flex items-center gap-3 mb-6">
+            <img src="../img/logo.jpg" alt="Logo I.M.A" class="h-12">
+            <div>
+              <span class="font-bold text-sm">I.M.A</span>
+              <span class="block font-extrabold text-amarelo-destaque">INSTITUTO MACHADO DE ASSIS</span>
+            </div>
+          </div>
+          <p class="text-white/70 mb-2">
+            Estrada do Amapá (Lote 17, Quadra 04)<br>
+            Parque Barão do Amapá - Duque de Caxias - RJ 25235-475
+          </p>
+          <p class="text-white/70">ima.instituto@gmail.com</p>
+        </div>
+        <div>
+          <h3 class="font-display font-bold text-lg mb-4">Links Rápidos</h3>
+          <ul class="space-y-2">
+            <li><a href="livro.html" class="text-white/70 hover:text-amarelo-destaque transition-colors">Biblioteca Virtual</a></li>
+            <li><a href="../index.html" class="text-white/70 hover:text-amarelo-destaque transition-colors">Início</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-display font-bold text-lg mb-4">Contato</h3>
+          <p class="text-white/70 mb-2">
+            <i class="fas fa-phone mr-2"></i>(21) 98855-0912 / (21) 3672-0169
+          </p>
+        </div>
+      </div>
+      <div class="border-t border-white/10 mt-12 pt-8 text-center">
+        <p class="text-white/50 text-sm">
+          © 2026 I.M.A - Instituto Machado de Assis. Todos os direitos reservados.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/5521988550912" target="_blank" class="fixed bottom-6 right-6 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-50">
+    <i class="fab fa-whatsapp text-white text-2xl"></i>
+  </a>
+
+  <button id="back-to-top" class="fixed bottom-6 left-6 w-12 h-12 bg-amarelo-destaque rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-50 opacity-0 invisible">
+    <i class="fas fa-arrow-up text-azul-escuro"></i>
+  </button>
+
+  <script>
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const menuDrawer = document.getElementById('menu-drawer');
+    const closeMenuBtn = document.getElementById('close-menu');
+
+    function openMenu() {
+      mobileMenu.classList.remove('hidden');
+      setTimeout(() => {
+        menuOverlay.classList.remove('opacity-0');
+        menuDrawer.classList.remove('-translate-x-full');
+      }, 10);
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      menuOverlay.classList.add('opacity-0');
+      menuDrawer.classList.add('-translate-x-full');
+      setTimeout(() => {
+        mobileMenu.classList.add('hidden');
+      }, 300);
+      document.body.style.overflow = '';
+    }
+
+    mobileMenuBtn.addEventListener('click', openMenu);
+    closeMenuBtn.addEventListener('click', closeMenu);
+    menuOverlay.addEventListener('click', closeMenu);
+
+    const buscaAcervo = document.getElementById('buscaAcervo');
+    const cards = Array.from(document.querySelectorAll('#gradeAcervo article'));
+
+    if (buscaAcervo) {
+      buscaAcervo.addEventListener('input', function() {
+        const termo = this.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+        cards.forEach(card => {
+          const texto = card.textContent.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+          card.style.display = texto.includes(termo) ? '' : 'none';
+        });
+      });
+    }
+
+    const backToTop = document.getElementById('back-to-top');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 500) {
+        backToTop.classList.remove('opacity-0', 'invisible');
+      } else {
+        backToTop.classList.add('opacity-0', 'invisible');
+      }
+    });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+
+</body>
+
+</html>
