@@ -193,9 +193,9 @@ Para suporte técnico, entre em contato com o desenvolvedor do sistema.
 
 ## 📄 Licença
 
-Este sistema foi desenvolvido exclusivamente para o Centro Educacional Alameda Argentina.
+Este sistema foi desenvolvido para uso em instituições educacionais.
 
 ---
 
-**Desenvolvido para CEAA - Centro Educacional Alameda Argentina**
+**Sistema de Gestão Escolar**
 © 2026 Todos os direitos reservados

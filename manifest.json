@@ -42,7 +42,7 @@
       "name": "Biblioteca Virtual",
       "short_name": "Biblioteca",
       "description": "Acessar a biblioteca virtual",
-      "url": "/biblioteca_vrtual/livro.html",
+      "url": "/biblioteca_vrtual/biblioteca.html",
       "icons": [
         {
           "src": "/img/logo.jpg",

@@ -56,6 +56,9 @@ try {
     $_SESSION['turma'] = $usuario['turma'];
     $_SESSION['serie'] = $usuario['serie'];
     
+    // Verificar se usuário precisa alterar senha no primeiro acesso
+    $trocar_senha = isset($usuario['trocar_senha_proximo_login']) && $usuario['trocar_senha_proximo_login'];
+    
     // Registrar log de auditoria
     if (function_exists('logAudit')) {
         logAudit(AuditActions::LOGIN_SUCCESS, [
@@ -64,10 +67,25 @@ try {
         ], $usuario['id'], $tipo_usuario);
     }
     
+    // Redirecionar baseado no tipo de usuário e necessidade de trocar senha
+    if ($trocar_senha) {
+        $redirect = 'portal/trocar_senha.php';
+    } else {
+        if ($usuario['tipo_usuario'] === 'admin') {
+            $redirect = 'portal/admin/index.php';
+        } elseif ($usuario['tipo_usuario'] === 'professor') {
+            $redirect = 'portal/professor/index.php';
+        } elseif ($usuario['tipo_usuario'] === 'aluno') {
+            $redirect = 'portal/aluno/index.php';
+        } else {
+            $redirect = 'portal/dashboard.php';
+        }
+    }
+    
     echo json_encode([
         'success' => true,
-        'message' => 'Login realizado com sucesso',
-        'redirect' => 'portal/dashboard.php',
+        'message' => $trocar_senha ? 'Você precisa alterar sua senha no primeiro acesso.' : 'Login realizado com sucesso',
+        'redirect' => $redirect,
         'user' => [
             'nome' => $usuario['nome_completo'],
             'tipo' => $usuario['tipo_usuario'],

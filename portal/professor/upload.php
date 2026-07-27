@@ -131,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <img src="../img/logo1.png" alt="Logo CEAA" class="h-10">
                         <div class="hidden sm:block">
                             <span class="text-azul-principal font-bold text-xs">CENTRO EDUCACIONAL</span>
-                            <span class="block text-amarelo-destaque font-extrabold text-sm">ALAMEDA ARGENTINA</span>
+                            <span class="block text-amarelo-destaque font-extrabold text-sm">NOME DA ESCOLA</span>
                         </div>
                     </a>
                 </div>

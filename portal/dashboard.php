@@ -3,6 +3,22 @@ require_once 'config.php';
 
 requireLogin();
 
+// Redirecionar para painéis específicos
+if (isProfessor()) {
+    header('Location: professor/index.php');
+    exit();
+}
+
+if (isAluno()) {
+    header('Location: aluno/index.php');
+    exit();
+}
+
+if (isSecretaria()) {
+    header('Location: dashboard_secretaria.php');
+    exit();
+}
+
 $usuario_id = $_SESSION['usuario_id'];
 $tipo_usuario = $_SESSION['tipo_usuario'];
 $turma = $_SESSION['turma'];
@@ -104,7 +120,6 @@ $notificacoes = getUnreadNotifications($usuario_id);
     <link rel="stylesheet" href="../css/output.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="../js/dark-mode.js"></script>
 </head>
 <body class="bg-gray-100 min-h-screen">
     <!-- Header -->
@@ -112,7 +127,7 @@ $notificacoes = getUnreadNotifications($usuario_id);
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center gap-3">
-                    <a href="../index.html" class="flex items-center gap-2">
+                    <a href="../index.php" class="flex items-center gap-2">
                         <img src="../img/logo.jpg" alt="Logo" class="h-10">
                         <div class="hidden sm:block">
                             <span class="text-azul-principal font-bold text-xs">SISTEMA DE GESTÃO</span>

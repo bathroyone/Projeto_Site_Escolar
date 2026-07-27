@@ -1,3 +1,10 @@
+<?php
+session_start();
+require_once 'portal/config.php';
+$isLoggedIn = isLoggedIn();
+$userName = $_SESSION['nome'] ?? '';
+$userType = $_SESSION['tipo_usuario'] ?? '';
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -47,7 +54,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="js/form-validation.js"></script>
   <script src="js/loading-states.js"></script>
-  <script src="js/dark-mode.js"></script>
   <script src="js/accessibility.js"></script>
   <script src="js/performance-animations.js"></script>
   
@@ -145,11 +151,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-20">
         <a href="#" class="flex items-center gap-3 group">
-          <img src="img/logo.jpg" alt="Logo I.M.A" class="h-14 w-auto transition-transform group-hover:scale-110 floating">
-          <div class="flex flex-col">
-            <span class="text-white font-bold text-sm tracking-wide">I.M.A</span>
-            <span class="gradient-text font-extrabold text-lg">INSTITUTO MACHADO DE ASSIS</span>
-          </div>
+          <img src="img/logo.jpg" alt="Logo [Inserir nome da escola aqui]" class="h-14 w-auto">
         </a>
 
         <nav class="hidden lg:flex items-center gap-8">
@@ -160,16 +162,52 @@
           <a href="#contact" class="nav-link text-white/90 hover:text-white font-medium transition-colors">Contato</a>
         </nav>
 
-        <div class="hidden md:flex items-center gap-3">
-          <a href="biblioteca_vrtual/livro.html" class="px-5 py-2.5 bg-gradient-to-r from-verde-complementar to-verde-claro text-white rounded-full font-semibold hover:shadow-lg hover:shadow-green-500/30 transition-all duration-300 text-sm">
-            <i class="fas fa-book mr-2"></i>Biblioteca
+        <div class="hidden md:flex items-center gap-2">
+          <a href="biblioteca_vrtual/biblioteca.html" class="px-4 py-2.5 bg-gradient-to-r from-verde-complementar to-verde-claro text-white rounded-full font-semibold hover:shadow-lg hover:shadow-green-500/30 transition-all duration-300 text-sm whitespace-nowrap">
+            <i class="fas fa-book mr-1"></i>Biblioteca
           </a>
-          <button id="acesso-sistema-btn" class="px-5 py-2.5 bg-gradient-to-r from-azul-principal to-azul-claro text-white rounded-full font-semibold hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 text-sm">
-            <i class="fas fa-sign-in-alt mr-2"></i>Acesso
-          </button>
-          <a href="aviso2/passo1.html" class="px-5 py-2.5 bg-gradient-to-r from-amarelo-destaque to-amarelo-claro text-azul-escuro rounded-full font-bold hover:shadow-lg hover:shadow-yellow-500/30 transition-all duration-300 text-sm">
-            <i class="fas fa-edit mr-2"></i>Correções
-          </a>
+          <?php if ($isLoggedIn): ?>
+            <!-- Avatar do usuário logado -->
+            <div class="relative ml-2">
+              <button id="user-menu-btn" class="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-azul-principal to-azul-claro text-white rounded-full font-semibold hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 text-sm whitespace-nowrap">
+                <div class="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <i class="fas fa-user text-xs"></i>
+                </div>
+                <span class="max-w-[80px] truncate"><?php echo htmlspecialchars(substr($userName, 0, 10)); ?></span>
+                <i class="fas fa-chevron-down text-xs flex-shrink-0"></i>
+              </button>
+              <!-- Menu dropdown -->
+              <div id="user-menu-dropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl py-2 hidden z-50">
+                <div class="px-4 py-2 border-b border-gray-100">
+                  <p class="text-xs text-gray-500">Logado como</p>
+                  <p class="text-sm font-semibold text-gray-800 truncate"><?php echo htmlspecialchars($userName); ?></p>
+                  <p class="text-xs text-azul-principal font-medium capitalize"><?php echo htmlspecialchars($userType); ?></p>
+                </div>
+                <?php if ($userType === 'admin'): ?>
+                  <a href="portal/admin/index.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-azul-principal transition-colors">
+                    <i class="fas fa-cog mr-2"></i>Painel Admin
+                  </a>
+                <?php elseif ($userType === 'professor'): ?>
+                  <a href="portal/professor/index.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-azul-principal transition-colors">
+                    <i class="fas fa-chalkboard-teacher mr-2"></i>Painel Professor
+                  </a>
+                <?php elseif ($userType === 'aluno'): ?>
+                  <a href="portal/aluno/index.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-azul-principal transition-colors">
+                    <i class="fas fa-graduation-cap mr-2"></i>Painel Aluno
+                  </a>
+                <?php endif; ?>
+                <div class="border-t border-gray-100 mt-2 pt-2">
+                  <a href="portal/logout.php" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                    <i class="fas fa-sign-out-alt mr-2"></i>Sair
+                  </a>
+                </div>
+              </div>
+            </div>
+          <?php else: ?>
+            <button id="acesso-sistema-btn" class="ml-2 px-4 py-2.5 bg-gradient-to-r from-azul-principal to-azul-claro text-white rounded-full font-semibold hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 text-sm whitespace-nowrap">
+              <i class="fas fa-sign-in-alt mr-1"></i>Acesso
+            </button>
+          <?php endif; ?>
         </div>
 
         <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-lg text-white hover:bg-white/10 transition-colors">
@@ -179,11 +217,11 @@
     </div>
 
     <div id="mobile-menu" class="fixed inset-0 z-50 lg:hidden">
-      <div id="menu-overlay" class="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+      <div id="menu-overlay" class="absolute inset-0 bg-black/95 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
       <div id="menu-drawer" class="absolute right-0 top-0 h-full w-80 bg-gray-900 shadow-2xl transform translate-x-full transition-transform duration-300">
         <div class="p-6">
           <div class="flex items-center justify-between mb-8">
-            <img src="img/logo.jpg" alt="Logo I.M.A" class="h-12">
+            <img src="img/logo.jpg" alt="Logo [Inserir nome da escola aqui]" class="h-12">
             <button id="close-menu" class="p-2 rounded-lg hover:bg-white/10 transition-colors">
               <i class="fas fa-times text-xl text-white"></i>
             </button>
@@ -195,12 +233,31 @@
             <a href="#gallery" class="px-4 py-3 text-white font-semibold hover:bg-white/10 rounded-lg transition-colors">Fotos</a>
             <a href="#contact" class="px-4 py-3 text-white font-semibold hover:bg-white/10 rounded-lg transition-colors">Contato</a>
             <div class="border-t border-white/10 pt-4 mt-4 space-y-3">
-              <a href="biblioteca_vrtual/livro.html" class="block px-4 py-3 bg-gradient-to-r from-verde-complementar to-verde-claro text-white rounded-lg font-semibold text-center hover:shadow-lg transition-all">
+              <a href="biblioteca_vrtual/biblioteca.html" class="block px-4 py-3 bg-gradient-to-r from-verde-complementar to-verde-claro text-white rounded-lg font-semibold text-center hover:shadow-lg transition-all">
                 <i class="fas fa-book mr-2"></i>Biblioteca
               </a>
-              <button id="acesso-sistema-btn-mobile" class="block w-full px-4 py-3 bg-gradient-to-r from-azul-principal to-azul-claro text-white rounded-lg font-semibold text-center hover:shadow-lg transition-all">
-                <i class="fas fa-sign-in-alt mr-2"></i>Acesso ao Sistema
-              </button>
+              <?php if ($isLoggedIn): ?>
+                <div class="px-4 py-3 bg-white/10 rounded-lg">
+                  <p class="text-white/70 text-xs mb-1">Logado como</p>
+                  <p class="text-white font-semibold"><?php echo htmlspecialchars(substr($userName, 0, 20)); ?></p>
+                  <p class="text-amarelo-destaque text-xs font-medium capitalize"><?php echo htmlspecialchars($userType); ?></p>
+                </div>
+                <a href="portal/dashboard.php" class="block px-4 py-3 bg-gradient-to-r from-azul-principal to-azul-claro text-white rounded-lg font-semibold text-center hover:shadow-lg transition-all">
+                  <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
+                </a>
+                <?php if ($userType === 'admin'): ?>
+                  <a href="portal/admin/index.php" class="block  px-4 py-3 bg-white/10 text-white rounded-lg font-semibold text-center hover:bg-white/20 transition-all">
+                    <i class="fas fa-cog mr-2"></i>Painel Admin
+                  </a>
+                <?php endif; ?>
+                <a href="portal/logout.php" class="block px-4 py-3 bg-red-500/20 text-red-300 rounded-lg font-semibold text-center hover:bg-red-500/30 transition-all">
+                  <i class="fas fa-sign-out-alt mr-2"></i>Sair
+                </a>
+              <?php else: ?>
+                <button id="acesso-sistema-btn-mobile" class="block w-full px-4 py-3 bg-gradient-to-r from-azul-principal to-azul-claro text-white rounded-lg font-semibold text-center hover:shadow-lg transition-all">
+                  <i class="fas fa-sign-in-alt mr-2"></i>Acesso ao Sistema
+                </button>
+              <?php endif; ?>
               <a href="aviso2/passo1.html" target="_blank" class="block px-4 py-3 bg-gradient-to-r from-amarelo-destaque to-amarelo-claro text-azul-escuro rounded-lg font-bold text-center hover:shadow-lg transition-all">
                 <i class="fas fa-edit mr-2"></i>Correções
               </a>
@@ -249,8 +306,7 @@
                 <i class="fas fa-star mr-2"></i>Matrículas 2026 Abertas
               </span>
               <h1 class="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-white mb-6 leading-tight animate-on-scroll">
-                I.M.A
-                <span class="gradient-text block">Instituto Machado de Assis</span>
+                Inserir o Nome da Escola Aqui
               </h1>
               <p class="text-xl md:text-2xl text-white/80 mb-10 animate-on-scroll leading-relaxed">
                 Educação de excelência, acolhimento e tecnologia para formar grandes futuros.
@@ -259,7 +315,10 @@
                 <a href="#contact" class="px-8 py-4 bg-gradient-to-r from-amarelo-destaque to-amarelo-claro text-azul-escuro rounded-full font-bold hover:shadow-xl hover:shadow-yellow-500/30 transition-all duration-300 transform hover:scale-105">
                   <i class="fas fa-phone mr-2"></i>Fale Conosco
                 </a>
-                <a href="Biblioteca_vrtual/livro.html" target="_blank" class="px-8 py-4 bg-white/10 backdrop-blur-md text-white rounded-full font-semibold hover:bg-white/20 transition-all duration-300 border border-white/30 transform hover:scale-105">
+                <a href="pre_matricula.php" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-400 text-white rounded-full font-bold hover:shadow-xl hover:shadow-purple-500/30 transition-all duration-300 transform hover:scale-105">
+                  <i class="fas fa-user-graduate mr-2"></i>Pré-Matrícula
+                </a>
+                <a href="biblioteca_vrtual/biblioteca.html" target="_blank" class="px-8 py-4 bg-white/10 backdrop-blur-md text-white rounded-full font-semibold hover:bg-white/20 transition-all duration-300 border border-white/30 transform hover:scale-105">
                   <i class="fas fa-book mr-2"></i>Biblioteca Virtual
                 </a>
               </div>
@@ -315,7 +374,7 @@
               Nossa escola conta com um ambiente agradável e confortável para o bem-estar dos alunos e dos nossos funcionários. Montamos um sistema de segurança para manter nossas crianças e jovens mais protegidos.
             </p>
             <p class="text-gray-300 mb-8 leading-relaxed text-lg">
-              O I.M.A - Instituto Machado de Assis oferece formação da educação infantil ao 9º ano, circuito interno de câmera, aulas de informática, língua inglesa e espanhola, atividades extracurriculares, quadra, seguro escolar 24h, Karatê, dança, projetos multidisciplinares, ética e cidadania.
+              O [Inserir nome da escola aqui] oferece formação da educação infantil ao 9º ano, circuito interno de câmera, aulas de informática, língua inglesa e espanhola, atividades extracurriculares, quadra, seguro escolar 24h, Karatê, dança, projetos multidisciplinares, ética e cidadania.
             </p>
             <div class="flex flex-wrap gap-3">
               <span class="px-5 py-2.5 bg-white/10 text-white rounded-full text-sm font-semibold border border-white/20 hover:bg-white/20 transition-colors">Educação Infantil</span>
@@ -644,10 +703,10 @@
       <div class="grid md:grid-cols-3 gap-12">
         <div>
           <div class="flex items-center gap-3 mb-6">
-            <img src="img/logo.jpg" alt="Logo I.M.A" class="h-14">
+            <img src="img/logo.jpg" alt="Logo [Inserir nome da escola aqui]" class="h-14">
             <div>
-              <span class="font-bold text-sm text-white">I.M.A</span>
-              <span class="block font-extrabold gradient-text">INSTITUTO MACHADO DE ASSIS</span>
+              <span class="font-bold text-sm text-white">[Inserir nome da escola aqui]</span>
+              <span class="block font-extrabold gradient-text">[Inserir nome da escola aqui]</span>
             </div>
           </div>
           <p class="text-gray-400 mb-4 leading-relaxed">
@@ -667,7 +726,7 @@
             <li><a href="#" class="text-gray-400 hover:text-amarelo-destaque transition-colors">Início</a></li>
             <li><a href="#about" class="text-gray-400 hover:text-amarelo-destaque transition-colors">Sobre Nós</a></li>
             <li><a href="#projects" class="text-gray-400 hover:text-amarelo-destaque transition-colors">Projetos</a></li>
-            <li><a href="Biblioteca_vrtual/livro.html" target="_blank" class="text-gray-400 hover:text-amarelo-destaque transition-colors">Biblioteca</a></li>
+            <li><a href="biblioteca_vrtual/biblioteca.html" target="_blank" class="text-gray-400 hover:text-amarelo-destaque transition-colors">Biblioteca</a></li>
             <li><a href="aviso2/passo1.html" target="_blank" class="text-gray-400 hover:text-amarelo-destaque transition-colors">Correções</a></li>
           </ul>
         </div>
@@ -688,7 +747,7 @@
       </div>
       <div class="border-t border-white/10 mt-12 pt-8 text-center">
         <p class="text-gray-500 text-sm">
-          © 2026 I.M.A - Instituto Machado de Assis. Todos os direitos reservados.
+          © 2026 [Inserir nome da escola aqui]. Todos os direitos reservados.
         </p>
       </div>
     </div>
@@ -713,16 +772,18 @@
       mobileMenu.classList.remove('hidden');
       setTimeout(() => {
         menuOverlay.classList.remove('opacity-0');
-        menuDrawer.classList.remove('-translate-x-full');
+        menuDrawer.classList.remove('translate-x-full');
       }, 10);
       document.body.style.overflow = 'hidden';
     }
 
     function closeMenu() {
       menuOverlay.classList.add('opacity-0');
-      menuDrawer.classList.add('-translate-x-full');
+      menuDrawer.classList.add('translate-x-full');
       setTimeout(() => {
         mobileMenu.classList.add('hidden');
+        // Resetar opacidade para a próxima abertura
+        menuOverlay.classList.remove('opacity-0');
       }, 300);
       document.body.style.overflow = '';
     }
@@ -730,6 +791,12 @@
     mobileMenuBtn.addEventListener('click', openMenu);
     closeMenuBtn.addEventListener('click', closeMenu);
     menuOverlay.addEventListener('click', closeMenu);
+    
+    // Fechar menu ao clicar em links
+    const mobileMenuLinks = document.querySelectorAll('#mobile-menu a');
+    mobileMenuLinks.forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
 
     const slides = document.querySelectorAll('.carousel-slide');
     const dots = document.querySelectorAll('.carousel-dot');
@@ -949,15 +1016,16 @@
   </div>
 
   <script>
-    // Modal de Acesso ao Sistema
-    const acessoSistemaBtn = document.getElementById('acesso-sistema-btn');
-    const acessoSistemaBtnMobile = document.getElementById('acesso-sistema-btn-mobile');
-    const acessoSistemaModal = document.getElementById('acesso-sistema-modal');
-    const modalOverlay = document.getElementById('modal-overlay');
-    const modalContent = document.getElementById('modal-content');
-    const closeModal = document.getElementById('close-modal');
-    const loginTabs = document.querySelectorAll('.login-tab');
-    const loginForms = document.querySelectorAll('.login-form');
+    document.addEventListener('DOMContentLoaded', function() {
+      // Modal de Acesso ao Sistema
+      const acessoSistemaBtn = document.getElementById('acesso-sistema-btn');
+      const acessoSistemaBtnMobile = document.getElementById('acesso-sistema-btn-mobile');
+      const acessoSistemaModal = document.getElementById('acesso-sistema-modal');
+      const modalOverlay = document.getElementById('modal-overlay');
+      const modalContent = document.getElementById('modal-content');
+      const closeModal = document.getElementById('close-modal');
+      const loginTabs = document.querySelectorAll('.login-tab');
+      const loginForms = document.querySelectorAll('.login-form');
 
     function openModal() {
       acessoSistemaModal.classList.remove('hidden');
@@ -977,11 +1045,18 @@
       }, 300);
     }
 
-    acessoSistemaBtn.addEventListener('click', openModal);
-    acessoSistemaBtnMobile.addEventListener('click', () => {
-      closeMenuFn();
-      openModal();
-    });
+    if (acessoSistemaBtn) {
+      acessoSistemaBtn.addEventListener('click', openModal);
+    } else {
+      console.error('Botão acesso-sistema-btn não encontrado');
+    }
+    
+    if (acessoSistemaBtnMobile) {
+      acessoSistemaBtnMobile.addEventListener('click', () => {
+        closeMenu();
+        openModal();
+      });
+    }
     closeModal.addEventListener('click', closeModalFn);
     modalOverlay.addEventListener('click', closeModalFn);
 
@@ -1051,6 +1126,27 @@
     handleLogin('form-aluno', 'loading-aluno', 'error-aluno');
     handleLogin('form-admin', 'loading-admin', 'error-admin');
 
+    // User menu dropdown toggle
+    const userMenuBtn = document.getElementById('user-menu-btn');
+    const userMenuDropdown = document.getElementById('user-menu-dropdown');
+    
+    if (userMenuBtn && userMenuDropdown) {
+      userMenuBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        userMenuDropdown.classList.toggle('hidden');
+      });
+      
+      // Close dropdown when clicking outside
+      document.addEventListener('click', () => {
+        userMenuDropdown.classList.add('hidden');
+      });
+      
+      // Prevent closing when clicking inside dropdown
+      userMenuDropdown.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    }
+
     // Gallery Modal Functions
     let currentImages = [];
     let currentIndex = 0;
@@ -1110,6 +1206,7 @@
     // Make functions global
     window.openGallery = openGallery;
     window.closeGallery = closeGallery;
+    });
     window.nextImage = nextImage;
     window.prevImage = prevImage;
   </script>

@@ -28,6 +28,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } elseif ($tipo_usuario === 'aluno') {
                 $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE cpf = ? AND tipo_usuario = 'aluno' AND ativo = TRUE");
                 $stmt->execute([$login_field]);
+            } elseif ($tipo_usuario === 'secretaria') {
+                $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE matricula = ? AND tipo_usuario = 'secretaria' AND ativo = TRUE");
+                $stmt->execute([$login_field]);
             } elseif ($tipo_usuario === 'admin') {
                 $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE usuario_login = ? AND tipo_usuario = 'admin' AND ativo = TRUE");
                 $stmt->execute([$login_field]);
@@ -100,19 +103,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="bg-gradient-to-br from-blue-50 to-white min-h-screen flex items-center justify-center p-4">
     <div class="w-full max-w-md">
         <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
-            <div class="h-32 bg-gradient-to-br from-azul-principal to-verde-complementar flex items-center justify-center relative overflow-hidden">
+            <div class="h-28 sm:h-32 bg-gradient-to-br from-azul-principal to-verde-complementar flex items-center justify-center relative overflow-hidden">
                 <div class="absolute inset-0 bg-white/10"></div>
                 <div class="absolute top-10 left-10 w-20 h-20 bg-white/10 rounded-full blur-2xl"></div>
                 <div class="absolute bottom-10 right-10 w-24 h-24 bg-amarelo-destaque/20 rounded-full blur-2xl"></div>
                 <div class="relative z-10 text-center">
-                    <i class="fas fa-graduation-cap text-white text-4xl mb-2"></i>
-                    <h1 class="font-display font-bold text-white text-2xl">Portal CEAA</h1>
+                    <i class="fas fa-graduation-cap text-white text-3xl sm:text-4xl mb-2"></i>
+                    <h1 class="font-display font-bold text-white text-xl sm:text-2xl">Portal CEAA</h1>
                 </div>
             </div>
             
-            <div class="p-8">
+            <div class="p-6 sm:p-8">
                 <div class="text-center mb-6">
-                    <h2 class="font-display font-bold text-azul-principal text-2xl mb-2">Bem-vindo de volta!</h2>
+                    <h2 class="font-display font-bold text-azul-principal text-xl sm:text-2xl mb-2">Bem-vindo de volta!</h2>
                     <p class="text-gray-600 text-sm">Faça login para acessar o portal</p>
                 </div>
                 
@@ -132,12 +135,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 <form method="POST" action="">
                     <div class="mb-4">
-                        <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                        <label for="tipo_usuario" class="block text-sm font-semibold text-gray-700 mb-2">Tipo de Usuário</label>
+                        <select id="tipo_usuario" name="tipo_usuario" required
+                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent appearance-none bg-white">
+                            <option value="">Selecione</option>
+                            <option value="aluno">Aluno</option>
+                            <option value="professor">Professor</option>
+                            <option value="secretaria">Secretaria</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="login_field" class="block text-sm font-semibold text-gray-700 mb-2" id="login_label">Email/CPF/Matrícula</label>
                         <div class="relative">
-                            <i class="fas fa-envelope absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                            <input type="email" id="email" name="email" required
+                            <i class="fas fa-user absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" id="login_field" name="login_field" required
                                 class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
-                                placeholder="seu@email.com">
+                                placeholder="Digite seu login">
                         </div>
                     </div>
                     
@@ -169,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 
                 <div class="mt-4 text-center">
-                    <a href="../index.html" class="text-gray-500 text-sm hover:text-azul-principal transition-colors">
+                    <a href="../index.php" class="text-gray-500 text-sm hover:text-azul-principal transition-colors">
                         <i class="fas fa-arrow-left mr-1"></i>
                         Voltar ao site principal
                     </a>
@@ -178,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         
         <div class="text-center mt-6 text-gray-500 text-sm">
-            <p>© 2026 Centro Educacional Alameda Argentina</p>
+            <p>© 2026 Centro Educacional</p>
         </div>
     </div>
     
