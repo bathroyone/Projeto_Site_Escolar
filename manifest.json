@@ -1,0 +1,68 @@
+{
+  "name": "Site Institucional e Sistema de Gestão Escolar",
+  "short_name": "Gestão Escolar",
+  "description": "Site institucional moderno e sistema de gestão escolar completo para instituições educacionais",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a2463",
+  "theme_color": "#0a2463",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/img/logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/img/logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "business"],
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "shortcuts": [
+    {
+      "name": "Portal de Login",
+      "short_name": "Login",
+      "description": "Acessar o portal do sistema",
+      "url": "/portal/login.php",
+      "icons": [
+        {
+          "src": "/img/logo.jpg",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Biblioteca Virtual",
+      "short_name": "Biblioteca",
+      "description": "Acessar a biblioteca virtual",
+      "url": "/biblioteca_vrtual/livro.html",
+      "icons": [
+        {
+          "src": "/img/logo.jpg",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/img/screenshot1.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/img/screenshot2.jpg",
+      "sizes": "750x1334",
+      "type": "image/jpeg",
+      "form_factor": "narrow"
+    }
+  ]
+}

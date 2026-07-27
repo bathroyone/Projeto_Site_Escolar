@@ -1,0 +1,19 @@
+# robots.txt para Site Institucional e Sistema de Gestão Escolar
+
+User-agent: *
+Allow: /
+
+# Bloquear diretórios de sistema
+Disallow: /portal/
+Disallow: /portal/admin/
+Disallow: /portal/professor/
+Disallow: /portal/uploads/
+Disallow: /portal/logs/
+Disallow: /portal/cache/
+Disallow: /scripts/
+Disallow: /database/
+Disallow: /node_modules/
+Disallow: /.git/
+
+# Sitemap
+Sitemap: https://seusite.com.br/sitemap.xml
