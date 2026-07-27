@@ -16,7 +16,7 @@ $userType = $_SESSION['tipo_usuario'] ?? '';
   <link rel="stylesheet" href="css/output.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -24,280 +24,356 @@ $userType = $_SESSION['tipo_usuario'] ?? '';
       box-sizing: border-box;
     }
     body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: linear-gradient(135deg, #0a2463 0%, #1e3a8a 50%, #0a2463 100%);
+      font-family: 'Open Sans', system-ui, sans-serif;
+      background: #f8f9fa;
       min-height: 100vh;
       overflow-x: hidden;
     }
     
-    /* Animated Background */
-    .bg-animation {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      overflow: hidden;
+    /* Header */
+    .top-bar {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+      padding: 8px 0;
     }
-    .bg-animation::before {
+    
+    .main-header {
+      background: #ffffff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    /* Navigation */
+    .nav-link {
+      color: #334155;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .nav-link:hover {
+      color: #1e3a8a;
+    }
+    .nav-link::after {
       content: '';
       position: absolute;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 20%, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
-                  radial-gradient(circle at 40% 40%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
-      animation: bgMove 20s ease-in-out infinite;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: #1e3a8a;
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
     }
-    @keyframes bgMove {
-      0%, 100% { transform: translate(0, 0); }
-      50% { transform: translate(-50%, -50%); }
-    }
-    
-    /* Glass Effect */
-    .glass {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+    .nav-link:hover::after {
+      width: 80%;
     }
     
-    /* Floating Particles */
-    .particle {
+    /* Dropdown */
+    .dropdown {
+      position: relative;
+    }
+    .dropdown-menu {
       position: absolute;
-      border-radius: 50%;
-      background: rgba(255, 215, 0, 0.3);
-      animation: float 15s infinite;
+      top: 100%;
+      left: 0;
+      background: white;
+      min-width: 220px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      border-radius: 8px;
+      padding: 0.5rem 0;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
     }
-    @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+    .dropdown:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
     }
-    
-    /* Header Animation */
-    .header-animate {
-      animation: slideDown 0.8s ease-out;
+    .dropdown-item {
+      display: block;
+      padding: 0.5rem 1rem;
+      color: #334155;
+      transition: all 0.2s ease;
     }
-    @keyframes slideDown {
-      from { transform: translateY(-100%); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+    .dropdown-item:hover {
+      background: #f1f5f9;
+      color: #1e3a8a;
+      padding-left: 1.5rem;
     }
     
     /* Hero Section */
-    .hero-animate {
-      animation: fadeInUp 1s ease-out 0.3s both;
-    }
-    @keyframes fadeInUp {
-      from { transform: translateY(50px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-    
-    /* Button Animations */
-    .btn-animate {
+    .hero-section {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1e3a8a 100%);
       position: relative;
       overflow: hidden;
-      transition: all 0.3s ease;
     }
-    .btn-animate::before {
+    .hero-section::before {
       content: '';
       position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      transition: width 0.6s ease, height 0.6s ease;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></svg>');
+      background-size: 100px 100px;
+      animation: patternMove 20s linear infinite;
     }
-    .btn-animate:hover::before {
-      width: 300px;
-      height: 300px;
-    }
-    .btn-animate:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    @keyframes patternMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 100px 100px; }
     }
     
-    /* Card Hover Effect */
-    .card-3d {
-      transition: all 0.5s ease;
-      transform-style: preserve-3d;
+    /* Cards */
+    .feature-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+      transition: all 0.3s ease;
+      border: 1px solid #e2e8f0;
     }
-    .card-3d:hover {
-      transform: translateY(-10px) rotateX(5deg);
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     }
     
-    /* Modal Styles */
+    /* Buttons */
+    .btn-primary {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      color: white;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(30, 58, 138, 0.3);
+    }
+    
+    .btn-secondary {
+      background: white;
+      color: #1e3a8a;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 2px solid #1e3a8a;
+      cursor: pointer;
+    }
+    .btn-secondary:hover {
+      background: #1e3a8a;
+      color: white;
+    }
+    
+    /* Modal */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(10px);
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
       z-index: 1000;
       display: none;
-      animation: fadeIn 0.3s ease;
+      align-items: center;
+      justify-content: center;
     }
     .modal-overlay.active {
       display: flex;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
     .modal-content {
-      animation: modalSlide 0.4s ease;
-    }
-    @keyframes modalSlide {
-      from { transform: scale(0.9) translateY(-50px); opacity: 0; }
-      to { transform: scale(1) translateY(0); opacity: 1; }
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
     }
     
-    /* Tab Styles */
+    /* Tabs */
     .tab-btn {
+      padding: 0.5rem 1rem;
+      border: 2px solid #e2e8f0;
+      background: white;
+      color: #64748b;
+      border-radius: 8px;
+      font-weight: 500;
       transition: all 0.3s ease;
+      cursor: pointer;
     }
     .tab-btn.active {
-      background: linear-gradient(135deg, #ffd700, #ffed4a);
-      color: #0a2463;
-      transform: scale(1.05);
+      background: #1e3a8a;
+      color: white;
+      border-color: #1e3a8a;
     }
     
-    /* Input Styles */
-    .input-animate {
+    /* Inputs */
+    .form-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 0.95rem;
       transition: all 0.3s ease;
     }
-    .input-animate:focus {
-      transform: scale(1.02);
-      box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3);
-    }
-    
-    /* Gradient Text */
-    .gradient-text {
-      background: linear-gradient(135deg, #ffd700, #ffed4a, #fbbf24);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    
-    /* Pulse Animation */
-    .pulse {
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-    
-    /* Glow Effect */
-    .glow {
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    .form-input:focus {
+      outline: none;
+      border-color: #1e3a8a;
+      box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
     }
     
     /* Mobile Menu */
     .mobile-menu {
-      transform: translateX(100%);
-      transition: transform 0.3s ease;
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 280px;
+      height: 100vh;
+      background: white;
+      z-index: 1001;
+      transition: right 0.3s ease;
+      box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
     }
     .mobile-menu.active {
-      transform: translateX(0);
+      right: 0;
+    }
+    .mobile-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      display: none;
+    }
+    .mobile-overlay.active {
+      display: block;
+    }
+    
+    /* Social Icons */
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: all 0.3s ease;
+    }
+    .social-icon:hover {
+      transform: translateY(-3px);
     }
   </style>
 </head>
-<body class="min-h-screen text-white">
+<body class="text-gray-800">
   
-  <!-- Animated Background -->
-  <div class="bg-animation"></div>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between text-white text-sm">
+        <div class="flex items-center gap-4">
+          <span><i class="fas fa-phone mr-2"></i>(11) 1234-5678</span>
+          <span class="hidden sm:inline"><i class="fas fa-envelope mr-2"></i>contato@escola.com.br</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <a href="#" class="social-icon bg-blue-600 hover:bg-blue-700"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-icon bg-pink-600 hover:bg-pink-700"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-icon bg-blue-400 hover:bg-blue-500"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-icon bg-red-600 hover:bg-red-700"><i class="fab fa-youtube"></i></a>
+          <a href="https://wa.me/5511999999999" target="_blank" class="social-icon bg-green-500 hover:bg-green-600"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
   
-  <!-- Floating Particles -->
-  <div id="particles"></div>
-  
-  <!-- Header -->
-  <header class="fixed top-0 left-0 right-0 z-50 glass header-animate">
+  <!-- Main Header -->
+  <header class="main-header">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-20">
-        <a href="#" class="flex items-center gap-3 group">
-          <img src="img/logo.jpg" alt="Logo" class="h-14 w-auto transition-transform duration-300 group-hover:scale-110">
+        <a href="#" class="flex items-center gap-3">
+          <img src="img/logo.jpg" alt="Logo" class="h-14 w-auto">
+          <div class="hidden sm:block">
+            <h1 class="text-xl font-bold text-gray-800" style="font-family: 'Playfair Display', serif;">Nome da Escola</h1>
+            <p class="text-xs text-gray-500">Educação de Excelência</p>
+          </div>
         </a>
 
-        <nav class="hidden lg:flex items-center gap-8">
-          <a href="#" class="text-white/90 hover:text-white font-medium transition-colors relative group">
-            Início
-            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-yellow-400 to-yellow-600 transition-all duration-300 group-hover:w-full"></span>
-          </a>
-          <a href="#about" class="text-white/90 hover:text-white font-medium transition-colors relative group">
-            Sobre
-            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-yellow-400 to-yellow-600 transition-all duration-300 group-hover:w-full"></span>
-          </a>
-          <a href="#projects" class="text-white/90 hover:text-white font-medium transition-colors relative group">
-            Projetos
-            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-yellow-400 to-yellow-600 transition-all duration-300 group-hover:w-full"></span>
-          </a>
-          <a href="#contact" class="text-white/90 hover:text-white font-medium transition-colors relative group">
-            Contato
-            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-yellow-400 to-yellow-600 transition-all duration-300 group-hover:w-full"></span>
-          </a>
+        <nav class="hidden lg:flex items-center gap-1">
+          <a href="#" class="nav-link">Início</a>
+          
+          <div class="dropdown">
+            <a href="#" class="nav-link flex items-center gap-1">
+              Instituição <i class="fas fa-chevron-down text-xs"></i>
+            </a>
+            <div class="dropdown-menu">
+              <a href="#" class="dropdown-item">Sobre o Colégio</a>
+              <a href="historico.php" class="dropdown-item">História</a>
+              <a href="#" class="dropdown-item">Missão, Visão e Valores</a>
+              <a href="#" class="dropdown-item">Nossa Equipe</a>
+              <a href="#" class="dropdown-item">Instalações</a>
+            </div>
+          </div>
+          
+          <div class="dropdown">
+            <a href="#" class="nav-link flex items-center gap-1">
+              Ensino <i class="fas fa-chevron-down text-xs"></i>
+            </a>
+            <div class="dropdown-menu">
+              <a href="#" class="dropdown-item">Educação Infantil</a>
+              <a href="#" class="dropdown-item">Ensino Fundamental I</a>
+              <a href="#" class="dropdown-item">Ensino Fundamental II</a>
+              <a href="#" class="dropdown-item">Ensino Médio</a>
+            </div>
+          </div>
+          
+          <a href="noticias.php" class="nav-link">Notícias</a>
+          <a href="eventos.php" class="nav-link">Eventos</a>
+          <a href="contato.php" class="nav-link">Contato</a>
         </nav>
 
         <div class="hidden md:flex items-center gap-3">
-          <!-- Biblioteca Virtual Button -->
-          <a href="biblioteca.php" class="btn-animate px-6 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-full font-semibold text-sm flex items-center gap-2 glow">
-            <i class="fas fa-book"></i>
-            <span>Biblioteca Virtual</span>
+          <a href="biblioteca.php" class="btn-secondary text-sm">
+            <i class="fas fa-book mr-2"></i>Biblioteca
           </a>
           
           <?php if ($isLoggedIn): ?>
-            <div class="relative ml-2">
-              <button id="user-menu-btn" class="btn-animate px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-full font-semibold text-sm flex items-center gap-2">
-                <div class="w-8 h-8 bg-white/ rounded-full flex items-center justify-center">
-                  <i class="fas fa-user"></i>
-                </div>
-                <span class="max-w-[80px] truncate"><?php echo htmlspecialchars(substr($userName, 0, 10)); ?></span>
-                <i class="fas fa-chevron-down text-xs"></i>
+            <div class="relative">
+              <button id="user-menu-btn" class="btn-primary text-sm flex items-center gap-2">
+                <i class="fas fa-user"></i>
+                <span><?php echo htmlspecialchars(substr($userName, 0, 10)); ?></span>
               </button>
-              <div id="user-menu-dropdown" class="absolute right-0 mt-2 w-56 bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl py-3 hidden z-50 border border-white/20">
-                <div class="px-4 py-3 border-b border-white/10">
-                  <p class="text-xs text-white/60">Logado como</p>
-                  <p class="text-sm font-semibold text-white truncate"><?php echo htmlspecialchars($userName); ?></p>
-                  <p class="text-xs text-yellow-400 font-medium capitalize"><?php echo htmlspecialchars($userType); ?></p>
+              <div id="user-menu-dropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-2 hidden z-50 border">
+                <div class="px-4 py-2 border-b border-gray-100">
+                  <p class="text-xs text-gray-500">Logado como</p>
+                  <p class="text-sm font-semibold text-gray-800"><?php echo htmlspecialchars($userName); ?></p>
+                  <p class="text-xs text-blue-600 font-medium capitalize"><?php echo htmlspecialchars($userType); ?></p>
                 </div>
                 <?php if ($userType === 'admin'): ?>
-                  <a href="portal/admin/index.php" class="block px-4 py-2 text-sm text-white/80 hover:bg-white/10 hover:text-white transition-colors">
-                    <i class="fas fa-cog mr-2"></i>Painel Admin
-                  </a>
+                  <a href="portal/admin/index.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Painel Admin</a>
                 <?php elseif ($userType === 'professor'): ?>
-                  <a href="portal/professor/index.php" class="block px-4 py-2 text-sm text-white/80 hover:bg-white/10 hover:text-white transition-colors">
-                    <i class="fas fa-chalkboard-teacher mr-2"></i>Painel Professor
-                  </a>
+                  <a href="portal/professor/index.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Painel Professor</a>
                 <?php elseif ($userType === 'aluno'): ?>
-                  <a href="portal/aluno/index.php" class="block px-4 py-2 text-sm text-white/80 hover:bg-white/10 hover:text-white transition-colors">
-                    <i class="fas fa-graduation-cap mr-2"></i>Painel Aluno
-                  </a>
+                  <a href="portal/aluno/index.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Painel Aluno</a>
                 <?php elseif ($userType === 'secretaria'): ?>
-                  <a href="portal/secretaria/index.php" class="block px-4 py-2 text-sm text-white/80 hover:bg-white/10 hover:text-white transition-colors">
-                    <i class="fas fa-building mr-2"></i>Painel Secretaria
-                  </a>
+                  <a href="portal/secretaria/index.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Painel Secretaria</a>
                 <?php endif; ?>
-                <div class="border-t border-white/10 mt-2 pt-2">
-                  <a href="portal/logout.php" class="block px-4 py-2 text-sm text-red-400 hover:bg-red-500/10 transition-colors">
-                    <i class="fas fa-sign-out-alt mr-2"></i>Sair
-                  </a>
+                <div class="border-t border-gray-100 mt-2 pt-2">
+                  <a href="portal/logout.php" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50">Sair</a>
                 </div>
               </div>
             </div>
           <?php else: ?>
-            <button id="acesso-sistema-btn" class="btn-animate ml-2 px-6 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-blue-900 rounded-full font-bold text-sm flex items-center gap-2 pulse">
-              <i class="fas fa-sign-in-alt"></i>
-              <span>Acesso</span>
+            <button id="acesso-sistema-btn" class="btn-primary text-sm">
+              <i class="fas fa-sign-in-alt mr-2"></i>Acesso
             </button>
           <?php endif; ?>
         </div>
 
-        <button id="mobile-menu-btn" class="lg:hidden p-3 rounded-xl text-white hover:bg-white/10 transition-colors">
+        <button id="mobile-menu-btn" class="lg:hidden p-2 text-gray-600 hover:text-gray-800">
           <i class="fas fa-bars text-xl"></i>
         </button>
       </div>
@@ -305,143 +381,328 @@ $userType = $_SESSION['tipo_usuario'] ?? '';
   </header>
 
   <!-- Mobile Menu -->
-  <div id="mobile-menu" class="fixed inset-0 z-50 lg:hidden mobile-menu">
-    <div id="menu-overlay" class="absolute inset-0 bg-black/90 backdrop-blur-sm"></div>
-    <div class="absolute right-0 top-0 h-full w-80 bg-gradient-to-b from-blue-900 to-blue-950 shadow-2xl p-6">
+  <div id="mobile-menu" class="mobile-menu">
+    <div class="p-6">
       <div class="flex items-center justify-between mb-8">
         <img src="img/logo.jpg" alt="Logo" class="h-12">
-        <button id="close-menu" class="p-3 rounded-xl hover:bg-white/10 transition-colors">
-          <i class="fas fa-times text-xl text-white"></i>
+        <button id="close-menu" class="p-2 text-gray-600 hover:text-gray-800">
+          <i class="fas fa-times text-xl"></i>
         </button>
       </div>
       <nav class="flex flex-col gap-4">
-        <a href="#" class="px-4 py-3 text-white font-semibold hover:bg-white/10 rounded-xl transition-colors">Início</a>
-        <a href="#about" class="px-4 py-3 text-white font-semibold hover:bg-white/10 rounded-xl transition-colors">Sobre</a>
-        <a href="#projects" class="px-4 py-3 text-white font-semibold hover:bg-white/10 rounded-xl transition-colors">Projetos</a>
-        <a href="#contact" class="px-4 py-3 text-white font-semibold hover:bg-white/10 rounded-xl transition-colors">Contato</a>
-        <div class="border-t border-white/10 pt-4 mt-4 space-y-3">
-          <a href="biblioteca.php" class="block px-4 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-xl font-semibold text-center hover:shadow-lg transition-all flex items-center justify-center gap-2">
-            <i class="fas fa-book"></i>Biblioteca Virtual
-          </a>
+        <a href="#" class="text-gray-700 font-semibold hover:text-blue-600">Início</a>
+        <a href="#" class="text-gray-700 font-semibold hover:text-blue-600">Instituição</a>
+        <a href="#" class="text-gray-700 font-semibold hover:text-blue-600">Ensino</a>
+        <a href="noticias.php" class="text-gray-700 font-semibold hover:text-blue-600">Notícias</a>
+        <a href="eventos.php" class="text-gray-700 font-semibold hover:text-blue-600">Eventos</a>
+        <a href="contato.php" class="text-gray-700 font-semibold hover:text-blue-600">Contato</a>
+        <div class="border-t border-gray-200 pt-4 mt-4 space-y-3">
+          <a href="biblioteca.php" class="block w-full btn-secondary text-center text-sm">Biblioteca</a>
           <?php if ($isLoggedIn): ?>
-            <div class="px-4 py-3 bg-white/10 rounded-xl">
-              <p class="text-white/60 text-xs mb-1">Logado como</p>
-              <p class="text-white font-semibold"><?php echo htmlspecialchars(substr($userName, 0, 20)); ?></p>
-              <p class="text-yellow-400 text-xs font-medium capitalize"><?php echo htmlspecialchars($userType); ?></p>
+            <div class="bg-gray-50 rounded-lg p-3">
+              <p class="text-xs text-gray-500 mb-1">Logado como</p>
+              <p class="text-sm font-semibold text-gray-800"><?php echo htmlspecialchars(substr($userName, 0, 20)); ?></p>
+              <p class="text-xs text-blue-600 font-medium capitalize"><?php echo htmlspecialchars($userType); ?></p>
             </div>
-            <a href="portal/logout.php" class="block px-4 py-3 bg-red-500/20 text-red-300 rounded-xl font-semibold text-center hover:bg-red-500/30 transition-all flex items-center justify-center gap-2">
-              <i class="fas fa-sign-out-alt"></i>Sair
-            </a>
+            <a href="portal/logout.php" class="block w-full text-center py-2 text-red-600 hover:bg-red-50 rounded-lg text-sm">Sair</a>
           <?php else: ?>
-            <button id="acesso-sistema-btn-mobile" class="block w-full px-4 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-blue-900 rounded-xl font-bold text-center hover:shadow-lg transition-all flex items-center justify-center gap-2">
-              <i class="fas fa-sign-in-alt"></i>Acesso ao Sistema
-            </button>
+            <button id="acesso-sistema-btn-mobile" class="block w-full btn-primary text-sm">Acesso ao Sistema</button>
           <?php endif; ?>
         </div>
       </nav>
     </div>
   </div>
+  <div id="mobile-overlay" class="mobile-overlay"></div>
 
   <!-- Hero Section -->
-  <section class="relative min-h-screen flex items-center justify-center pt-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-      <div class="text-center hero-animate">
-        <div class="inline-block mb-6 px-6 py-3 glass rounded-full">
-          <span class="text-yellow-400 font-semibold text-sm">
+  <section class="hero-section py-24 md:py-32 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center text-white">
+        <div class="inline-block mb-6 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full">
+          <span class="text-sm font-semibold">
             <i class="fas fa-star mr-2"></i>Matrículas 2026 Abertas
           </span>
         </div>
         
-        <h1 class="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-6 leading-tight">
-          <span class="gradient-text">Inserir o Nome</span>
-          <br>
-          <span class="text-white">da Escola Aqui</span>
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6" style="font-family: 'Playfair Display', serif;">
+          Educação de Excelência<br>para o Futuro
         </h1>
         
-        <p class="text-xl md:text-2xl text-white/80 mb-10 max-w-3xl mx-auto leading-relaxed">
-          Educação de excelência, acolhimento e tecnologia para formar grandes futuros.
+        <p class="text-xl md:text-2xl text-white/90 mb-10 max-w-3xl mx-auto">
+          Formando cidadãos conscientes, críticos e preparados para os desafios do mundo moderno.
         </p>
         
-        <div class="flex flex-wrap justify-center gap-4 mb-16">
-          <a href="#contact" class="btn-animate px-8 py-4 bg-gradient-to-r from-yellow-400 to-yellow-500 text-blue-900 rounded-full font-bold text-lg flex items-center gap-2 glow">
-            <i class="fas fa-phone"></i>
-            <span>Fale Conosco</span>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="pre_matricula.php" class="btn-primary text-lg">
+            <i class="fas fa-user-graduate mr-2"></i>Pré-Matrícula
           </a>
-          <a href="pre_matricula.php" class="btn-animate px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-full font-bold text-lg flex items-center gap-2">
-            <i class="fas fa-user-graduate"></i>
-            <span>Pré-Matrícula</span>
+          <a href="agendar_visita.php" class="btn-secondary text-lg">
+            <i class="fas fa-calendar-check mr-2"></i>Agendar Visita
           </a>
-          <a href="agendar_visita.php" class="btn-animate px-8 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-full font-bold text-lg flex items-center gap-2">
-            <i class="fas fa-calendar-check"></i>
-            <span>Agendar Visita</span>
-          </a>
-        </div>
-        
-        <!-- Access Cards -->
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-          <div class="card-3d glass rounded-2xl p-6 cursor-pointer" onclick="openLoginModal('professor')">
-            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <i class="fas fa-chalkboard-teacher text-white text-2xl"></i>
-            </div>
-            <h3 class="text-white font-semibold text-lg mb-2">Professor</h3>
-            <p class="text-white/60 text-sm">Acesso com matrícula</p>
-          </div>
-          
-          <div class="card-3d glass rounded-2xl p-6 cursor-pointer" onclick="openLoginModal('aluno')">
-            <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <i class="fas fa-graduation-cap text-white text-2xl"></i>
-            </div>
-            <h3 class="text-white font-semibold text-lg mb-2">Aluno</h3>
-            <p class="text-white/60 text-sm">Acesso com CPF do responsável</p>
-          </div>
-          
-          <div class="card-3d glass rounded-2xl p-6 cursor-pointer" onclick="openLoginModal('secretaria')">
-            <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <i class="fas fa-building text-white text-2xl"></i>
-            </div>
-            <h3 class="text-white font-semibold text-lg mb-2">Secretaria</h3>
-            <p class="text-white/60 text-sm">Acesso com usuário</p>
-          </div>
-          
-          <div class="card-3d glass rounded-2xl p-6 cursor-pointer" onclick="openLoginModal('admin')">
-            <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <i class="fas fa-cog text-white text-2xl"></i>
-            </div>
-            <h3 class="text-white font-semibold text-lg mb-2">Admin</h3>
-            <p class="text-white/60 text-sm">Acesso administrativo</p>
-          </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Features Section -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4" style="font-family: 'Playfair Display', serif;">
+          Nossos Serviços
+        </h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Conheça todas as funcionalidades e serviços disponíveis em nossa plataforma educacional.
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <a href="noticias.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-newspaper text-blue-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Notícias</h3>
+          <p class="text-sm text-gray-600">Portal de notícias e blog</p>
+        </a>
+        
+        <a href="eventos.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-calendar-alt text-purple-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Eventos</h3>
+          <p class="text-sm text-gray-600">Sistema de inscrição</p>
+        </a>
+        
+        <a href="galeria.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-pink-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-images text-pink-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Álbum de Fotos</h3>
+          <p class="text-sm text-gray-600">Galeria de imagens</p>
+        </a>
+        
+        <a href="galeria_videos.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-video text-red-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Vídeos</h3>
+          <p class="text-sm text-gray-600">Galeria de vídeos</p>
+        </a>
+        
+        <a href="chat.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-comments text-green-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Chat Online</h3>
+          <p class="text-sm text-gray-600">Atendimento em tempo real</p>
+        </a>
+        
+        <a href="aviso2/passo1.html" target="_blank" class="feature-card text-center">
+          <div class="w-14 h-14 bg-yellow-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-edit text-yellow-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Avisos/Correções</h3>
+          <p class="text-sm text-gray-600">Comunicados</p>
+        </a>
+        
+        <a href="vagas.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-briefcase text-indigo-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Vagas</h3>
+          <p class="text-sm text-gray-600">Currículos e empregos</p>
+        </a>
+        
+        <a href="doacoes.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-teal-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-heart text-teal-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Doações</h3>
+          <p class="text-sm text-gray-600">Sistema de contribuições</p>
+        </a>
+        
+        <a href="portal_pais.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-cyan-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-users text-cyan-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Portal Pais</h3>
+          <p class="text-sm text-gray-600">Área dos responsáveis</p>
+        </a>
+        
+        <a href="faq.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-question-circle text-orange-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">FAQ</h3>
+          <p class="text-sm text-gray-600">Suporte e perguntas</p>
+        </a>
+        
+        <a href="avaliacoes.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-rose-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-star text-rose-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Avaliações</h3>
+          <p class="text-sm text-gray-600">Depoimentos</p>
+        </a>
+        
+        <a href="ex_alunos.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-amber-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-user-graduate text-amber-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Ex-Alunos</h3>
+          <p class="text-sm text-gray-600">Networking</p>
+        </a>
+        
+        <a href="newsletter.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-lime-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-envelope text-lime-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Newsletter</h3>
+          <p class="text-sm text-gray-600">Comunicações</p>
+        </a>
+        
+        <a href="calendario_escolar.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-violet-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-calendar text-violet-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Calendário</h3>
+          <p class="text-sm text-gray-600">Calendário escolar</p>
+        </a>
+        
+        <a href="formularios.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-sky-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-file-download text-sky-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Formulários</h3>
+          <p class="text-sm text-gray-600">Downloads</p>
+        </a>
+        
+        <a href="projetos.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-project-diagram text-emerald-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Projetos</h3>
+          <p class="text-sm text-gray-600">Iniciativas</p>
+        </a>
+        
+        <a href="https://wa.me/5511999999999" target="_blank" class="feature-card text-center">
+          <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fab fa-whatsapp text-green-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">WhatsApp</h3>
+          <p class="text-sm text-gray-600">Chat direto</p>
+        </a>
+        
+        <a href="contato.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-slate-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-map-marker-alt text-slate-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Como Chegar</h3>
+          <p class="text-sm text-gray-600">Endereço e contato</p>
+        </a>
+        
+        <a href="redes_sociais.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-share-alt text-blue-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Redes Sociais</h3>
+          <p class="text-sm text-gray-600">Integração</p>
+        </a>
+        
+        <a href="parcerias.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-fuchsia-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-handshake text-fuchsia-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Parcerias</h3>
+          <p class="text-sm text-gray-600">Convênios</p>
+        </a>
+        
+        <a href="transporte.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-yellow-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-bus text-yellow-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Transporte</h3>
+          <p class="text-sm text-gray-600">Informações</p>
+        </a>
+        
+        <a href="recursos.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-teal-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-book-open text-teal-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Recursos</h3>
+          <p class="text-sm text-gray-600">Educacionais</p>
+        </a>
+        
+        <a href="contato_departamentos.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-building text-purple-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Departamentos</h3>
+          <p class="text-sm text-gray-600">Contato avançado</p>
+        </a>
+        
+        <a href="historico.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-amber-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-history text-amber-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Histórico</h3>
+          <p class="text-sm text-gray-600">Da instituição</p>
+        </a>
+        
+        <a href="tour_virtual.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-cyan-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-vr-cardboard text-cyan-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Tour Virtual</h3>
+          <p class="text-sm text-gray-600">360°</p>
+        </a>
+        
+        <a href="transparencia.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-slate-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-file-invoice-dollar text-slate-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Transparência</h3>
+          <p class="text-sm text-gray-600">Prestação de contas</p>
+        </a>
+        
+        <a href="acessibilidade.php" class="feature-card text-center">
+          <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-universal-access text-blue-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Acessibilidade</h3>
+          <p class="text-sm text-gray-600">Libras, alto contraste</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- Login Modal -->
-  <div id="login-modal" class="modal-overlay items-center justify-center p-4">
-    <div class="modal-content glass rounded-3xl p-8 max-w-md w-full relative">
-      <button id="close-modal" class="absolute top-4 right-4 text-white/60 hover:text-white transition-colors">
+  <div id="login-modal" class="modal-overlay">
+    <div class="modal-content">
+      <button id="close-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
         <i class="fas fa-times text-xl"></i>
       </button>
       
-      <div class="text-center mb-8">
-        <div class="w-20 h-20 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-          <i class="fas fa-sign-in-alt text-blue-900 text-3xl"></i>
+      <div class="text-center mb-6">
+        <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-sign-in-alt text-white text-2xl"></i>
         </div>
-        <h2 class="text-2xl font-bold text-white mb-2">Acesso ao Sistema</h2>
-        <p class="text-white/60 text-sm">Entre com suas credenciais</p>
+        <h2 class="text-2xl font-bold text-gray-800 mb-1" style="font-family: 'Playfair Display', serif;">Acesso ao Sistema</h2>
+        <p class="text-gray-600 text-sm">Entre com suas credenciais</p>
       </div>
       
       <!-- Tabs -->
       <div class="flex flex-wrap gap-2 mb-6">
-        <button class="tab-btn flex-1 px-4 py-2 rounded-xl text-sm font-semibold bg-white/10 text-white/80" data-tab="professor">
+        <button class="tab-btn flex-1 text-xs" data-tab="professor">
           <i class="fas fa-chalkboard-teacher mr-1"></i>Professor
         </button>
-        <button class="tab-btn flex-1 px-4 py-2 rounded-xl text-sm font-semibold bg-white/10 text-white/80" data-tab="aluno">
+        <button class="tab-btn flex-1 text-xs" data-tab="aluno">
           <i class="fas fa-graduation-cap mr-1"></i>Aluno
         </button>
-        <button class="tab-btn flex-1 px-4 py-2 rounded-xl text-sm font-semibold bg-white/10 text-white/80" data-tab="secretaria">
+        <button class="tab-btn flex-1 text-xs" data-tab="secretaria">
           <i class="fas fa-building mr-1"></i>Secretaria
         </button>
-        <button class="tab-btn flex-1 px-4 py-2 rounded-xl text-sm font-semibold bg-white/10 text-white/80" data-tab="admin">
+        <button class="tab-btn flex-1 text-xs" data-tab="admin">
           <i class="fas fa-cog mr-1"></i>Admin
         </button>
       </div>
@@ -451,62 +712,89 @@ $userType = $_SESSION['tipo_usuario'] ?? '';
         <input type="hidden" id="login-tipo" name="tipo" value="professor">
         
         <div>
-          <label id="usuario-label" class="block text-sm font-semibold text-white mb-2">Matrícula</label>
-          <input type="text" id="login-usuario" name="usuario" required class="input-animate w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-yellow-400" placeholder="Digite sua matrícula">
+          <label id="usuario-label" class="block text-sm font-semibold text-gray-700 mb-2">Matrícula</label>
+          <input type="text" id="login-usuario" name="usuario" required class="form-input" placeholder="Digite sua matrícula">
         </div>
         
         <div>
-          <label class="block text-sm font-semibold text-white mb-2">Senha</label>
-          <input type="password" id="login-senha" name="senha" required class="input-animate w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-yellow-400" placeholder="Digite sua senha">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Senha</label>
+          <input type="password" id="login-senha" name="senha" required class="form-input" placeholder="Digite sua senha">
         </div>
         
-        <div id="login-error" class="hidden text-red-400 text-sm text-center"></div>
+        <div id="login-error" class="hidden text-red-600 text-sm text-center"></div>
         
-        <button type="submit" class="btn-animate w-full py-4 bg-gradient-to-r from-yellow-400 to-yellow-500 text-blue-900 rounded-xl font-bold text-lg flex items-center justify-center gap-2">
-          <i class="fas fa-sign-in-alt"></i>
-          <span>Entrar</span>
+        <button type="submit" class="btn-primary w-full">
+          <i class="fas fa-sign-in-alt mr-2"></i>Entrar
         </button>
       </form>
       
-      <p class="text-center text-white/60 text-sm mt-6">
-        Esqueceu sua senha? <a href="#" class="text-yellow-400 hover:text-yellow-300 transition-colors">Recuperar</a>
+      <p class="text-center text-gray-600 text-sm mt-6">
+        Esqueceu sua senha? <a href="#" class="text-blue-600 hover:text-blue-700">Recuperar</a>
       </p>
     </div>
   </div>
 
-  <script>
-    // Create floating particles
-    function createParticles() {
-      const container = document.getElementById('particles');
-      for (let i = 0; i < 50; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.width = Math.random() * 10 + 5 + 'px';
-        particle.style.height = particle.style.width;
-        particle.style.animationDelay = Math.random() * 15 + 's';
-        particle.style.animationDuration = Math.random() * 10 + 10 + 's';
-        container.appendChild(particle);
-      }
-    }
-    createParticles();
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-4 gap-8">
+        <div>
+          <h3 class="text-lg font-bold mb-4" style="font-family: 'Playfair Display', serif;">Nome da Escola</h3>
+          <p class="text-gray-400 text-sm">Educação de excelência, acolhimento e tecnologia para formar grandes futuros.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Links Rápidos</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="#" class="hover:text-white">Sobre Nós</a></li>
+            <li><a href="noticias.php" class="hover:text-white">Notícias</a></li>
+            <li><a href="eventos.php" class="hover:text-white">Eventos</a></li>
+            <li><a href="contato.php" class="hover:text-white">Contato</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Contato</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><i class="fas fa-phone mr-2"></i>(11) 1234-5678</li>
+            <li><i class="fas fa-envelope mr-2"></i>contato@escola.com.br</li>
+            <li><i class="fas fa-map-marker-alt mr-2"></i>Rua da Escola, 123</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4">Redes Sociais</h4>
+          <div class="flex gap-3">
+            <a href="#" class="social-icon bg-blue-600"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon bg-pink-600"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon bg-blue-400"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon bg-red-600"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+        <p>&copy; 2026 Nome da Escola. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
 
+  <script>
     // Mobile menu
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     const closeMenuBtn = document.getElementById('close-menu');
-    const menuOverlay = document.getElementById('menu-overlay');
+    const mobileOverlay = document.getElementById('mobile-overlay');
 
     mobileMenuBtn.addEventListener('click', () => {
       mobileMenu.classList.add('active');
+      mobileOverlay.classList.add('active');
     });
 
     closeMenuBtn.addEventListener('click', () => {
       mobileMenu.classList.remove('active');
+      mobileOverlay.classList.remove('active');
     });
 
-    menuOverlay.addEventListener('click', () => {
+    mobileOverlay.addEventListener('click', () => {
       mobileMenu.classList.remove('active');
+      mobileOverlay.classList.remove('active');
     });
 
     // User menu dropdown
@@ -572,6 +860,7 @@ $userType = $_SESSION['tipo_usuario'] ?? '';
     if (acessoSistemaBtnMobile) {
       acessoSistemaBtnMobile.addEventListener('click', () => {
         mobileMenu.classList.remove('active');
+        mobileOverlay.classList.remove('active');
         openLoginModal('professor');
       });
     }
@@ -610,29 +899,11 @@ $userType = $_SESSION['tipo_usuario'] ?? '';
         } else {
           loginError.textContent = result.message;
           loginError.classList.remove('hidden');
-          loginForm.classList.add('error-message');
-          setTimeout(() => loginForm.classList.remove('error-message'), 500);
         }
       } catch (error) {
         loginError.textContent = 'Erro ao processar login. Tente novamente.';
         loginError.classList.remove('hidden');
       }
-    });
-
-    // GSAP animations
-    gsap.from('.hero-animate', {
-      opacity: 0,
-      y: 50,
-      duration: 1,
-      delay: 0.3
-    });
-
-    gsap.from('.card-3d', {
-      opacity: 0,
-      y: 30,
-      duration: 0.8,
-      stagger: 0.1,
-      delay: 0.5
     });
   </script>
 </body>

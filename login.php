@@ -22,17 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     try {
         if ($tipo === 'professor') {
-            // Login de professor: matrícula de funcionário + senha
-            $stmt = $pdo->prepare("SELECT f.id, f.nome, f.matricula, f.senha, p.cargo 
-                                   FROM funcionarios f 
-                                   JOIN professores p ON f.id = p.funcionario_id 
-                                   WHERE f.matricula = ? AND f.ativo = 1");
+            // Login de professor: matrícula + senha
+            $stmt = $pdo->prepare("SELECT id, nome_completo, senha, matricula FROM usuarios WHERE matricula = ? AND tipo_usuario = 'professor' AND ativo = 1");
             $stmt->execute([$usuario]);
             $user = $stmt->fetch();
             
             if ($user && password_verify($senha, $user['senha'])) {
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['nome'] = $user['nome'];
+                $_SESSION['usuario_id'] = $user['id'];
+                $_SESSION['nome'] = $user['nome_completo'];
                 $_SESSION['tipo_usuario'] = 'professor';
                 $_SESSION['matricula'] = $user['matricula'];
                 $success = true;
@@ -45,16 +42,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Login de aluno: CPF do responsável + senha
             $cpf = preg_replace('/[^0-9]/', '', $usuario);
             
-            $stmt = $pdo->prepare("SELECT a.id, a.nome, a.senha, r.cpf, r.nome as responsavel_nome 
-                                   FROM alunos a 
-                                   JOIN responsaveis r ON a.responsavel_id = r.id 
-                                   WHERE r.cpf = ? AND a.ativo = 1");
-            $stmt->execute([$cpf]);
-            $user = $stmt->fetch();
+            // Buscar aluno limpando o CPF do banco também
+            $stmt = $pdo->prepare("SELECT id, nome_completo, senha, cpf FROM usuarios WHERE tipo_usuario = 'aluno' AND ativo = 1");
+            $stmt->execute();
+            $users = $stmt->fetchAll();
+            
+            $user = null;
+            foreach ($users as $u) {
+                $cpf_banco = preg_replace('/[^0-9]/', '', $u['cpf']);
+                if ($cpf_banco === $cpf) {
+                    $user = $u;
+                    break;
+                }
+            }
             
             if ($user && password_verify($senha, $user['senha'])) {
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['nome'] = $user['nome'];
+                $_SESSION['usuario_id'] = $user['id'];
+                $_SESSION['nome'] = $user['nome_completo'];
                 $_SESSION['tipo_usuario'] = 'aluno';
                 $_SESSION['cpf_responsavel'] = $user['cpf'];
                 $success = true;
@@ -64,16 +68,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             
         } elseif ($tipo === 'secretaria') {
-            // Login de secretaria: usuário + senha
-            $stmt = $pdo->prepare("SELECT id, nome, usuario, senha FROM usuarios_secretaria WHERE usuario = ? AND ativo = 1");
+            // Login de secretaria: usuario_login + senha
+            $stmt = $pdo->prepare("SELECT id, nome_completo, senha, usuario_login FROM usuarios WHERE usuario_login = ? AND tipo_usuario = 'secretaria' AND ativo = 1");
             $stmt->execute([$usuario]);
             $user = $stmt->fetch();
             
             if ($user && password_verify($senha, $user['senha'])) {
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['nome'] = $user['nome'];
+                $_SESSION['usuario_id'] = $user['id'];
+                $_SESSION['nome'] = $user['nome_completo'];
                 $_SESSION['tipo_usuario'] = 'secretaria';
-                $_SESSION['usuario'] = $user['usuario'];
+                $_SESSION['usuario'] = $user['usuario_login'];
                 $success = true;
                 $redirect = 'portal/secretaria/index.php';
             } else {
@@ -81,16 +85,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             
         } elseif ($tipo === 'admin') {
-            // Login de admin: usuário + senha
-            $stmt = $pdo->prepare("SELECT id, nome, usuario, senha FROM usuarios_admin WHERE usuario = ? AND ativo = 1");
+            // Login de admin: usuario_login + senha
+            $stmt = $pdo->prepare("SELECT id, nome_completo, senha, usuario_login FROM usuarios WHERE usuario_login = ? AND tipo_usuario = 'admin' AND ativo = 1");
             $stmt->execute([$usuario]);
             $user = $stmt->fetch();
             
             if ($user && password_verify($senha, $user['senha'])) {
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['nome'] = $user['nome'];
+                $_SESSION['usuario_id'] = $user['id'];
+                $_SESSION['nome'] = $user['nome_completo'];
                 $_SESSION['tipo_usuario'] = 'admin';
-                $_SESSION['usuario'] = $user['usuario'];
+                $_SESSION['usuario'] = $user['usuario_login'];
                 $success = true;
                 $redirect = 'portal/admin/index.php';
             } else {
