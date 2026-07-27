@@ -5,42 +5,64 @@
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="I.M.A - Instituto Machado de Assis. Educação de qualidade há 28 anos.">
-  <title>I.M.A - Instituto Machado de Assis</title>
+  
+  <!-- Meta Tags SEO -->
+  <title>Site Institucional Moderno e Sistema de Gestão Escolar</title>
+  <meta name="description" content="Site institucional moderno e sistema de gestão escolar completo para instituições educacionais. Portal para alunos, professores e administradores.">
+  <meta name="keywords" content="escola, educação, gestão escolar, portal educacional, sistema escolar, biblioteca virtual, eventos escolares">
+  <meta name="author" content="Sistema de Gestão Escolar">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://seusite.com.br/">
+  <meta property="og:title" content="Site Institucional Moderno e Sistema de Gestão Escolar">
+  <meta property="og:description" content="Site institucional moderno e sistema de gestão escolar completo para instituições educacionais.">
+  <meta property="og:image" content="https://seusite.com.br/img/og-image.jpg">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://seusite.com.br/">
+  <meta property="twitter:title" content="Site Institucional Moderno e Sistema de Gestão Escolar">
+  <meta property="twitter:description" content="Site institucional moderno e sistema de gestão escolar completo para instituições educacionais.">
+  <meta property="twitter:image" content="https://seusite.com.br/img/og-image.jpg">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://seusite.com.br/">
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#0a2463">
+  
+  <!-- Apple Touch Icon -->
+  <link rel="apple-touch-icon" href="img/logo.jpg">
+  
+  <!-- Favicon -->
   <link rel="shortcut icon" type="image/x-icon" href="img/logo.jpg">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/output.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="js/form-validation.js"></script>
+  <script src="js/loading-states.js"></script>
+  <script src="js/dark-mode.js"></script>
+  <script src="js/accessibility.js"></script>
+  <script src="js/performance-animations.js"></script>
+  
+  <!-- Service Worker Registration -->
   <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            azul: {
-              principal: '#0a2463',
-              escuro: '#051435',
-              claro: '#1e3a8a'
-            },
-            amarelo: {
-              destaque: '#ffd700',
-              claro: '#ffed4a'
-            },
-            verde: {
-              complementar: '#2d6a4f',
-              claro: '#40916c'
-            },
-            preto: {
-              principal: '#000000',
-              escuro: '#1a1a1a'
-            }
-          },
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-            display: ['Poppins', 'system-ui', 'sans-serif']
-          }
-        }
-      }
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((registration) => {
+            console.log('Service Worker registrado com sucesso:', registration.scope);
+          })
+          .catch((error) => {
+            console.log('Falha ao registrar Service Worker:', error);
+          });
+      });
     }
   </script>
   <style>
@@ -73,6 +95,18 @@
     .card-hover:hover {
       transform: translateY(-12px);
       box-shadow: 0 25px 50px rgba(10, 36, 99, 0.2);
+    }
+    .input-error {
+      border-color: #ef4444 !important;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+    }
+    .error-message {
+      animation: shake 0.5s ease-in-out;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
     }
     .floating {
       animation: floating 3s ease-in-out infinite;
@@ -127,7 +161,7 @@
         </nav>
 
         <div class="hidden md:flex items-center gap-3">
-          <a href="Biblioteca_vrtual/livro.html" class="px-5 py-2.5 bg-gradient-to-r from-verde-complementar to-verde-claro text-white rounded-full font-semibold hover:shadow-lg hover:shadow-green-500/30 transition-all duration-300 text-sm">
+          <a href="biblioteca_vrtual/livro.html" class="px-5 py-2.5 bg-gradient-to-r from-verde-complementar to-verde-claro text-white rounded-full font-semibold hover:shadow-lg hover:shadow-green-500/30 transition-all duration-300 text-sm">
             <i class="fas fa-book mr-2"></i>Biblioteca
           </a>
           <button id="acesso-sistema-btn" class="px-5 py-2.5 bg-gradient-to-r from-azul-principal to-azul-claro text-white rounded-full font-semibold hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 text-sm">
@@ -161,7 +195,7 @@
             <a href="#gallery" class="px-4 py-3 text-white font-semibold hover:bg-white/10 rounded-lg transition-colors">Fotos</a>
             <a href="#contact" class="px-4 py-3 text-white font-semibold hover:bg-white/10 rounded-lg transition-colors">Contato</a>
             <div class="border-t border-white/10 pt-4 mt-4 space-y-3">
-              <a href="Biblioteca_vrtual/livro.html" class="block px-4 py-3 bg-gradient-to-r from-verde-complementar to-verde-claro text-white rounded-lg font-semibold text-center hover:shadow-lg transition-all">
+              <a href="biblioteca_vrtual/livro.html" class="block px-4 py-3 bg-gradient-to-r from-verde-complementar to-verde-claro text-white rounded-lg font-semibold text-center hover:shadow-lg transition-all">
                 <i class="fas fa-book mr-2"></i>Biblioteca
               </a>
               <button id="acesso-sistema-btn-mobile" class="block w-full px-4 py-3 bg-gradient-to-r from-azul-principal to-azul-claro text-white rounded-lg font-semibold text-center hover:shadow-lg transition-all">
