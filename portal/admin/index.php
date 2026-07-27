@@ -55,7 +55,7 @@ $admin_id = $_SESSION['usuario_id'];
                     </div>
                 </div>
                 
-                <nav class="space-y-1">
+                <nav class="space-y-1 flex-1 overflow-y-auto">
                     <a href="#" onclick="loadContent('dashboard')" class="nav-link flex items-center gap-3 px-4 py-3 bg-primary-50 text-primary-700 rounded-lg font-medium" data-page="dashboard">
                         <i class="fas fa-home"></i>
                         <span>Dashboard</span>
@@ -87,6 +87,42 @@ $admin_id = $_SESSION['usuario_id'];
                     <a href="#" onclick="loadContent('audit_logs')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="audit_logs">
                         <i class="fas fa-history"></i>
                         <span>Audit Logs</span>
+                    </a>
+                    <a href="#" onclick="loadContent('arquivos')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="arquivos">
+                        <i class="fas fa-folder"></i>
+                        <span>Arquivos</span>
+                    </a>
+                    <a href="#" onclick="loadContent('backup')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="backup">
+                        <i class="fas fa-database"></i>
+                        <span>Backup/Restore</span>
+                    </a>
+                    <a href="#" onclick="loadContent('permissoes')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="permissoes">
+                        <i class="fas fa-lock"></i>
+                        <span>Permissões</span>
+                    </a>
+                    <a href="#" onclick="loadContent('notificacoes')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="notificacoes">
+                        <i class="fas fa-bell"></i>
+                        <span>Notificações</span>
+                    </a>
+                    <a href="#" onclick="loadContent('analytics')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="analytics">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Analytics</span>
+                    </a>
+                    <a href="#" onclick="loadContent('integracoes')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="integracoes">
+                        <i class="fas fa-plug"></i>
+                        <span>Integrações</span>
+                    </a>
+                    <a href="#" onclick="loadContent('suporte')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="suporte">
+                        <i class="fas fa-headset"></i>
+                        <span>Suporte</span>
+                    </a>
+                    <a href="#" onclick="loadContent('horarios')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="horarios">
+                        <i class="fas fa-clock"></i>
+                        <span>Horários</span>
+                    </a>
+                    <a href="#" onclick="loadContent('patrimonio')" class="nav-link flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors" data-page="patrimonio">
+                        <i class="fas fa-box"></i>
+                        <span>Patrimônio</span>
                     </a>
                 </nav>
             </div>
@@ -172,7 +208,16 @@ $admin_id = $_SESSION['usuario_id'];
                 'matriculas': 'Gerenciar Matrículas',
                 'financeiro': 'Financeiro',
                 'relatorios': 'Relatórios',
-                'audit_logs': 'Logs de Auditoria'
+                'audit_logs': 'Logs de Auditoria',
+                'arquivos': 'Gerenciar Arquivos',
+                'backup': 'Backup e Restore',
+                'permissoes': 'Gestão de Permissões',
+                'notificacoes': 'Notificações',
+                'analytics': 'Analytics',
+                'integracoes': 'Integrações',
+                'suporte': 'Suporte',
+                'horarios': 'Horários',
+                'patrimonio': 'Patrimônio'
             };
             document.getElementById('page-title').textContent = titles[page] || 'Painel Administrativo';
 
@@ -187,6 +232,14 @@ $admin_id = $_SESSION['usuario_id'];
                 .then(html => {
                     document.getElementById('content-container').innerHTML = html;
                     currentPage = page;
+                    
+                    // Execute scripts in the loaded content
+                    const scripts = document.getElementById('content-container').querySelectorAll('script');
+                    scripts.forEach(script => {
+                        const newScript = document.createElement('script');
+                        newScript.textContent = script.textContent;
+                        document.head.appendChild(newScript);
+                    });
                 })
                 .catch(error => {
                     document.getElementById('content-container').innerHTML = `

@@ -48,8 +48,8 @@ $professor_id = $_SESSION['usuario_id'];
 <body class="bg-gray-50 min-h-screen">
     <div class="flex">
         <!-- Sidebar -->
-        <aside class="w-64 bg-white border-r border-gray-200 min-h-screen fixed left-0 top-0 z-30 hidden lg:block">
-            <div class="p-6">
+        <aside class="w-64 bg-white border-r border-gray-200 h-screen fixed left-0 top-0 z-30 hidden lg:flex flex-col">
+            <div class="p-6 flex-shrink-0">
                 <div class="flex items-center gap-3 mb-8">
                     <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center">
                         <i class="fas fa-chalkboard-teacher text-white"></i>
@@ -59,8 +59,9 @@ $professor_id = $_SESSION['usuario_id'];
                         <p class="text-xs text-gray-500">Professor</p>
                     </div>
                 </div>
-                
-                <nav class="space-y-1">
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto px-6 space-y-1 pb-24">
                     <a href="#" onclick="loadContent('dashboard')" class="nav-link flex items-center gap-3 px-4 py-3 bg-primary-50 text-primary-700 rounded-lg font-medium" data-page="dashboard">
                         <i class="fas fa-home"></i>
                         <span>Dashboard</span>
@@ -276,6 +277,14 @@ $professor_id = $_SESSION['usuario_id'];
                 .then(html => {
                     document.getElementById('content-container').innerHTML = html;
                     currentPage = page;
+                    
+                    // Execute scripts in the loaded content
+                    const scripts = document.getElementById('content-container').querySelectorAll('script');
+                    scripts.forEach(script => {
+                        const newScript = document.createElement('script');
+                        newScript.textContent = script.textContent;
+                        document.head.appendChild(newScript);
+                    });
                 })
                 .catch(error => {
                     document.getElementById('content-container').innerHTML = `
