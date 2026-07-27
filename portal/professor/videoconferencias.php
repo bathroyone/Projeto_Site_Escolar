@@ -81,14 +81,14 @@ if (isset($_GET['action']) && $_GET['action'] === 'excluir' && isset($_GET['id']
 }
 
 // Obter videoconferências
-$videoconferencias = [];
+$_videoconferencias = [];
 try {
     $pdo = getDBConnection();
     $stmt = $pdo->query("
-        SELECT vc.*, t.nome as turma_nome 
-        FROM videoconferencias vc 
-        JOIN turmas t ON vc.turma_id = t.id 
-        WHERE vc.professor_id = ? 
+        SELECT vc.*, t.nome as turma_nome
+        FROM videoconferencias vc
+        JOIN turmas t ON vc.turma_id = t.id
+        WHERE vc.professor_id = ?
         ORDER BY vc.data_hora DESC
     ");
     $stmt->execute([$_SESSION['usuario_id']]);
@@ -143,44 +143,64 @@ try {
             }
         }
     </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #063b7a 0%, #0b4a8c 50%, #13843b 100%);
+        }
+    </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
     <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
+    <header class="gradient-bg shadow-lg sticky top-0 z-40">
+        <div class="px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
                 <div class="flex items-center gap-3">
-                    <a href="index.php" class="flex items-center gap-2">
-                        <img src="../img/logo.jpg" alt="Logo" class="h-10">
+                    <a href="index.php" class="flex items-center gap-2 sm:gap-3 group">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm group-hover:bg-white/30 transition-all">
+                            <i class="fas fa-arrow-left text-white text-lg sm:text-xl"></i>
+                        </div>
                         <div class="hidden sm:block">
-                            <span class="text-azul-principal font-bold text-xs">[Inserir nome da escola aqui]</span>
-                            <span class="block text-amarelo-destaque font-extrabold text-sm">[Inserir nome da escola aqui]</span>
+                            <span class="text-white font-bold text-xs sm:text-sm tracking-wide">PAINEL DO</span>
+                            <span class="block text-amarelo-destaque font-extrabold text-xs sm:text-sm">PROFESSOR</span>
                         </div>
                     </a>
                 </div>
-                
-                <div class="flex items-center gap-4">
-                    <a href="index.php" class="px-4 py-2 text-gray-600 hover:text-azul-principal transition-colors">
-                        <i class="fas fa-arrow-left mr-2"></i>Voltar
-                    </a>
-                    
+
+                <div class="flex items-center gap-3">
                     <div class="relative">
-                        <button onclick="toggleMenu()" class="flex items-center gap-2 p-2 rounded-full hover:bg-gray-100 transition-colors">
-                            <div class="w-10 h-10 bg-gradient-to-br from-azul-principal to-verde-complementar rounded-full flex items-center justify-center text-white font-bold">
+                        <button onclick="toggleMenu()" class="flex items-center gap-2 p-2 rounded-xl hover:bg-white/10 transition-all">
+                            <div class="w-9 h-9 sm:w-11 sm:h-11 bg-gradient-to-br from-amarelo-destaque to-amarelo-claro rounded-xl flex items-center justify-center text-azul-escuro font-bold shadow-lg">
                                 <?php echo strtoupper(substr($_SESSION['nome'], 0, 1)); ?>
                             </div>
-                            <span class="hidden md:block text-sm font-medium text-gray-700"><?php echo htmlspecialchars($_SESSION['nome']); ?></span>
+                            <div class="hidden sm:block text-left">
+                                <span class="text-white text-xs sm:text-sm font-medium block"><?php echo htmlspecialchars(substr($_SESSION['nome'], 0, 15)); ?></span>
+                                <span class="text-white/70 text-xs">Professor</span>
+                            </div>
+                            <i class="fas fa-chevron-down text-white/70 text-xs sm:text-sm"></i>
                         </button>
-                        
-                        <div id="user-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden">
-                            <div class="p-4 border-b border-gray-100">
-                                <p class="font-semibold text-gray-800"><?php echo htmlspecialchars($_SESSION['nome']); ?></p>
-                                <p class="text-sm text-gray-500">Professor</p>
+
+                        <div id="user-menu" class="hidden absolute right-0 mt-2 sm:mt-3 w-48 sm:w-56 glass-card rounded-2xl shadow-2xl overflow-hidden">
+                            <div class="p-4 sm:p-5 border-b border-gray-100 bg-gradient-to-r from-azul-principal to-azul-claro">
+                                <p class="font-semibold text-white text-sm"><?php echo htmlspecialchars($_SESSION['nome']); ?></p>
+                                <p class="text-xs sm:text-sm text-white/80">Professor</p>
                             </div>
                             <div class="p-2">
-                                <a href="../logout.php" class="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                                <a href="index.php" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-xl transition-all">
+                                    <i class="fas fa-home"></i>
+                                    <span>Painel Professor</span>
+                                </a>
+                                <a href="../dashboard.php" class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-xl transition-all">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                                <a href="../logout.php" class="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl transition-all">
                                     <i class="fas fa-sign-out-alt"></i>
-                                    Sair
+                                    <span>Sair</span>
                                 </a>
                             </div>
                         </div>

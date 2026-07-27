@@ -190,10 +190,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-verde-complementar focus:border-transparent transition-all appearance-none bg-white">
                                         <option value="">Selecione a série primeiro</option>
                                         <?php
-                                        if (isset($_POST['serie'])): ?>
-                                            <?php
-                                            $turmas_filtradas = array_filter($turmas, function($t) use ($_POST) {
-                                                return $t['serie'] === $_POST['serie'];
+                                        if (isset($_POST['serie'])):
+                                            $serie_selecionada = $_POST['serie'];
+                                            $turmas_filtradas = array_filter($turmas, function($t) use ($serie_selecionada) {
+                                                return $t['serie'] === $serie_selecionada;
                                             });
                                             foreach ($turmas_filtradas as $t): ?>
                                                 <option value="<?php echo $t['nome']; ?>" <?php echo (isset($_POST['turma']) && $_POST['turma'] === $t['nome']) ? 'selected' : ''; ?>>

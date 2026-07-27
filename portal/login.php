@@ -51,12 +51,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['tipo_usuario'] = $usuario['tipo_usuario'];
                 $_SESSION['turma'] = $usuario['turma'];
                 $_SESSION['serie'] = $usuario['serie'];
-                
+
                 // Redirecionar para o dashboard apropriado
                 header('Location: dashboard.php');
                 exit();
             } else {
-                $error = 'Credenciais incorretas.';
+                if ($tipo_usuario === 'aluno') {
+                    $error = 'CPF ou senha incorretos. CPF de teste: 123.456.789-00 | Senha: aluno123';
+                } else {
+                    $error = 'Credenciais incorretas.';
+                }
             }
         } catch (PDOException $e) {
             error_log("Erro no login: " . $e->getMessage());
@@ -135,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 <?php endif; ?>
                 
-                <form method="POST" action="">
+                <form method="POST" action="" onsubmit="return validarFormulario()" class="login-form-exclude">
                     <div class="mb-4">
                         <label class="block text-sm font-semibold text-gray-700 mb-3">Tipo de Usuário</label>
                         <div class="grid grid-cols-2 gap-3">
@@ -161,6 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </button>
                         </div>
                         <input type="hidden" id="tipo_usuario" name="tipo_usuario" required>
+                        <p id="tipo-error" class="text-red-500 text-sm mt-2 hidden">Selecione um tipo de usuário</p>
                     </div>
                     
                     <div class="mb-4">
@@ -280,6 +285,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (tipoUsuario) {
                 selecionarTipo(tipoUsuario);
             }
+        }
+
+        function validarFormulario() {
+            const tipoUsuario = document.getElementById('tipo_usuario').value;
+            const tipoError = document.getElementById('tipo-error');
+            
+            if (!tipoUsuario) {
+                tipoError.classList.remove('hidden');
+                return false;
+            }
+            
+            tipoError.classList.add('hidden');
+            return true;
         }
     </script>
 </body>

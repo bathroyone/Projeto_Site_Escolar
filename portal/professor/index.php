@@ -437,7 +437,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 </div>
             </a>
             
-            <a href="planejamento_aulas.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+            <a href="planejamento.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
                 <div class="flex flex-col items-center text-center">
                     <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
                         <i class="fas fa-calendar-alt text-white text-2xl"></i>
@@ -447,7 +447,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 </div>
             </a>
             
-            <a href="provas_online.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+            <a href="provas.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
                 <div class="flex flex-col items-center text-center">
                     <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-pink-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
                         <i class="fas fa-file-signature text-white text-2xl"></i>
@@ -467,7 +467,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 </div>
             </a>
             
-            <a href="forum_discussao.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+            <a href="forum.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
                 <div class="flex flex-col items-center text-center">
                     <div class="w-16 h-16 bg-gradient-to-br from-rose-500 to-rose-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
                         <i class="fas fa-comments text-white text-2xl"></i>
@@ -477,7 +477,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 </div>
             </a>
             
-            <a href="materiais_didaticos.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+            <a href="materiais.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
                 <div class="flex flex-col items-center text-center">
                     <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
                         <i class="fas fa-book-open text-white text-2xl"></i>
@@ -487,7 +487,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 </div>
             </a>
             
-            <a href="acompanhamento_alunos.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+            <a href="acompanhamento.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
                 <div class="flex flex-col items-center text-center">
                     <div class="w-16 h-16 bg-gradient-to-br from-lime-500 to-lime-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
                         <i class="fas fa-user-graduate text-white text-2xl"></i>
@@ -496,9 +496,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     <p class="text-sm text-gray-500">Acompanhamento individual</p>
                 </div>
             </a>
-        </div>
-        
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-10">
+
             <a href="relatorios_desempenho.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
                 <div class="flex flex-col items-center text-center">
                     <div class="w-16 h-16 bg-gradient-to-br from-violet-500 to-violet-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
