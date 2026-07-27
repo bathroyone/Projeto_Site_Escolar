@@ -411,6 +411,126 @@ try {
                     <p class="text-sm text-gray-500">Certificados e atestados</p>
                 </div>
             </a>
+            
+            <a href="irmaos_descontos.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-users text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Irmãos</h3>
+                    <p class="text-sm text-gray-500">Controle de irmãos e descontos</p>
+                </div>
+            </a>
+            
+            <a href="transferencias.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-teal-500 to-teal-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-exchange-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Transferências</h3>
+                    <p class="text-sm text-gray-500">Entrada e saída</p>
+                </div>
+            </a>
+            
+            <a href="renovacoes.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-cyan-500 to-cyan-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-sync-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Renovações</h3>
+                    <p class="text-sm text-gray-500">Controle de renovações</p>
+                </div>
+            </a>
+            
+            <a href="autorizacoes.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-pink-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-file-signature text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Autorizações</h3>
+                    <p class="text-sm text-gray-500">Termos e autorizações</p>
+                </div>
+            </a>
+            
+            <a href="calendario_pagamentos.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-calendar-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Calendário</h3>
+                    <p class="text-sm text-gray-500">Calendário de pagamentos</p>
+                </div>
+            </a>
+            
+            <a href="bolsas.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-award text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Bolsas</h3>
+                    <p class="text-sm text-gray-500">Bolsas e descontos</p>
+                </div>
+            </a>
+            
+            <a href="comunicados.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-envelope text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Comunicados</h3>
+                    <p class="text-sm text-gray-500">Comunicados aos responsáveis</p>
+                </div>
+            </a>
+            
+            <a href="agenda_atendimentos.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-calendar-check text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Agenda</h3>
+                    <p class="text-sm text-gray-500">Agenda de atendimentos</p>
+                </div>
+            </a>
+            
+            <a href="estatisticas_matricula.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-rose-500 to-rose-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-chart-bar text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Estatísticas</h3>
+                    <p class="text-sm text-gray-500">Estatísticas de matrícula</p>
+                </div>
+            </a>
+            
+            <a href="estoque_formularios.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-slate-500 to-slate-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-file-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Estoque</h3>
+                    <p class="text-sm text-gray-500">Estoque de formulários</p>
+                </div>
+            </a>
+            
+            <a href="controle_visitas.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-lime-500 to-lime-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-users text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Visitas</h3>
+                    <p class="text-sm text-gray-500">Controle de visitas</p>
+                </div>
+            </a>
+            
+            <a href="integracao_bancos.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-sky-500 to-sky-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-university text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Bancos</h3>
+                    <p class="text-sm text-gray-500">Integração com bancos</p>
+                </div>
+            </a>
         </div>
 
         <!-- Listas Recentes -->

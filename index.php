@@ -318,6 +318,9 @@ $userType = $_SESSION['tipo_usuario'] ?? '';
                 <a href="pre_matricula.php" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-400 text-white rounded-full font-bold hover:shadow-xl hover:shadow-purple-500/30 transition-all duration-300 transform hover:scale-105">
                   <i class="fas fa-user-graduate mr-2"></i>Pré-Matrícula
                 </a>
+                <a href="agendar_visita.php" class="px-8 py-4 bg-gradient-to-r from-verde-complementar to-verde-claro text-white rounded-full font-bold hover:shadow-xl hover:shadow-green-500/30 transition-all duration-300 transform hover:scale-105">
+                  <i class="fas fa-calendar-check mr-2"></i>Agendar Visita
+                </a>
                 <a href="biblioteca_vrtual/biblioteca.html" target="_blank" class="px-8 py-4 bg-white/10 backdrop-blur-md text-white rounded-full font-semibold hover:bg-white/20 transition-all duration-300 border border-white/30 transform hover:scale-105">
                   <i class="fas fa-book mr-2"></i>Biblioteca Virtual
                 </a>
