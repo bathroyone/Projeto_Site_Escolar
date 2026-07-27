@@ -1,9 +1,10 @@
--- Banco de dados para o Sistema Escolar CEAA
+-- Banco de dados para Sistema de Gestão Escolar
 -- Criado em: 23/07/2026
+-- Este é um schema genérico que pode ser adaptado para qualquer instituição educacional
 
 -- Criar banco de dados
-CREATE DATABASE IF NOT EXISTS ceaa_escola CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE ceaa_escola;
+CREATE DATABASE IF NOT EXISTS escola_gestao CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE escola_gestao;
 
 -- Tabela de usuários (alunos, professores e admin)
 CREATE TABLE usuarios (
@@ -113,17 +114,17 @@ CREATE INDEX idx_notificacoes_lida ON notificacoes(lida);
 -- Inserir usuário admin padrão
 -- Usuário: admin | Senha: admin123 (deve ser alterada após primeiro acesso)
 INSERT INTO usuarios (nome_completo, email, senha, tipo_usuario, usuario_login) 
-VALUES ('Administrador', 'admin@ceaa.com.br', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', 'admin');
+VALUES ('Administrador', 'admin@escola.local', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', 'admin');
 
 -- Inserir usuário professor de teste
 -- Matrícula: PRO2026001 | Senha: prof123
 INSERT INTO usuarios (nome_completo, email, senha, tipo_usuario, matricula) 
-VALUES ('Professor Teste', 'professor@ceaa.com.br', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'professor', 'PRO2026001');
+VALUES ('Professor Teste', 'professor@escola.local', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'professor', 'PRO2026001');
 
 -- Inserir usuário aluno de teste
 -- CPF: 123.456.789-00 | Senha: aluno123
 INSERT INTO usuarios (nome_completo, email, senha, tipo_usuario, cpf, turma, serie) 
-VALUES ('Aluno Teste', 'aluno@ceaa.com.br', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'aluno', '123.456.789-00', 'Turma A', '1º Ano');
+VALUES ('Aluno Teste', 'aluno@escola.local', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'aluno', '123.456.789-00', 'Turma A', '1º Ano');
 
 -- Inserir turmas de exemplo
 INSERT INTO turmas (nome, serie, ano_letivo) VALUES

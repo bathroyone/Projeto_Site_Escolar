@@ -128,7 +128,7 @@ portal/logs/
 backups/
 
 # Database
-*.sql
+# *.sql
 *.sqlite
 *.db
 

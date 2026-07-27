@@ -1,14 +1,14 @@
 <?php
 // Configurações do Banco de Dados
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'ceaa_escola');
+define('DB_NAME', 'escola_gestao');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_CHARSET', 'utf8mb4');
 
 // Configurações do Sistema
-define('SITE_URL', 'https://ceaacolegiobrasil.com.br/portal');
-define('SITE_NAME', 'Portal CEAA - Centro Educacional Alameda Argentina');
+define('SITE_URL', 'https://seusite.com.br/portal');
+define('SITE_NAME', 'Portal de Gestão Escolar');
 
 // Configurações de Upload
 define('UPLOAD_DIR', __DIR__ . '/uploads/');
