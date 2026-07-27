@@ -286,7 +286,7 @@ try {
                             <option value="alunos">Alunos</option>
                             <option value="professores">Professores</option>
                             <option value="secretaria">Secretaria</option>
-                            <option value="admin">Administração</option>
+                            <option value="admin">Administrador</option>
                         </select>
                     </div>
                     

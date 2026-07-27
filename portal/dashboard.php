@@ -4,6 +4,11 @@ require_once 'config.php';
 requireLogin();
 
 // Redirecionar para painéis específicos
+if (isAdmin()) {
+    header('Location: admin/index.php');
+    exit();
+}
+
 if (isProfessor()) {
     header('Location: professor/index.php');
     exit();

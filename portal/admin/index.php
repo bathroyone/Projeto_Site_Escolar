@@ -117,7 +117,7 @@ try {
                             </div>
                             <div class="hidden sm:block text-left">
                                 <span class="text-white text-xs sm:text-sm font-medium block"><?php echo htmlspecialchars(substr($_SESSION['nome'], 0, 15)); ?></span>
-                                <span class="text-white/70 text-xs">Admin</span>
+                                <span class="text-white/70 text-xs">Administrador</span>
                             </div>
                             <i class="fas fa-chevron-down text-white/70 text-xs sm:text-sm"></i>
                         </button>

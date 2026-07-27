@@ -136,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <form method="POST" action="">
                     <div class="mb-4">
                         <label for="tipo_usuario" class="block text-sm font-semibold text-gray-700 mb-2">Tipo de Usuário</label>
-                        <select id="tipo_usuario" name="tipo_usuario" required
+                        <select id="tipo_usuario" name="tipo_usuario" required onchange="updateLabel()"
                             class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent appearance-none bg-white">
                             <option value="">Selecione</option>
                             <option value="aluno">Aluno</option>
@@ -210,6 +210,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 senhaInput.type = 'password';
                 eyeIcon.classList.remove('fa-eye-slash');
                 eyeIcon.classList.add('fa-eye');
+            }
+        }
+
+        function updateLabel() {
+            const tipoUsuario = document.getElementById('tipo_usuario').value;
+            const loginLabel = document.getElementById('login_label');
+            
+            switch(tipoUsuario) {
+                case 'aluno':
+                    loginLabel.textContent = 'CPF';
+                    break;
+                case 'professor':
+                    loginLabel.textContent = 'Matrícula';
+                    break;
+                case 'secretaria':
+                    loginLabel.textContent = 'Matrícula';
+                    break;
+                case 'admin':
+                    loginLabel.textContent = 'Usuário';
+                    break;
+                default:
+                    loginLabel.textContent = 'Email/CPF/Matrícula';
             }
         }
     </script>
