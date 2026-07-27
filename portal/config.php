@@ -7,7 +7,7 @@ define('DB_PASS', '');
 define('DB_CHARSET', 'utf8mb4');
 
 // Configurações do Sistema
-define('SITE_URL', 'https://seusite.com.br/portal');
+define('SITE_URL', 'http://localhost/Projeto_Site_Escolar/portal');
 define('SITE_NAME', 'Portal de Gestão Escolar');
 
 // Configurações de Upload
