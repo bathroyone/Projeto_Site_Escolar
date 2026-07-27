@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Galeria de Fotos - I.M.A - Instituto Machado de Assis">
+  <title>Galeria de Fotos | I.M.A - Instituto Machado de Assis</title>
+  <link rel="shortcut icon" type="image/x-icon" href="../img/logo.jpg">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            azul: {
+              principal: '#0a2463',
+              escuro: '#051435',
+              claro: '#1e3a8a'
+            },
+            amarelo: {
+              destaque: '#ffd700',
+              claro: '#ffed4a'
+            },
+            verde: {
+              complementar: '#2d6a4f',
+              claro: '#40916c'
+            },
+            preto: {
+              principal: '#000000',
+              escuro: '#1a1a1a'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Poppins', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .gallery-card {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .gallery-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(6, 59, 122, 0.15);
+    }
+    .gallery-card img {
+      transition: transform 0.4s ease;
+    }
+    .gallery-card:hover img {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-blue-50 to-white min-h-screen">
+  
+  <header class="glass fixed top-0 left-0 right-0 z-50 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <a href="../index.html" class="flex items-center gap-3 group">
+          <img src="../img/logo.jpg" alt="Logo I.M.A" class="h-14 w-auto transition-transform group-hover:scale-105">
+          <div class="flex flex-col">
+            <span class="text-azul-principal font-bold text-xs tracking-wide">I.M.A</span>
+            <span class="text-amarelo-destaque font-extrabold text-base">INSTITUTO MACHADO DE ASSIS</span>
+          </div>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-2">
+          <a href="../index.html" class="px-4 py-2 rounded-full text-azul-principal font-semibold hover:bg-azul-principal hover:text-white transition-all duration-300">Home</a>
+        </nav>
+
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-azul-principal hover:bg-blue-100 transition-colors">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="fixed inset-0 z-50 md:hidden">
+      <div id="menu-overlay" class="absolute inset-0 bg-black/50 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+      <div id="menu-drawer" class="absolute left-0 top-0 h-full w-80 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300">
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-8">
+            <img src="../img/logo.jpg" alt="Logo I.M.A" class="h-12">
+            <button id="close-menu" class="p-2 rounded-lg hover:bg-gray-100">
+              <i class="fas fa-times text-xl text-azul-principal"></i>
+            </button>
+          </div>
+          <nav class="flex flex-col gap-4">
+            <a href="../index.html" class="px-4 py-3 rounded-lg text-azul-principal font-semibold hover:bg-blue-50 transition-colors">Home</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-20">
+    
+    <section class="relative h-[400px] md:h-[500px] bg-gradient-to-br from-azul-principal to-verde-complementar overflow-hidden">
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="relative h-full flex items-center justify-center text-center px-4">
+        <div class="max-w-3xl">
+          <span class="inline-block px-4 py-2 bg-amarelo-destaque text-azul-escuro rounded-full font-bold text-sm mb-6">
+            Galeria de Fotos
+          </span>
+          <h1 class="text-4xl md:text-6xl font-display font-bold text-white mb-4">
+            Álbum 1
+          </h1>
+          <p class="text-xl md:text-2xl text-white/90">
+            Exposição de Trabalhos sobre o Meio Ambiente da Educação Infantil
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <span class="text-verde-complementar font-bold text-sm uppercase tracking-wider">Galeria</span>
+          <h2 class="text-3xl md:text-4xl font-display font-bold text-azul-principal mt-2 mb-4">
+            Memórias do I.M.A
+          </h2>
+          <p class="text-gray-600">
+            Navegue pelos álbuns para ver os momentos especiais da nossa escola.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <a href="#" class="gallery-card bg-white rounded-2xl shadow-lg overflow-hidden border border-blue-100">
+            <div class="aspect-square bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
+              <div class="text-center p-4">
+                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
+                <p class="text-white/50 text-xs">Coloque a foto</p>
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="font-display font-bold text-azul-principal">Exposição de Trabalhos</h3>
+              <p class="text-gray-500 text-sm">Meio Ambiente</p>
+            </div>
+          </a>
+
+          <a href="#" class="gallery-card bg-white rounded-2xl shadow-lg overflow-hidden border border-blue-100">
+            <div class="aspect-square bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
+              <div class="text-center p-4">
+                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
+                <p class="text-white/50 text-xs">Coloque a foto</p>
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="font-display font-bold text-azul-principal">Aula de Campo 6º Ano</h3>
+              <p class="text-gray-500 text-sm">Planetário e Jardim Botânico</p>
+            </div>
+          </a>
+
+          <a href="#" class="gallery-card bg-white rounded-2xl shadow-lg overflow-hidden border border-blue-100">
+            <div class="aspect-square bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
+              <div class="text-center p-4">
+                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
+                <p class="text-white/50 text-xs">Coloque a foto</p>
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="font-display font-bold text-azul-principal">Aula de Campo 3º Ano</h3>
+              <p class="text-gray-500 text-sm">Planetário da Gávea</p>
+            </div>
+          </a>
+
+          <a href="#" class="gallery-card bg-white rounded-2xl shadow-lg overflow-hidden border border-blue-100">
+            <div class="aspect-square bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
+              <div class="text-center p-4">
+                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
+                <p class="text-white/50 text-xs">Coloque a foto</p>
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="font-display font-bold text-azul-principal">Aula de Campo 5º Ano</h3>
+              <p class="text-gray-500 text-sm">Palácio Imperial e Catedral</p>
+            </div>
+          </a>
+
+          <a href="#" class="gallery-card bg-white rounded-2xl shadow-lg overflow-hidden border border-blue-100">
+            <div class="aspect-square bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
+              <div class="text-center p-4">
+                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
+                <p class="text-white/50 text-xs">Coloque a foto</p>
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="font-display font-bold text-azul-principal">Dia das Mães</h3>
+              <p class="text-gray-500 text-sm">Jardim I e II</p>
+            </div>
+          </a>
+
+          <a href="#" class="gallery-card bg-white rounded-2xl shadow-lg overflow-hidden border border-blue-100">
+            <div class="aspect-square bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
+              <div class="text-center p-4">
+                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
+                <p class="text-white/50 text-xs">Coloque a foto</p>
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="font-display font-bold text-azul-principal">Dia de Lazer</h3>
+              <p class="text-gray-500 text-sm">Educação Infantil 2019</p>
+            </div>
+          </a>
+
+          <a href="#" class="gallery-card bg-white rounded-2xl shadow-lg overflow-hidden border border-blue-100">
+            <div class="aspect-square bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
+              <div class="text-center p-4">
+                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
+                <p class="text-white/50 text-xs">Coloque a foto</p>
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="font-display font-bold text-azul-principal">Aula de Campo 7º Ano</h3>
+              <p class="text-gray-500 text-sm">Corredor Cultural</p>
+            </div>
+          </a>
+
+          <a href="#" class="gallery-card bg-white rounded-2xl shadow-lg overflow-hidden border border-blue-100">
+            <div class="aspect-square bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
+              <div class="text-center p-4">
+                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
+                <p class="text-white/50 text-xs">Coloque a foto</p>
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="font-display font-bold text-azul-principal">Oficina de Negócios</h3>
+              <p class="text-gray-500 text-sm">Culminância - 5º ano</p>
+            </div>
+          </a>
+
+          <a href="#" class="gallery-card bg-white rounded-2xl shadow-lg overflow-hidden border border-blue-100">
+            <div class="aspect-square bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
+              <div class="text-center p-4">
+                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
+                <p class="text-white/50 text-xs">Coloque a foto</p>
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="font-display font-bold text-azul-principal">Aula de Campo 9º Ano</h3>
+              <p class="text-gray-500 text-sm">Museu do Exército e CCBB</p>
+            </div>
+          </a>
+
+          <a href="#" class="gallery-card bg-white rounded-2xl shadow-lg overflow-hidden border border-blue-100">
+            <div class="aspect-square bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
+              <div class="text-center p-4">
+                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
+                <p class="text-white/50 text-xs">Coloque a foto</p>
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="font-display font-bold text-azul-principal">Festa do Folclore</h3>
+              <p class="text-gray-500 text-sm">Fundamental I (Tarde)</p>
+            </div>
+          </a>
+
+          <a href="#" class="gallery-card bg-white rounded-2xl shadow-lg overflow-hidden border border-blue-100">
+            <div class="aspect-square bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
+              <div class="text-center p-4">
+                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
+                <p class="text-white/50 text-xs">Coloque a foto</p>
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="font-display font-bold text-azul-principal">Festa do Folclore</h3>
+              <p class="text-gray-500 text-sm">Fundamental I (Manhã)</p>
+            </div>
+          </a>
+
+          <a href="#" class="gallery-card bg-white rounded-2xl shadow-lg overflow-hidden border border-blue-100">
+            <div class="aspect-square bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
+              <div class="text-center p-4">
+                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
+                <p class="text-white/50 text-xs">Coloque a foto</p>
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="font-display font-bold text-azul-principal">Aula de Campo na Fazendinha</h3>
+              <p class="text-gray-500 text-sm">Educação Infantil</p>
+            </div>
+          </a>
+
+          <a href="#" class="gallery-card bg-white rounded-2xl shadow-lg overflow-hidden border border-blue-100">
+            <div class="aspect-square bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
+              <div class="text-center p-4">
+                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
+                <p class="text-white/50 text-xs">Coloque a foto</p>
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="font-display font-bold text-azul-principal">Torneio de Karate</h3>
+              <p class="text-gray-500 text-sm">Fase Regional</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Gallery Modal -->
+  <div id="gallery-modal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="closeGallery()"></div>
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+      <button onclick="closeGallery()" class="absolute top-4 right-4 text-white text-4xl hover:text-gray-300 transition-colors z-10">
+        <i class="fas fa-times"></i>
+      </button>
+      <button onclick="prevImage()" class="absolute left-4 text-white text-4xl hover:text-gray-300 transition-colors z-10">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button onclick="nextImage()" class="absolute right-4 text-white text-4xl hover:text-gray-300 transition-colors z-10">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+      <div class="relative w-full h-full flex items-center justify-center">
+        <img id="gallery-image" src="" alt="" class="max-w-full max-h-full object-contain">
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-azul-escuro text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-3 gap-12">
+        <div>
+          <div class="flex items-center gap-3 mb-6">
+            <img src="../img/logo.jpg" alt="Logo I.M.A" class="h-12">
+            <div>
+              <span class="font-bold text-sm">I.M.A</span>
+              <span class="block font-extrabold text-amarelo-destaque">INSTITUTO MACHADO DE ASSIS</span>
+            </div>
+          </div>
+          <p class="text-white/70 mb-2">
+            Estrada do Amapá (Lote 17, Quadra 04)<br>
+            Parque Barão do Amapá - Duque de Caxias - RJ 25235-475
+          </p>
+          <p class="text-white/70">ima.instituto@gmail.com</p>
+        </div>
+        <div>
+          <h3 class="font-display font-bold text-lg mb-4">Links Rápidos</h3>
+          <ul class="space-y-2">
+            <li><a href="../index.html" class="text-white/70 hover:text-amarelo-destaque transition-colors">Home</a></li>
+            <li><a href="../Biblioteca_vrtual/livro.html" class="text-white/70 hover:text-amarelo-destaque transition-colors">Biblioteca</a></li>
+            <li><a href="../aviso2/passo1.html" class="text-white/70 hover:text-amarelo-destaque transition-colors">Correções</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-display font-bold text-lg mb-4">Contato</h3>
+          <p class="text-white/70 mb-2">
+            <i class="fas fa-phone mr-2"></i>(21) 98855-0912 / (21) 3672-0169
+          </p>
+        </div>
+      </div>
+      <div class="border-t border-white/10 mt-12 pt-8 text-center">
+        <p class="text-white/50 text-sm">
+          © 2026 I.M.A - Instituto Machado de Assis. Todos os direitos reservados.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/5521988550912" target="_blank" class="fixed bottom-6 right-6 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-50">
+    <i class="fab fa-whatsapp text-white text-2xl"></i>
+  </a>
+
+  <button id="back-to-top" class="fixed bottom-6 left-6 w-12 h-12 bg-amarelo-destaque rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-50 opacity-0 invisible">
+    <i class="fas fa-arrow-up text-azul-escuro"></i>
+  </button>
+
+  <script>
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const menuDrawer = document.getElementById('menu-drawer');
+    const closeMenuBtn = document.getElementById('close-menu');
+
+    function openMenu() {
+      mobileMenu.classList.remove('hidden');
+      setTimeout(() => {
+        menuOverlay.classList.remove('opacity-0');
+        menuDrawer.classList.remove('-translate-x-full');
+      }, 10);
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      menuOverlay.classList.add('opacity-0');
+      menuDrawer.classList.add('-translate-x-full');
+      setTimeout(() => {
+        mobileMenu.classList.add('hidden');
+      }, 300);
+      document.body.style.overflow = '';
+    }
+
+    mobileMenuBtn.addEventListener('click', openMenu);
+    closeMenuBtn.addEventListener('click', closeMenu);
+    menuOverlay.addEventListener('click', closeMenu);
+
+    const backToTop = document.getElementById('back-to-top');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 500) {
+        backToTop.classList.remove('opacity-0', 'invisible');
+      } else {
+        backToTop.classList.add('opacity-0', 'invisible');
+      }
+    });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Gallery Modal Functions
+    let currentImages = [];
+    let currentIndex = 0;
+    let currentTitle = '';
+
+    // Mapeamento de imagens disponíveis em cada álbum
+    const albumImages = {
+      'A1': Array.from({length: 27}, (_, i) => `img/A1/${i + 1}.jpg`),
+      'A2': Array.from({length: 36}, (_, i) => `img/A2/${i + 1}.jpg`),
+      'A3': Array.from({length: 27}, (_, i) => `img/A3/${i + 1}.jpg`),
+      'A4': Array.from({length: 11}, (_, i) => `img/A4/${i + 1}.jpg`),
+      'A5': Array.from({length: 9}, (_, i) => `img/A5/${i + 1}.jpg`),
+      'A6': Array.from({length: 40}, (_, i) => `img/A6/${i + 1}.jpg`),
+      'A7': Array.from({length: 39}, (_, i) => `img/A7/${i + 1}.jpg`),
+      'A8': Array.from({length: 14}, (_, i) => `img/A8/${i + 1}.jpg`),
+      'A9': Array.from({length: 19}, (_, i) => `img/A9/${i + 1}.jpg`),
+      'A10': ['img/A10/1.jpg', 'img/A10/11.jpg', 'img/A10/18.jpg', 'img/A10/19.jpg', 'img/A10/20.jpg', 'img/A10/21.jpg', 'img/A10/58.jpg', 'img/A10/59.jpg', 'img/A10/60.jpg', 'img/A10/61.jpg'],
+      'A11': ['img/A11/1.jpg', 'img/A11/17.jpg', 'img/A11/18.jpg', 'img/A11/19.jpg', 'img/A11/20.jpg', 'img/A11/21.jpg'],
+      'A12': ['img/A12/1.jpg', 'img/A12/16.jpg', 'img/A12/33.jpg', 'img/A12/34.jpg', 'img/A12/35.jpg', 'img/A12/36.jpg', 'img/A12/64.jpg', 'img/A12/73.jpg', 'img/A12/74.jpg', 'img/A12/75.jpg', 'img/A12/76.jpg'],
+      'A13': Array.from({length: 20}, (_, i) => `img/A13/${i + 1}.jpg`)
+    };
+
+    function openGallery(albumId, title) {
+      currentTitle = title;
+      currentImages = albumImages[albumId] || [];
+      currentIndex = 0;
+      
+      if (currentImages.length > 0) {
+        document.getElementById('gallery-modal').classList.remove('hidden');
+        updateGalleryImage();
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeGallery() {
+      document.getElementById('gallery-modal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function updateGalleryImage() {
+      const img = document.getElementById('gallery-image');
+      img.src = currentImages[currentIndex];
+    }
+
+    function nextImage() {
+      if (currentIndex < currentImages.length - 1) {
+        currentIndex++;
+        updateGalleryImage();
+      }
+    }
+
+    function prevImage() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateGalleryImage();
+      }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (!document.getElementById('gallery-modal').classList.contains('hidden')) {
+        if (e.key === 'Escape') closeGallery();
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') prevImage();
+      }
+    });
+
+    // Make functions global
+    window.openGallery = openGallery;
+    window.closeGallery = closeGallery;
+    window.nextImage = nextImage;
+    window.prevImage = prevImage;
+  </script>
+
+</body>
+
+</html>
