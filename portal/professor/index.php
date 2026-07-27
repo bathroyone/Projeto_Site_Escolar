@@ -426,6 +426,188 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     <p class="text-sm text-gray-500">Registrar notas no boletim</p>
                 </div>
             </a>
+            
+            <a href="chamada_geo.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-teal-500 to-teal-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-qrcode text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Chamada Geo</h3>
+                    <p class="text-sm text-gray-500">Chamada com geolocalização</p>
+                </div>
+            </a>
+            
+            <a href="planejamento_aulas.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-calendar-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Planejamento</h3>
+                    <p class="text-sm text-gray-500">Planejamento de aulas</p>
+                </div>
+            </a>
+            
+            <a href="provas_online.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-pink-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-file-signature text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Provas Online</h3>
+                    <p class="text-sm text-gray-500">Criar e gerenciar provas</p>
+                </div>
+            </a>
+            
+            <a href="trabalhos_grupo.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-cyan-500 to-cyan-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-users text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Trabalhos em Grupo</h3>
+                    <p class="text-sm text-gray-500">Gestão de trabalhos</p>
+                </div>
+            </a>
+            
+            <a href="forum_discussao.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-rose-500 to-rose-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-comments text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Fórum de Discussão</h3>
+                    <p class="text-sm text-gray-500">Fórum por turma</p>
+                </div>
+            </a>
+            
+            <a href="materiais_didaticos.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-book-open text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Materiais Didáticos</h3>
+                    <p class="text-sm text-gray-500">Gestão de materiais</p>
+                </div>
+            </a>
+            
+            <a href="acompanhamento_alunos.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-lime-500 to-lime-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-user-graduate text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Acompanhamento</h3>
+                    <p class="text-sm text-gray-500">Acompanhamento individual</p>
+                </div>
+            </a>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-10">
+            <a href="relatorios_desempenho.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-violet-500 to-violet-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-chart-bar text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Relatórios</h3>
+                    <p class="text-sm text-gray-500">Relatórios de desempenho</p>
+                </div>
+            </a>
+            
+            <a href="avisos_responsaveis.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-sky-500 to-sky-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-bell text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Avisos Responsáveis</h3>
+                    <p class="text-sm text-gray-500">Avisos aos responsáveis</p>
+                </div>
+            </a>
+            
+            <a href="projetos.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-fuchsia-500 to-fuchsia-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-project-diagram text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Projetos</h3>
+                    <p class="text-sm text-gray-500">Gestão de projetos</p>
+                </div>
+            </a>
+            
+            <a href="videoconferencias.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-video text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Videoconferências</h3>
+                    <p class="text-sm text-gray-500">Aulas online integradas</p>
+                </div>
+            </a>
+            
+            <a href="bibliografia.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-stone-500 to-stone-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-book text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Bibliografia</h3>
+                    <p class="text-sm text-gray-500">Gestão de referências</p>
+                </div>
+            </a>
+            
+            <a href="compartilhamento.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-zinc-500 to-zinc-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-share-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Compartilhamento</h3>
+                    <p class="text-sm text-gray-500">Compartilhamento de recursos</p>
+                </div>
+            </a>
+            
+            <a href="recuperacao.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-red-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-redo text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Recuperação</h3>
+                    <p class="text-sm text-gray-500">Gestão de recuperação</p>
+                </div>
+            </a>
+            
+            <a href="feedback.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-comment-dots text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Feedback</h3>
+                    <p class="text-sm text-gray-500">Feedback para alunos</p>
+                </div>
+            </a>
+            
+            <a href="horarios_atendimento.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-clock text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Horários</h3>
+                    <p class="text-sm text-gray-500">Horários de atendimento</p>
+                </div>
+            </a>
+            
+            <a href="controle_entregas.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-500 to-yellow-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-tasks text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Controle Entregas</h3>
+                    <p class="text-sm text-gray-500">Controle de entregas</p>
+                </div>
+            </a>
+            
+            <a href="avaliacoes_formativas.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-clipboard-check text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Avaliações Formativas</h3>
+                    <p class="text-sm text-gray-500">Gestão de avaliações</p>
+                </div>
+            </a>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-10">

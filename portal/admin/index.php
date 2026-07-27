@@ -255,16 +255,6 @@ try {
                 </div>
             </a>
             
-            <a href="pre_matriculas.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
-                <div class="flex flex-col items-center text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-purple-600 to-purple-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
-                        <i class="fas fa-user-graduate text-white text-2xl"></i>
-                    </div>
-                    <h3 class="font-bold text-gray-800 text-lg mb-2">Pré-Matrículas</h3>
-                    <p class="text-sm text-gray-500">Aprovar e gerenciar solicitações</p>
-                </div>
-            </a>
-            
             <a href="arquivos.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
                 <div class="flex flex-col items-center text-center">
                     <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
@@ -302,6 +292,56 @@ try {
                     </div>
                     <h3 class="font-bold text-gray-800 text-lg mb-2">Backup & Restore</h3>
                     <p class="text-sm text-gray-500">Gerenciar backups do sistema</p>
+                </div>
+            </a>
+            
+            <a href="comunicados.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-teal-500 to-teal-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-bullhorn text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Comunicados</h3>
+                    <p class="text-sm text-gray-500">Gerenciar comunicados oficiais</p>
+                </div>
+            </a>
+            
+            <a href="visitas.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-walking text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Visitas</h3>
+                    <p class="text-sm text-gray-500">Agendamento de visitas</p>
+                </div>
+            </a>
+            
+            <a href="analytics.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-pink-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-chart-pie text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Analytics</h3>
+                    <p class="text-sm text-gray-500">Estatísticas do sistema</p>
+                </div>
+            </a>
+            
+            <a href="suporte.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-cyan-500 to-cyan-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-headset text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Suporte</h3>
+                    <p class="text-sm text-gray-500">Gerenciar tickets de suporte</p>
+                </div>
+            </a>
+            
+            <a href="contratos.php" class="action-card glass-card rounded-3xl p-6 transition-all duration-300 hover:shadow-xl group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-rose-500 to-rose-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-file-contract text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Contratos</h3>
+                    <p class="text-sm text-gray-500">Gestão de contratos</p>
                 </div>
             </a>
         </div>
