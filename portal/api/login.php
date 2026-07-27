@@ -38,46 +38,44 @@ try {
     
     $usuario = $stmt->fetch();
     
-    if ($usuario && verifyPassword($senha, $usuario['senha'])) {
-        // Login bem-sucedido
-        $_SESSION['usuario_id'] = $usuario['id'];
-        $_SESSION['nome'] = $usuario['nome_completo'];
-        $_SESSION['email'] = $usuario['email'];
-        $_SESSION['tipo_usuario'] = $usuario['tipo_usuario'];
-        $_SESSION['turma'] = $usuario['turma'];
-        $_SESSION['serie'] = $usuario['serie'];
-        
-        // Registrar log de auditoria
-        if (function_exists('logAudit')) {
-            logAudit(AuditActions::LOGIN_SUCCESS, [
-                'login_field' => $login_field,
-                'tipo_usuario' => $tipo_usuario
-            ], $usuario['id'], $tipo_usuario);
-        }
-        
-        echo json_encode([
-            'success' => true,
-            'message' => 'Login realizado com sucesso',
-            'redirect' => 'portal/dashboard.php',
-            'user' => [
-                'nome' => $usuario['nome_completo'],
-                'tipo' => $usuario['tipo_usuario'],
-                'email' => $usuario['email']
-            ]
-        ]);
-    } else {
-        // Login falhou
-        if (function_exists('logAudit')) {
-            logAudit(AuditActions::LOGIN_FAILED, [
-                'login_field' => $login_field,
-                'tipo_usuario' => $tipo_usuario
-            ], null, $tipo_usuario);
-        }
-        
-        echo json_encode(['success' => false, 'message' => 'Credenciais incorretas.']);
+    if (!$usuario) {
+        echo json_encode(['success' => false, 'message' => 'Usuário não encontrado. Verifique suas credenciais.']);
+        exit();
     }
+    
+    if (!verifyPassword($senha, $usuario['senha'])) {
+        echo json_encode(['success' => false, 'message' => 'Senha incorreta.']);
+        exit();
+    }
+    
+    // Login bem-sucedido
+    $_SESSION['usuario_id'] = $usuario['id'];
+    $_SESSION['nome'] = $usuario['nome_completo'];
+    $_SESSION['email'] = $usuario['email'];
+    $_SESSION['tipo_usuario'] = $usuario['tipo_usuario'];
+    $_SESSION['turma'] = $usuario['turma'];
+    $_SESSION['serie'] = $usuario['serie'];
+    
+    // Registrar log de auditoria
+    if (function_exists('logAudit')) {
+        logAudit(AuditActions::LOGIN_SUCCESS, [
+            'login_field' => $login_field,
+            'tipo_usuario' => $tipo_usuario
+        ], $usuario['id'], $tipo_usuario);
+    }
+    
+    echo json_encode([
+        'success' => true,
+        'message' => 'Login realizado com sucesso',
+        'redirect' => 'portal/dashboard.php',
+        'user' => [
+            'nome' => $usuario['nome_completo'],
+            'tipo' => $usuario['tipo_usuario'],
+            'email' => $usuario['email']
+        ]
+    ]);
 } catch (PDOException $e) {
     error_log("Erro no login: " . $e->getMessage());
-    echo json_encode(['success' => false, 'message' => 'Erro ao fazer login. Por favor, tente novamente.']);
+    echo json_encode(['success' => false, 'message' => 'Erro ao fazer login: ' . $e->getMessage()]);
 }
 ?>
