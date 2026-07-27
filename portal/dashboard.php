@@ -100,37 +100,11 @@ $notificacoes = getUnreadNotifications($usuario_id);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Portal CEAA</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Dashboard | Portal de Gestão Escolar</title>
+    <link rel="stylesheet" href="../css/output.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        azul: {
-                            principal: '#063b7a',
-                            escuro: '#082b54',
-                            claro: '#0b4a8c'
-                        },
-                        amarelo: {
-                            destaque: '#ffd000',
-                            claro: '#ffe033'
-                        },
-                        verde: {
-                            complementar: '#13843b',
-                            claro: '#15a048'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                        display: ['Poppins', 'system-ui', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
+    <script src="../js/dark-mode.js"></script>
 </head>
 <body class="bg-gray-100 min-h-screen">
     <!-- Header -->
@@ -139,10 +113,10 @@ $notificacoes = getUnreadNotifications($usuario_id);
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center gap-3">
                     <a href="../index.html" class="flex items-center gap-2">
-                        <img src="../img/logo1.png" alt="Logo CEAA" class="h-10">
+                        <img src="../img/logo.jpg" alt="Logo" class="h-10">
                         <div class="hidden sm:block">
-                            <span class="text-azul-principal font-bold text-xs">CENTRO EDUCACIONAL</span>
-                            <span class="block text-amarelo-destaque font-extrabold text-sm">ALAMEDA ARGENTINA</span>
+                            <span class="text-azul-principal font-bold text-xs">SISTEMA DE GESTÃO</span>
+                            <span class="block text-amarelo-destaque font-extrabold text-sm">ESCOLAR</span>
                         </div>
                     </a>
                 </div>
@@ -198,6 +172,18 @@ $notificacoes = getUnreadNotifications($usuario_id);
                                 <?php endif; ?>
                             </div>
                             <div class="p-2">
+                                <?php if (isProfessor()): ?>
+                                    <a href="professor/" class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                                        <i class="fas fa-chalkboard-teacher"></i>
+                                        Painel do Professor
+                                    </a>
+                                <?php endif; ?>
+                                <?php if (isAdmin()): ?>
+                                    <a href="admin/" class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                                        <i class="fas fa-user-shield"></i>
+                                        Painel Administrativo
+                                    </a>
+                                <?php endif; ?>
                                 <a href="logout.php" class="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
                                     <i class="fas fa-sign-out-alt"></i>
                                     Sair

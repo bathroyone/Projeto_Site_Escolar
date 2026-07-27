@@ -26,15 +26,15 @@
 
 ### 2.2. Criar o banco de dados manualmente
 - Clique em "Novo" no menu lateral
-- Nome do banco: `ceaa_escola`
+- Nome do banco: `escola_gestao`
 - Collation: `utf8mb4_unicode_ci`
 - Clique em "Criar"
 
 ### 2.3. Importar o schema.sql
-- Selecione o banco `ceaa_escola`
+- Selecione o banco `escola_gestao`
 - Clique na aba "Importar"
 - Clique em "Escolher arquivo"
-- Navegue até: `g:\Meus Sites\Alameda Argentina\ceaacolegiobrasil.com.br\database\schema.sql`
+- Navegue até: `C:\xampp\htdocs\Projeto_Site_Escolar\database\schema.sql`
 - Clique em "Importar"
 - Aguarde a conclusão da importação
 
@@ -48,34 +48,40 @@
 ## 3. Configurar o Sistema
 
 ### 3.1. Configurar o arquivo config.php
-- Abra o arquivo: `g:\Meus Sites\Alameda Argentina\ceaacolegiobrasil.com.br\portal\config.php`
+- Abra o arquivo: `C:\xampp\htdocs\Projeto_Site_Escolar\portal\config.php`
 - Verifique as configurações do banco de dados:
   ```php
   define('DB_HOST', 'localhost');
-  define('DB_NAME', 'ceaa_escola');
+  define('DB_NAME', 'escola_gestao');
   define('DB_USER', 'root');
   define('DB_PASS', '');
   ```
 - Se sua senha do MySQL for diferente, altere `DB_PASS`
 - Configure o URL do site:
   ```php
-  define('SITE_URL', 'http://localhost/ceaacolegiobrasil.com.br/portal');
+  define('SITE_URL', 'http://localhost/Projeto_Site_Escolar/portal');
   ```
 
 ### 3.2. Criar diretório de uploads
-- Navegue até: `g:\Meus Sites\Alameda Argentina\ceaacolegiobrasil.com.br\portal`
+- Navegue até: `C:\xampp\htdocs\Projeto_Site_Escolar\portal`
 - Crie a pasta `uploads`
 - Dentro de `uploads`, crie a pasta `arquivos`
+
+### 3.3. Compilar o CSS (opcional)
+- Abra o terminal na pasta do projeto
+- Execute: `npm run build`
+- Isso irá gerar o arquivo `css/output.css` com o Tailwind CSS compilado
 
 ## 4. Testar o Sistema
 
 ### 4.1. Acessar o site principal
-- Abra o navegador e acesse: `http://localhost/ceaacolegiobrasil.com.br`
+- Abra o navegador e acesse: `http://localhost/Projeto_Site_Escolar`
 - Verifique se o site carrega corretamente
 
 ### 4.2. Testar o modal de login
 - Clique no botão "Acesso ao Sistema" no menu
 - O modal deve abrir com 3 tabs: Professor, Aluno, Admin
+- O login é feito via AJAX com autenticação no banco de dados
 
 ### 4.3. Testar login como Admin
 - Selecione a tab "Admin"
@@ -83,6 +89,7 @@
 - Senha: `admin123`
 - Clique em "Entrar como Admin"
 - Deve ser redirecionado para o dashboard do admin
+- Verifique se o avatar e menu de usuário aparecem na barra superior
 
 ### 4.4. Testar login como Professor
 - Faça logout
@@ -92,6 +99,7 @@
 - Senha: `prof123`
 - Clique em "Entrar como Professor"
 - Deve ser redirecionado para o dashboard do professor
+- Verifique se o avatar e menu de usuário aparecem na barra superior
 
 ### 4.5. Testar login como Aluno
 - Faça logout
@@ -101,6 +109,7 @@
 - Senha: `aluno123`
 - Clique em "Entrar como Aluno"
 - Deve ser redirecionado para o dashboard do aluno
+- Verifique se o avatar e menu de usuário aparecem na barra superior
 
 ## 5. Testar Funcionalidades
 
@@ -160,4 +169,4 @@
 
 ---
 
-**Nota:** Este passo a passo assume que o XAMPP está instalado em `C:\xampp` e o site está em `g:\Meus Sites\Alameda Argentina\ceaacolegiobrasil.com.br`. Ajuste os caminhos conforme necessário.
+**Nota:** Este passo a passo assume que o XAMPP está instalado em `C:\xampp` e o site está em `C:\xampp\htdocs\Projeto_Site_Escolar`. Ajuste os caminhos conforme necessário.

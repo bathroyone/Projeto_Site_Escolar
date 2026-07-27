@@ -16,15 +16,21 @@ Este projeto consiste em um sistema escolar completo com:
 
 ### Frontend
 - **HTML5**: Estrutura semântica
-- **Tailwind CSS**: Framework CSS para estilização (via CDN)
+- **Tailwind CSS**: Framework CSS para estilização (build local)
 - **GSAP**: Animações avançadas
 - **Font Awesome**: Ícones
 - **Google Fonts**: Inter e Poppins
+- **Dark Mode**: Alternância entre temas claro/escuro
+- **PWA**: Progressive Web App com service worker
 
 ### Backend
 - **PHP 7.4+**: Linguagem de servidor
 - **MySQL 5.7+**: Banco de dados relacional
 - **PDO**: Abstração de banco de dados
+- **Sistema de Autenticação**: Login via AJAX com banco de dados
+- **Tratamento de Erros**: Centralizado com logging
+- **Cache**: Sistema de cache para performance
+- **Logs de Auditoria**: Rastreamento de ações do sistema
 
 ### Ferramentas de Desenvolvimento
 - **Node.js**: Gerenciamento de pacotes
@@ -50,9 +56,12 @@ Projeto_Site_Escolar/
 ├── js/                         # Scripts JavaScript
 │   ├── main.js                # Funcionalidades principais
 │   ├── carousel.js            # Carrossel de imagens
-│   ├── mobile-menu.js         # Menu mobile
-│   ├── scroll-animations.js   # Animações de scroll
-│   └── stats-counter.js       # Contador animado
+│   ├── form-validation.js     # Validação de formulários
+│   ├── loading-states.js      # Estados de loading
+│   ├── dark-mode.js           # Sistema de dark mode
+│   ├── accessibility.js      # Melhorias de acessibilidade
+│   ├── performance-animations.js # Animações otimizadas
+│   └── notifications-polling.js # Sistema de notificações
 │
 ├── img/                        # Imagens do site
 │   └── logo.jpg               # Logo da escola
@@ -64,6 +73,10 @@ Projeto_Site_Escolar/
 │   ├── register.php           # Cadastro de alunos
 │   ├── dashboard.php          # Dashboard principal
 │   ├── install.php            # Instalação do sistema
+│   ├── api/                   # API endpoints
+│   │   ├── login.php         # API de login (AJAX)
+│   │   ├── notifications.php  # API de notificações
+│   │   └── mark-notification-read.php # Marcar notificação como lida
 │   ├── admin/                 # Portal do administrador
 │   │   ├── index.php         # Dashboard admin
 │   │   ├── usuarios.php      # Gerenciamento de usuários
@@ -71,11 +84,23 @@ Projeto_Site_Escolar/
 │   │   └── arquivos.php      # Gerenciamento de arquivos
 │   ├── professor/             # Portal do professor
 │   │   └── upload.php        # Upload de arquivos
+│   ├── error-handler.php      # Tratamento de erros
+│   ├── audit-logger.php      # Sistema de logs de auditoria
+│   ├── cache-manager.php     # Sistema de cache
 │   └── uploads/              # Diretório de uploads
 │       └── arquivos/         # Arquivos enviados
 │
 ├── database/                   # Banco de dados
-│   └── schema.sql            # Schema do banco de dados
+│   └── schema.sql            # Schema do banco de dados (escola_gestao)
+
+├── scripts/                    # Scripts de automação
+│   ├── backup-database.php    # Script de backup do banco
+│   └── backup-cron.bat        # Script para agendamento (Windows)
+
+├── manifest.json               # Manifesto PWA
+├── sw.js                       # Service Worker PWA
+├── robots.txt                  # Diretrizes para crawlers
+└── sitemap.xml                 # Sitemap do site
 │
 ├── biblioteca_vrtual/          # Biblioteca virtual
 │   ├── livro.html             # Página principal da biblioteca
@@ -165,12 +190,14 @@ Projeto_Site_Escolar/
    - Inicie os serviços Apache e MySQL
    - Acesse `http://localhost/phpmyadmin`
    - Importe o arquivo `database/schema.sql`
+   - O banco de dados será criado com o nome `escola_gestao`
    - Ou siga o guia detalhado em `INSTALACAO_XAMPP.md`
 
 4. **Configure o portal**:
    - Edite `portal/config.php` com suas credenciais do MySQL
+   - O nome do banco deve ser `escola_gestao`
    - Crie o diretório `portal/uploads/arquivos`
-   - Configure o URL do site
+   - Configure o URL do site em `SITE_URL`
 
 5. **Instale as dependências do Node.js** (opcional, para desenvolvimento):
    ```bash
@@ -216,6 +243,9 @@ Projeto_Site_Escolar/
 - **Contato**: Informações de contato e redes sociais
 - **Menu Mobile**: Responsivo para dispositivos móveis
 - **Animações**: Efeitos de scroll e transições suaves
+- **Dark Mode**: Alternância entre temas claro/escuro
+- **Login Modal**: Autenticação via AJAX com banco de dados
+- **SEO**: Meta tags otimizadas, sitemap e robots.txt
 
 ### Sistema de Portal
 
@@ -234,8 +264,9 @@ Projeto_Site_Escolar/
 **Aluno:**
 - Visualização de arquivos disponíveis para sua turma/série
 - Acesso ao dashboard com calendário de eventos
-- Recebimento de notificações
+- Recebimento de notificações em tempo real
 - Visualização de avisos dos professores
+- Avatar e menu de usuário personalizado
 
 ### Biblioteca Virtual
 - Livros organizados por categorias
