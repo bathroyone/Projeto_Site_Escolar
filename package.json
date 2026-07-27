@@ -1,7 +1,7 @@
 {
   "name": "ceaacolegiobrasil",
   "version": "2.0.0",
-  "description": "Centro Educacional Alameda Argentina - Site Institucional Modernizado",
+  "description": "Site Institucional Modernizado e Sistema de Gestão Escolar",
   "private": true,
   "scripts": {
     "dev": "npx tailwindcss -i ./css/globals.css -o ./css/output.css --watch",

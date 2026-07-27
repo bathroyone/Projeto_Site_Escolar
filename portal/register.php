@@ -107,19 +107,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="bg-gradient-to-br from-blue-50 to-white min-h-screen flex items-center justify-center p-4 py-8">
     <div class="w-full max-w-lg">
         <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
-            <div class="h-32 bg-gradient-to-br from-verde-complementar to-teal-600 flex items-center justify-center relative overflow-hidden">
+            <div class="h-28 sm:h-32 bg-gradient-to-br from-verde-complementar to-teal-600 flex items-center justify-center relative overflow-hidden">
                 <div class="absolute inset-0 bg-white/10"></div>
                 <div class="absolute top-10 left-10 w-20 h-20 bg-white/10 rounded-full blur-2xl"></div>
                 <div class="absolute bottom-10 right-10 w-24 h-24 bg-amarelo-destaque/20 rounded-full blur-2xl"></div>
                 <div class="relative z-10 text-center">
-                    <i class="fas fa-user-plus text-white text-4xl mb-2"></i>
-                    <h1 class="font-display font-bold text-white text-2xl">Cadastro de Aluno</h1>
+                    <i class="fas fa-user-plus text-white text-3xl sm:text-4xl mb-2"></i>
+                    <h1 class="font-display font-bold text-white text-xl sm:text-2xl">Cadastro de Aluno</h1>
                 </div>
             </div>
             
-            <div class="p-8">
+            <div class="p-6 sm:p-8">
                 <div class="text-center mb-6">
-                    <h2 class="font-display font-bold text-azul-principal text-2xl mb-2">Crie sua conta</h2>
+                    <h2 class="font-display font-bold text-azul-principal text-xl sm:text-2xl mb-2">Crie sua conta</h2>
                     <p class="text-gray-600 text-sm">Preencha os dados para se cadastrar no portal</p>
                 </div>
                 
@@ -249,7 +249,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php endif; ?>
                 
                 <div class="mt-4 text-center">
-                    <a href="../index.html" class="text-gray-500 text-sm hover:text-azul-principal transition-colors">
+                    <a href="../index.php" class="text-gray-500 text-sm hover:text-azul-principal transition-colors">
                         <i class="fas fa-arrow-left mr-1"></i>
                         Voltar ao site principal
                     </a>
@@ -258,7 +258,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         
         <div class="text-center mt-6 text-gray-500 text-sm">
-            <p>© 2026 Centro Educacional Alameda Argentina</p>
+            <p>© 2026 Centro Educacional</p>
         </div>
     </div>
     

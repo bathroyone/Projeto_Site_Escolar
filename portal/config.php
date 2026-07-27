@@ -16,10 +16,12 @@ define('MAX_FILE_SIZE', 10485760); // 10MB
 define('ALLOWED_EXTENSIONS', ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'jpg', 'jpeg', 'png', 'gif', 'mp4', 'webm']);
 
 // Configurações de Sessão
-ini_set('session.cookie_httponly', 1);
-ini_set('session.use_only_cookies', 1);
-ini_set('session.cookie_secure', 0); // Mudar para 1 em produção com HTTPS
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    ini_set('session.cookie_httponly', 1);
+    ini_set('session.use_only_cookies', 1);
+    ini_set('session.cookie_secure', 0); // Mudar para 1 em produção com HTTPS
+    session_start();
+}
 
 // Função de conexão com o banco de dados
 function getDBConnection() {
@@ -89,6 +91,11 @@ function requireProfessor() {
     }
 }
 
+// Função para verificar se é secretaria
+function isSecretaria() {
+    return isLoggedIn() && getUserType() === 'secretaria';
+}
+
 // Função para redirecionar se não for aluno
 function requireAluno() {
     requireLogin();
@@ -97,6 +104,17 @@ function requireAluno() {
         exit();
     }
 }
+
+// Função para redirecionar se não for secretaria
+function requireSecretaria() {
+    requireLogin();
+    if (!isSecretaria() && !isAdmin()) {
+        header('Location: dashboard.php');
+        exit();
+    }
+}
+
+// Função para redirecionar se não for aluno
 
 // Função para sanitizar entrada
 function sanitizeInput($data) {
@@ -186,6 +204,252 @@ function markNotificationAsRead($notificacaoId) {
     } catch (PDOException $e) {
         error_log("Erro ao marcar notificação como lida: " . $e->getMessage());
         return false;
+    }
+}
+
+// Função para registrar log de auditoria
+function logAudit($acao, $tabela = null, $registroId = null, $dadosAntigos = null, $dadosNovos = null) {
+    try {
+        $pdo = getDBConnection();
+        
+        $usuarioId = $_SESSION['usuario_id'] ?? null;
+        $usuarioNome = $_SESSION['nome'] ?? 'Sistema';
+        $usuarioTipo = $_SESSION['tipo_usuario'] ?? 'sistema';
+        $ip = $_SERVER['REMOTE_ADDR'] ?? null;
+        $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? null;
+        
+        $stmt = $pdo->prepare("
+            INSERT INTO audit_logs (usuario_id, usuario_nome, usuario_tipo, acao, tabela, registro_id, dados_antigos, dados_novos, ip, user_agent)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        
+        $stmt->execute([
+            $usuarioId,
+            $usuarioNome,
+            $usuarioTipo,
+            $acao,
+            $tabela,
+            $registroId,
+            $dadosAntigos ? json_encode($dadosAntigos) : null,
+            $dadosNovos ? json_encode($dadosNovos) : null,
+            $ip,
+            $userAgent
+        ]);
+        
+        return true;
+    } catch (PDOException $e) {
+        error_log("Erro ao registrar log de auditoria: " . $e->getMessage());
+        return false;
+    }
+}
+
+// Função para obter logs de auditoria
+function getAuditLogs($limit = 100, $offset = 0, $filtros = []) {
+    try {
+        $pdo = getDBConnection();
+        
+        $where = [];
+        $params = [];
+        
+        if (!empty($filtros['usuario_id'])) {
+            $where[] = "usuario_id = ?";
+            $params[] = $filtros['usuario_id'];
+        }
+        
+        if (!empty($filtros['acao'])) {
+            $where[] = "acao = ?";
+            $params[] = $filtros['acao'];
+        }
+        
+        if (!empty($filtros['tabela'])) {
+            $where[] = "tabela = ?";
+            $params[] = $filtros['tabela'];
+        }
+        
+        if (!empty($filtros['data_inicio'])) {
+            $where[] = "created_at >= ?";
+            $params[] = $filtros['data_inicio'];
+        }
+        
+        if (!empty($filtros['data_fim'])) {
+            $where[] = "created_at <= ?";
+            $params[] = $filtros['data_fim'];
+        }
+        
+        $whereClause = !empty($where) ? "WHERE " . implode(" AND ", $where) : "";
+        
+        $sql = "SELECT * FROM audit_logs $whereClause ORDER BY created_at DESC LIMIT ? OFFSET ?";
+        $params[] = $limit;
+        $params[] = $offset;
+        
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        error_log("Erro ao obter logs de auditoria: " . $e->getMessage());
+        return [];
+    }
+}
+
+// Função para obter total de logs de auditoria
+function getAuditLogsCount($filtros = []) {
+    try {
+        $pdo = getDBConnection();
+        
+        $where = [];
+        $params = [];
+        
+        if (!empty($filtros['usuario_id'])) {
+            $where[] = "usuario_id = ?";
+            $params[] = $filtros['usuario_id'];
+        }
+        
+        if (!empty($filtros['acao'])) {
+            $where[] = "acao = ?";
+            $params[] = $filtros['acao'];
+        }
+        
+        if (!empty($filtros['tabela'])) {
+            $where[] = "tabela = ?";
+            $params[] = $filtros['tabela'];
+        }
+        
+        $whereClause = !empty($where) ? "WHERE " . implode(" AND ", $where) : "";
+        
+        $sql = "SELECT COUNT(*) as total FROM audit_logs $whereClause";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        
+        return $stmt->fetch()['total'];
+    } catch (PDOException $e) {
+        error_log("Erro ao contar logs de auditoria: " . $e->getMessage());
+        return 0;
+    }
+}
+
+// Função para verificar se usuário tem permissão
+function hasPermission($codigoPermissao) {
+    try {
+        $pdo = getDBConnection();
+        $usuarioId = $_SESSION['usuario_id'] ?? null;
+        
+        if (!$usuarioId) {
+            return false;
+        }
+        
+        // Verificar se é Super Admin (tem todas as permissões)
+        $stmt = $pdo->prepare("
+            SELECT COUNT(*) as total 
+            FROM usuario_roles ur 
+            JOIN roles r ON ur.role_id = r.id 
+            WHERE ur.usuario_id = ? AND r.nome = 'Super Admin'
+        ");
+        $stmt->execute([$usuarioId]);
+        
+        if ($stmt->fetch()['total'] > 0) {
+            return true;
+        }
+        
+        // Verificar permissão específica
+        $stmt = $pdo->prepare("
+            SELECT COUNT(*) as total 
+            FROM usuario_roles ur 
+            JOIN role_permissoes rp ON ur.role_id = rp.role_id 
+            JOIN permissoes p ON rp.permissao_id = p.id 
+            WHERE ur.usuario_id = ? AND p.codigo = ? AND p.ativo = 1
+        ");
+        $stmt->execute([$usuarioId, $codigoPermissao]);
+        
+        return $stmt->fetch()['total'] > 0;
+    } catch (PDOException $e) {
+        error_log("Erro ao verificar permissão: " . $e->getMessage());
+        return false;
+    }
+}
+
+// Função para obter permissões do usuário
+function getUserPermissions($usuarioId) {
+    try {
+        $pdo = getDBConnection();
+        
+        $stmt = $pdo->prepare("
+            SELECT DISTINCT p.* 
+            FROM usuario_roles ur 
+            JOIN role_permissoes rp ON ur.role_id = rp.role_id 
+            JOIN permissoes p ON rp.permissao_id = p.id 
+            WHERE ur.usuario_id = ? AND p.ativo = 1
+            ORDER BY p.modulo, p.nome
+        ");
+        $stmt->execute([$usuarioId]);
+        
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        error_log("Erro ao obter permissões: " . $e->getMessage());
+        return [];
+    }
+}
+
+// Função para obter roles do usuário
+function getUserRoles($usuarioId) {
+    try {
+        $pdo = getDBConnection();
+        
+        $stmt = $pdo->prepare("
+            SELECT r.* 
+            FROM usuario_roles ur 
+            JOIN roles r ON ur.role_id = r.id 
+            WHERE ur.usuario_id = ? AND r.ativo = 1
+            ORDER BY r.nivel DESC
+        ");
+        $stmt->execute([$usuarioId]);
+        
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        error_log("Erro ao obter roles: " . $e->getMessage());
+        return [];
+    }
+}
+
+// Função para atribuir role ao usuário
+function assignRole($usuarioId, $roleId) {
+    try {
+        $pdo = getDBConnection();
+        
+        $stmt = $pdo->prepare("INSERT INTO usuario_roles (usuario_id, role_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE role_id = role_id");
+        $stmt->execute([$usuarioId, $roleId]);
+        
+        logAudit('ROLE_ASSIGN', 'usuario_roles', $usuarioId, null, ['role_id' => $roleId]);
+        
+        return true;
+    } catch (PDOException $e) {
+        error_log("Erro ao atribuir role: " . $e->getMessage());
+        return false;
+    }
+}
+
+// Função para remover role do usuário
+function removeRole($usuarioId, $roleId) {
+    try {
+        $pdo = getDBConnection();
+        
+        $stmt = $pdo->prepare("DELETE FROM usuario_roles WHERE usuario_id = ? AND role_id = ?");
+        $stmt->execute([$usuarioId, $roleId]);
+        
+        logAudit('ROLE_REMOVE', 'usuario_roles', $usuarioId, ['role_id' => $roleId], null);
+        
+        return true;
+    } catch (PDOException $e) {
+        error_log("Erro ao remover role: " . $e->getMessage());
+        return false;
+    }
+}
+
+// Função para redirecionar se não tiver permissão
+function requirePermission($codigoPermissao) {
+    if (!hasPermission($codigoPermissao)) {
+        header('Location: dashboard.php');
+        exit();
     }
 }
 ?>

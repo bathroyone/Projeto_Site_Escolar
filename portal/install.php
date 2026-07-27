@@ -22,11 +22,11 @@ try {
     ]);
     
     // Criar banco de dados
-    $pdo->exec("CREATE DATABASE IF NOT EXISTS ceaa_escola CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
-    $success[] = "Banco de dados 'ceaa_escola' criado com sucesso!";
+    $pdo->exec("CREATE DATABASE IF NOT EXISTS escola_gestao CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+    $success[] = "Banco de dados 'escola_gestao' criado com sucesso!";
     
     // Selecionar o banco de dados
-    $pdo->exec("USE ceaa_escola");
+    $pdo->exec("USE escola_gestao");
     
     // Ler o arquivo schema.sql
     $schema_file = __DIR__ . '/../database/schema.sql';
@@ -36,21 +36,43 @@ try {
     
     $sql = file_get_contents($schema_file);
     
-    // Remover comandos USE do schema (já estamos no banco correto)
+    // Remover comandos CREATE DATABASE e USE do schema (já estamos no banco correto)
+    $sql = preg_replace('/CREATE DATABASE IF NOT EXISTS \w+ CHARACTER SET [\w]+ COLLATE [\w_]+;/', '', $sql);
     $sql = preg_replace('/USE\s+\w+;/', '', $sql);
     
-    // Separar comandos SQL
-    $statements = explode(';', $sql);
+    // Separar comandos SQL mantendo a ordem correta
+    $statements = [];
+    $current_statement = '';
+    $in_delimiter = false;
     
+    foreach (explode("\n", $sql) as $line) {
+        $line = trim($line);
+        
+        // Ignorar comentários e linhas vazias
+        if (empty($line) || preg_match('/^--/', $line)) {
+            continue;
+        }
+        
+        $current_statement .= $line . "\n";
+        
+        // Se a linha termina com ;, é o fim do comando
+        if (substr($line, -1) === ';') {
+            $statements[] = trim($current_statement);
+            $current_statement = '';
+        }
+    }
+    
+    // Executar comandos em ordem
     foreach ($statements as $statement) {
         $statement = trim($statement);
-        if (!empty($statement) && !preg_match('/^(--|\/\*|\*\/)/', $statement)) {
+        if (!empty($statement)) {
             try {
                 $pdo->exec($statement);
             } catch (PDOException $e) {
-                // Ignorar erros de tabela já existente
-                if (strpos($e->getMessage(), 'already exists') === false) {
-                    $errors[] = "Erro ao executar: " . $statement . " - " . $e->getMessage();
+                // Ignorar erros de tabela/índice já existente
+                if (strpos($e->getMessage(), 'already exists') === false && 
+                    strpos($e->getMessage(), 'Duplicate key') === false) {
+                    $errors[] = "Erro ao executar: " . substr($statement, 0, 50) . "... - " . $e->getMessage();
                 }
             }
         }
@@ -128,7 +150,7 @@ try {
                         <a href="login.php" class="flex-1 bg-gradient-to-r from-azul-principal to-verde-complementar text-white text-center py-3 rounded-xl font-semibold hover:from-azul-escuro hover:to-verde-claro transition-all">
                             <i class="fas fa-sign-in-alt mr-2"></i>Fazer Login
                         </a>
-                        <a href="../index.html" class="flex-1 bg-gray-200 text-gray-700 text-center py-3 rounded-xl font-semibold hover:bg-gray-300 transition-all">
+                        <a href="../index.php" class="flex-1 bg-gray-200 text-gray-700 text-center py-3 rounded-xl font-semibold hover:bg-gray-300 transition-all">
                             <i class="fas fa-home mr-2"></i>Voltar ao Site
                         </a>
                     </div>
