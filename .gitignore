@@ -154,3 +154,5 @@ temp/
 # img/*.png
 # img/*.jpeg
 # img/*.gif
+.meta-panel-trigger
+meta.bat
