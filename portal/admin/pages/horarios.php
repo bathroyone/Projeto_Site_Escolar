@@ -36,9 +36,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $stmt->execute([$usuario_id, $dia_semana, $hora_inicio, $hora_fim, $local]);
             
             $success = 'Escala criada com sucesso!';
+            
+            // Recarregar escalas
+            $stmt = $pdo->query("
+                SELECT e.*, u.nome_completo, u.tipo_usuario 
+                FROM escala_horarios e 
+                JOIN usuarios u ON e.usuario_id = u.id 
+                ORDER BY FIELD(e.dia_semana, 'segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado'), e.hora_inicio
+            ");
+            $escalas = $stmt->fetchAll();
         } catch (PDOException $e) {
             error_log("Erro ao criar escala: " . $e->getMessage());
             $error = 'Erro ao criar escala.';
+        }
+    }
+}
+
+// Editar escala
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'editar_escala') {
+    $escala_id = intval($_POST['escala_id'] ?? 0);
+    $usuario_id = intval($_POST['usuario_id'] ?? 0);
+    $dia_semana = sanitizeInput($_POST['dia_semana'] ?? '');
+    $hora_inicio = sanitizeInput($_POST['hora_inicio'] ?? '');
+    $hora_fim = sanitizeInput($_POST['hora_fim'] ?? '');
+    $local = sanitizeInput($_POST['local'] ?? '');
+    
+    if (empty($usuario_id) || empty($dia_semana) || empty($hora_inicio) || empty($hora_fim) || empty($escala_id)) {
+        $error = 'Por favor, preencha todos os campos obrigatórios.';
+    } else {
+        try {
+            $pdo = getDBConnection();
+            $stmt = $pdo->prepare("
+                UPDATE escala_horarios SET usuario_id = ?, dia_semana = ?, hora_inicio = ?, hora_fim = ?, local = ? WHERE id = ?
+            ");
+            $stmt->execute([$usuario_id, $dia_semana, $hora_inicio, $hora_fim, $local, $escala_id]);
+            
+            $success = 'Escala atualizada com sucesso!';
+            
+            // Recarregar escalas
+            $stmt = $pdo->query("
+                SELECT e.*, u.nome_completo, u.tipo_usuario 
+                FROM escala_horarios e 
+                JOIN usuarios u ON e.usuario_id = u.id 
+                ORDER BY FIELD(e.dia_semana, 'segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado'), e.hora_inicio
+            ");
+            $escalas = $stmt->fetchAll();
+        } catch (PDOException $e) {
+            error_log("Erro ao editar escala: " . $e->getMessage());
+            $error = 'Erro ao editar escala.';
         }
     }
 }
@@ -129,7 +174,10 @@ if (isset($_GET['action']) && $_GET['action'] === 'excluir' && isset($_GET['id']
                         <td class="px-6 py-4 text-gray-600"><?php echo substr($escala['hora_inicio'], 0, 5) . ' - ' . substr($escala['hora_fim'], 0, 5); ?></td>
                         <td class="px-6 py-4 text-gray-600"><?php echo htmlspecialchars($escala['local'] ?? '-'); ?></td>
                         <td class="px-6 py-4 text-sm">
-                            <a href="?action=excluir&id=<?php echo $escala['id']; ?>" class="text-red-600 hover:text-red-800" onclick="return confirm('Tem certeza que deseja excluir esta escala?');">
+                            <button onclick="editEscala(<?php echo $escala['id']; ?>, <?php echo $escala['usuario_id']; ?>, '<?php echo $escala['dia_semana']; ?>', '<?php echo substr($escala['hora_inicio'], 0, 5); ?>', '<?php echo substr($escala['hora_fim'], 0, 5); ?>', '<?php echo htmlspecialchars($escala['local'] ?? '', ENT_QUOTES); ?>')" class="text-blue-600 hover:text-blue-800 mr-3">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <a href="../index.php?page=horarios&action=excluir&id=<?php echo $escala['id']; ?>" class="text-red-600 hover:text-red-800" onclick="return confirm('Tem certeza que deseja excluir esta escala?');">
                                 <i class="fas fa-trash"></i>
                             </a>
                         </td>
@@ -153,13 +201,14 @@ if (isset($_GET['action']) && $_GET['action'] === 'excluir' && isset($_GET['id']
     <div class="absolute inset-0 flex items-center justify-center p-4">
         <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full">
             <div class="p-6 border-b border-gray-200 flex items-center justify-between">
-                <h3 class="text-lg font-semibold text-gray-800">Nova Escala de Horário</h3>
+                <h3 class="text-lg font-semibold text-gray-800" id="modal-title">Nova Escala de Horário</h3>
                 <button onclick="toggleModal()" class="p-2 rounded-lg hover:bg-gray-100">
                     <i class="fas fa-times text-gray-400"></i>
                 </button>
             </div>
-            <form method="POST" action="" class="p-6">
-                <input type="hidden" name="action" value="criar_escala">
+            <form method="POST" action="../index.php?page=horarios" class="p-6">
+                <input type="hidden" name="action" id="form-action" value="criar_escala">
+                <input type="hidden" name="escala_id" id="escala-id" value="">
                 
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-2">Usuário *</label>
@@ -200,7 +249,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'excluir' && isset($_GET['id']
                 </div>
                 
                 <button type="submit" class="w-full bg-primary-600 text-white font-medium py-2 rounded-lg hover:bg-primary-700 transition-colors">
-                    <i class="fas fa-save mr-2"></i>Criar Escala
+                    <i class="fas fa-save mr-2"></i><span id="submit-text">Criar Escala</span>
                 </button>
             </form>
         </div>
@@ -211,5 +260,34 @@ if (isset($_GET['action']) && $_GET['action'] === 'excluir' && isset($_GET['id']
     function toggleModal() {
         const modal = document.getElementById('modal');
         modal.classList.toggle('hidden');
+        if (modal.classList.contains('hidden')) {
+            resetForm();
+        }
+    }
+    
+    function editEscala(id, usuarioId, diaSemana, horaInicio, horaFim, local) {
+        document.getElementById('form-action').value = 'editar_escala';
+        document.getElementById('escala-id').value = id;
+        document.getElementById('modal-title').textContent = 'Editar Escala de Horário';
+        document.getElementById('submit-text').textContent = 'Salvar Alterações';
+        document.getElementById('usuario_id').value = usuarioId;
+        document.getElementById('dia_semana').value = diaSemana;
+        document.getElementById('hora_inicio').value = horaInicio;
+        document.getElementById('hora_fim').value = horaFim;
+        document.getElementById('local').value = local;
+        
+        toggleModal();
+    }
+    
+    function resetForm() {
+        document.getElementById('form-action').value = 'criar_escala';
+        document.getElementById('escala-id').value = '';
+        document.getElementById('modal-title').textContent = 'Nova Escala de Horário';
+        document.getElementById('submit-text').textContent = 'Criar Escala';
+        document.getElementById('usuario_id').value = '';
+        document.getElementById('dia_semana').value = 'segunda';
+        document.getElementById('hora_inicio').value = '';
+        document.getElementById('hora_fim').value = '';
+        document.getElementById('local').value = '';
     }
 </script>

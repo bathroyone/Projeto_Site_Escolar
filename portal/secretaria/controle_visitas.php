@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     } else {
         try {
             $pdo = getDBConnection();
-            $stmt = $pdo->prepare("INSERT INTO visitas (nome_visitante, tipo_visita, data_visita, horario, motivo, status, criado_por) VALUES (?, ?, ?, ?, ?, 'agendada', ?)");
+            $stmt = $pdo->prepare("INSERT INTO visitas (visitante_nome, tipo_visita, data_visita, hora_entrada, motivo, status, autorizado_por) VALUES (?, ?, ?, ?, ?, 'agendada', ?)");
             $stmt->execute([$nome_visitante, $tipo_visita, $data_visita, $horario, $motivo, $_SESSION['usuario_id']]);
             
             logAudit('VISITA_CREATE', 'visitas', $pdo->lastInsertId(), null, ['nome' => $nome_visitante, 'tipo' => $tipo_visita]);
@@ -48,8 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     } else {
         try {
             $pdo = getDBConnection();
-            $stmt = $pdo->prepare("UPDATE visitas SET status = ?, observacoes = ?, atualizado_por = ? WHERE id = ?");
-            $stmt->execute([$status, $observacoes, $_SESSION['usuario_id'], $visita_id]);
+            $stmt = $pdo->prepare("UPDATE visitas SET status = ?, observacoes = ? WHERE id = ?");
+            $stmt->execute([$status, $observacoes, $visita_id]);
             
             logAudit('VISITA_UPDATE', 'visitas', $visita_id, null, ['status' => $status]);
             
@@ -85,7 +85,7 @@ try {
     $stmt = $pdo->query("
         SELECT * FROM visitas 
         WHERE data_visita >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
-        ORDER BY data_visita DESC, horario DESC
+        ORDER BY data_visita DESC, hora_entrada DESC
     ");
     $visitas = $stmt->fetchAll();
 } catch (PDOException $e) {
@@ -99,7 +99,7 @@ try {
     $stmt = $pdo->query("
         SELECT 
             COUNT(CASE WHEN status = 'agendada' THEN 1 END) as total_agendadas,
-            COUNT(CASE WHEN status = 'realizada' THEN 1 END) as total_realizadas,
+            COUNT(CASE WHEN status = 'concluida' THEN 1 END) as total_realizadas,
             COUNT(CASE WHEN status = 'cancelada' THEN 1 END) as total_canceladas
         FROM visitas
         WHERE data_visita >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
@@ -122,9 +122,9 @@ $tipos_visita = [
 // Status de visita
 $status_visita = [
     'agendada' => 'Agendada',
-    'realizada' => 'Realizada',
-    'cancelada' => 'Cancelada',
-    'remarcada' => 'Remarcada'
+    'em_andamento' => 'Em Andamento',
+    'concluida' => 'Concluída',
+    'cancelada' => 'Cancelada'
 ];
 ?>
 <!DOCTYPE html>
@@ -314,19 +314,19 @@ $status_visita = [
                             <tbody>
                                 <?php foreach ($visitas as $visita): ?>
                                     <tr class="border-b border-gray-50 hover:bg-gray-50">
-                                        <td class="px-4 sm:px-6 py-4 font-medium text-gray-800"><?php echo htmlspecialchars($visita['nome_visitante']); ?></td>
+                                        <td class="px-4 sm:px-6 py-4 font-medium text-gray-800"><?php echo htmlspecialchars($visita['visitante_nome']); ?></td>
                                         <td class="px-4 sm:px-6 py-4 text-gray-600"><?php echo htmlspecialchars($tipos_visita[$visita['tipo_visita']] ?? $visita['tipo_visita']); ?></td>
                                         <td class="px-4 sm:px-6 py-4 text-gray-600"><?php echo date('d/m/Y', strtotime($visita['data_visita'])); ?></td>
-                                        <td class="px-4 sm:px-6 py-4 text-gray-600"><?php echo $visita['horario']; ?></td>
+                                        <td class="px-4 sm:px-6 py-4 text-gray-600"><?php echo $visita['hora_entrada']; ?></td>
                                         <td class="px-4 sm:px-6 py-4 text-gray-600"><?php echo htmlspecialchars(substr($visita['motivo'] ?? '-', 0, 30)); ?></td>
                                         <td class="px-4 sm:px-6 py-4">
                                             <span class="px-2 py-1 rounded-full text-xs font-semibold 
                                                 <?php 
                                                 $cor_status = match($visita['status']) {
                                                     'agendada' => 'bg-yellow-100 text-yellow-600',
-                                                    'realizada' => 'bg-green-100 text-green-600',
+                                                    'em_andamento' => 'bg-blue-100 text-blue-600',
+                                                    'concluida' => 'bg-green-100 text-green-600',
                                                     'cancelada' => 'bg-red-100 text-red-600',
-                                                    'remarcada' => 'bg-blue-100 text-blue-600',
                                                     default => 'bg-gray-100 text-gray-600'
                                                 };
                                                 echo $cor_status;

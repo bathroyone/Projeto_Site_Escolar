@@ -1,4 +1,5 @@
 <?php
+$pageTitle = 'Transporte';
 require_once 'portal/config.php';
 
 // Criar tabela de rotas de transporte se não existir
@@ -25,193 +26,106 @@ try {
     error_log("Erro ao obter rotas: " . $e->getMessage());
 }
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transporte Escolar | Site da Escola</title>
-    <link rel="stylesheet" href="css/output.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-</head>
-<body class="bg-gray-900 min-h-screen">
-    <!-- Header -->
-    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-lg sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <div class="flex items-center gap-3">
-                    <a href="index.php" class="flex items-center gap-2 group">
-                        <img src="img/logo.jpg" alt="Logo" class="h-12">
-                        <div class="hidden sm:block">
-                            <span class="text-white font-bold text-xs tracking-wide">TRANSPORTE</span>
-                            <span class="block text-amarelo-destaque font-extrabold text-sm">ESCOLAR</span>
-                        </div>
-                    </a>
-                </div>
+<?php require_once 'includes/header.php'; ?>
 
-                <div class="flex items-center gap-3">
-                    <a href="index.php" class="px-6 py-2.5 bg-white/20 text-white rounded-full font-semibold hover:bg-white/30 transition-all">
-                        <i class="fas fa-arrow-left mr-2"></i>Voltar
-                    </a>
-                </div>
-            </div>
+<!-- Hero Section -->
+<section class="bg-gradient-to-br from-yellow-500 via-yellow-600 to-amber-700 py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center text-white">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 font-poppins">Transporte Escolar</h1>
+      <p class="text-xl text-white/90">Segurança e conforto no transporte dos alunos</p>
+    </div>
+  </div>
+</section>
+
+<!-- Main Content -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Transport Info -->
+    <div class="bg-white rounded-2xl shadow-lg p-8 mb-12">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4 font-poppins">Nosso Serviço de Transporte</h2>
+      <p class="text-gray-600 mb-6">Oferecemos transporte escolar seguro e confortável para os alunos, com motoristas qualificados e veículos equipados com todos os requisitos de segurança exigidos.</p>
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-3">
+            <i class="fas fa-shield-alt text-yellow-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2 font-poppins">Segurança</h3>
+          <p class="text-sm text-gray-600">Veículos monitorados</p>
         </div>
-    </header>
-
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <!-- Banner -->
-        <div class="bg-gradient-to-r from-azul-principal to-verde-complementar rounded-3xl p-8 mb-12 text-center">
-            <h1 class="text-3xl md:text-4xl font-display font-bold text-white mb-4">
-                <i class="fas fa-bus mr-3"></i>Transporte Escolar
-            </h1>
-            <p class="text-white/90 text-lg max-w-2xl mx-auto">
-                Informações sobre as rotas de transporte escolar, horários e valores.
-            </p>
+        
+        <div class="text-center">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+            <i class="fas fa-user-check text-blue-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2 font-poppins">Motoristas</h3>
+          <p class="text-sm text-gray-600">Profissionais qualificados</p>
         </div>
-
-        <!-- Informações Gerais -->
-        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-12 border border-white/20">
-            <h2 class="text-2xl font-bold text-white mb-6 text-center">
-                <i class="fas fa-info-circle mr-2 text-amarelo-destaque"></i>Informações Gerais
-            </h2>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-shield-alt text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-white font-semibold mb-2">Segurança</h3>
-                    <p class="text-gray-400 text-sm">Transporte seguro com monitoramento e profissionais qualificados.</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-clock text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-white font-semibold mb-2">Pontualidade</h3>
-                    <p class="text-gray-400 text-sm">Horários estabelecidos para garantir pontualidade nas aulas.</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-verde-complementar to-verde-claro rounded-xl flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-user-check text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-white font-semibold mb-2">Acompanhamento</h3>
-                    <p class="text-gray-400 text-sm">Controle de entrada e saída dos alunos em cada parada.</p>
-                </div>
-            </div>
+        
+        <div class="text-center">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+            <i class="fas fa-clock text-green-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2 font-poppins">Pontualidade</h3>
+          <p class="text-sm text-gray-600">Horários estabelecidos</p>
         </div>
-
-        <!-- Rotas Disponíveis -->
-        <div>
-            <h2 class="text-2xl font-bold text-white mb-6">
-                <i class="fas fa-route mr-2 text-amarelo-destaque"></i>Rotas Disponíveis
-            </h2>
-            
-            <div class="grid md:grid-cols-2 gap-6">
-                <?php if (count($rotas) > 0): ?>
-                    <?php foreach ($rotas as $rota): ?>
-                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                            <div class="flex items-start gap-4 mb-4">
-                                <div class="w-12 h-12 bg-gradient-to-br from-azul-principal to-verde-complementar rounded-xl flex items-center justify-center flex-shrink-0">
-                                    <i class="fas fa-bus text-white text-xl"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-white font-semibold text-lg"><?php echo htmlspecialchars($rota['nome']); ?></h3>
-                                    <?php if ($rota['descricao']): ?>
-                                        <p class="text-gray-400 text-sm"><?php echo htmlspecialchars($rota['descricao']); ?></p>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                            
-                            <div class="space-y-3">
-                                <?php if ($rota['bairros_atendidos']): ?>
-                                    <div class="flex items-start gap-2">
-                                        <i class="fas fa-map-marker-alt text-amarelo-destaque mt-1"></i>
-                                        <div>
-                                            <span class="text-gray-400 text-sm">Bairros atendidos:</span>
-                                            <p class="text-white text-sm"><?php echo htmlspecialchars($rota['bairros_atendidos']); ?></p>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
-                                
-                                <div class="flex items-center gap-4">
-                                    <div class="flex items-center gap-2">
-                                        <i class="fas fa-clock text-amarelo-destaque"></i>
-                                        <span class="text-gray-400 text-sm">Saída:</span>
-                                        <span class="text-white text-sm font-semibold"><?php echo date('H:i', strtotime($rota['horario_saida'])); ?></span>
-                                    </div>
-                                    <?php if ($rota['horario_chegada']): ?>
-                                        <div class="flex items-center gap-2">
-                                            <i class="fas fa-flag-checkered text-amarelo-destaque"></i>
-                                            <span class="text-gray-400 text-sm">Chegada:</span>
-                                            <span class="text-white text-sm font-semibold"><?php echo date('H:i', strtotime($rota['horario_chegada'])); ?></span>
-                                        </div>
-                                    <?php endif; ?>
-                                </div>
-                                
-                                <?php if ($rota['valor_mensal']): ?>
-                                    <div class="flex items-center gap-2">
-                                        <i class="fas fa-dollar-sign text-amarelo-destaque"></i>
-                                        <span class="text-gray-400 text-sm">Valor mensal:</span>
-                                        <span class="text-verde-complementar text-sm font-bold">R$ <?php echo number_format($rota['valor_mensal'], 2, ',', '.'); ?></span>
-                                    </div>
-                                <?php endif; ?>
-                                
-                                <?php if ($rota['telefone_contato']): ?>
-                                    <div class="flex items-center gap-2">
-                                        <i class="fas fa-phone text-amarelo-destaque"></i>
-                                        <span class="text-gray-400 text-sm">Contato:</span>
-                                        <span class="text-white text-sm"><?php echo htmlspecialchars($rota['telefone_contato']); ?></span>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <div class="col-span-2 text-center py-12 text-gray-400">
-                        <i class="fas fa-bus text-4xl mb-4"></i>
-                        <p class="text-lg">Nenhuma rota cadastrada ainda.</p>
-                    </div>
+      </div>
+    </div>
+    
+    <!-- Routes Section -->
+    <div>
+      <h2 class="text-2xl font-bold text-gray-900 mb-6 font-poppins">Rotas Disponíveis</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <?php if (!empty($rotas)): ?>
+          <?php foreach ($rotas as $rota): ?>
+            <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all">
+              <div class="flex items-start gap-4 mb-4">
+                <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <i class="fas fa-bus text-yellow-600 text-xl"></i>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-gray-800 mb-1 font-poppins"><?php echo htmlspecialchars($rota['nome']); ?></h3>
+                  <p class="text-sm text-gray-600"><?php echo htmlspecialchars($rota['descricao']); ?></p>
+                </div>
+              </div>
+              
+              <div class="space-y-2 text-sm">
+                <div class="flex items-center gap-2 text-gray-600">
+                  <i class="fas fa-map-marker-alt text-gray-400"></i>
+                  <span><?php echo htmlspecialchars($rota['bairros_atendidos']); ?></span>
+                </div>
+                <div class="flex items-center gap-2 text-gray-600">
+                  <i class="fas fa-clock text-gray-400"></i>
+                  <span>Saída: <?php echo date('H:i', strtotime($rota['horario_saida'])); ?></span>
+                </div>
+                <?php if (!empty($rota['valor_mensal'])): ?>
+                  <div class="flex items-center gap-2 text-gray-600">
+                    <i class="fas fa-dollar-sign text-gray-400"></i>
+                    <span>R$ <?php echo number_format($rota['valor_mensal'], 2, ',', '.'); ?>/mês</span>
+                  </div>
                 <?php endif; ?>
+              </div>
+              
+              <?php if (!empty($rota['telefone_contato'])): ?>
+                <div class="mt-4 pt-4 border-t border-gray-100">
+                  <a href="tel:<?php echo htmlspecialchars($rota['telefone_contato']); ?>" class="text-sm text-blue-600 hover:text-blue-700 font-medium">
+                    <i class="fas fa-phone mr-1"></i><?php echo htmlspecialchars($rota['telefone_contato']); ?>
+                  </a>
+                </div>
+              <?php endif; ?>
             </div>
-        </div>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <div class="col-span-3 bg-white rounded-xl p-8 text-center">
+            <i class="fas fa-bus text-4xl text-gray-300 mb-4"></i>
+            <p class="text-gray-600">Nenhuma rota cadastrada no momento.</p>
+          </div>
+        <?php endif; ?>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <!-- Como Contratar -->
-        <div class="mt-16 bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-            <h2 class="text-2xl font-bold text-white mb-6 text-center">
-                <i class="fas fa-handshake mr-2 text-amarelo-destaque"></i>Como Contratar
-            </h2>
-            <div class="grid md:grid-cols-4 gap-6">
-                <div class="text-center">
-                    <div class="w-12 h-12 bg-amarelo-destaque rounded-full flex items-center justify-center mx-auto mb-4 text-azul-escuro font-bold text-xl">1</div>
-                    <h3 class="text-white font-semibold mb-2">Entre em Contato</h3>
-                    <p class="text-gray-400 text-sm">Fale com a secretaria para verificar disponibilidade.</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-12 h-12 bg-amarelo-destaque rounded-full flex items-center justify-center mx-auto mb-4 text-azul-escuro font-bold text-xl">2</div>
-                    <h3 class="text-white font-semibold mb-2">Escolha a Rota</h3>
-                    <p class="text-gray-400 text-sm">Selecione a rota que melhor atende seu endereço.</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-12 h-12 bg-amarelo-destaque rounded-full flex items-center justify-center mx-auto mb-4 text-azul-escuro font-bold text-xl">3</div>
-                    <h3 class="text-white font-semibold mb-2">Formalize</h3>
-                    <p class="text-gray-400 text-sm">Preencha o contrato de transporte escolar.</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-12 h-12 bg-amarelo-destaque rounded-full flex items-center justify-center mx-auto mb-4 text-azul-escuro font-bold text-xl">4</div>
-                    <h3 class="text-white font-semibold mb-2">Inicie</h3>
-                    <p class="text-gray-400 text-sm">O aluno começa a utilizar o transporte.</p>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white mt-16 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <p class="text-gray-400 text-sm">© <?php echo date('Y'); ?> [Inserir nome da escola aqui]. Todos os direitos reservados.</p>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
+<?php require_once 'includes/footer.php'; ?>

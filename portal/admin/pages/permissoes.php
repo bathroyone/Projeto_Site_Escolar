@@ -30,6 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $stmt->execute([$tipo_usuario, $usuario_id]);
             
             $success = 'Permissão atualizada com sucesso!';
+            
+            // Recarregar a lista de usuários para mostrar o tipo atualizado
+            $stmt = $pdo->query("SELECT id, nome_completo, tipo_usuario FROM usuarios ORDER BY nome_completo");
+            $usuarios = $stmt->fetchAll();
         } catch (PDOException $e) {
             error_log("Erro ao atualizar permissão: " . $e->getMessage());
             $error = 'Erro ao atualizar permissão.';

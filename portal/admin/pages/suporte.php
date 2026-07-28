@@ -131,7 +131,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'atualizar_status' && isset($_
                         </td>
                         <td class="px-6 py-4 text-gray-600"><?php echo date('d/m/Y H:i', strtotime($ticket['data_criacao'])); ?></td>
                         <td class="px-6 py-4 text-sm">
-                            <select onchange="window.location.href='?action=atualizar_status&id=<?php echo $ticket['id']; ?>&status=' + this.value" class="text-xs border rounded px-2 py-1">
+                            <select onchange="window.location.href='../index.php?page=suporte&action=atualizar_status&id=<?php echo $ticket['id']; ?>&status=' + this.value" class="text-xs border rounded px-2 py-1">
                                 <option value="">Status</option>
                                 <option value="em_andamento">Em Andamento</option>
                                 <option value="resolvido">Resolvido</option>
@@ -163,7 +163,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'atualizar_status' && isset($_
                     <i class="fas fa-times text-gray-400"></i>
                 </button>
             </div>
-            <form method="POST" action="" class="p-6">
+            <form method="POST" action="../index.php?page=suporte" class="p-6">
                 <input type="hidden" name="action" value="criar_ticket">
                 
                 <div class="mb-4">

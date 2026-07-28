@@ -1,4 +1,5 @@
 <?php
+$pageTitle = 'Doações';
 require_once 'portal/config.php';
 
 $success = '';
@@ -28,197 +29,163 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mensagem = sanitizeInput($_POST['mensagem'] ?? '');
     
     if (empty($nome) || empty($email) || $valor <= 0) {
-        $error = 'Por favor, preencha todos os campos obrigatórios com valores válidos.';
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error = 'Por favor, insira um e-mail válido.';
+        $error = 'Por favor, preencha todos os campos obrigatórios.';
     } else {
         try {
             $stmt = $pdo->prepare("INSERT INTO doacoes (nome, email, telefone, valor, tipo, mensagem) VALUES (?, ?, ?, ?, ?, ?)");
             $stmt->execute([$nome, $email, $telefone, $valor, $tipo, $mensagem]);
-            
-            $success = 'Doação registrada com sucesso! Você receberá instruções para o pagamento.';
+            $success = 'Doação registrada com sucesso! Obrigado pelo seu apoio.';
         } catch (PDOException $e) {
-            error_log("Erro ao registrar doação: " . $e->getMessage());
-            $error = 'Erro ao registrar doação. Tente novamente.';
+            $error = 'Erro ao processar doação. Tente novamente.';
+            error_log("Erro ao processar doação: " . $e->getMessage());
         }
     }
 }
 
-// Obter estatísticas de doações
-$total_doacoes = 0;
-$total_valor = 0;
-try {
-    $stmt = $pdo->query("SELECT COUNT(*) as total, SUM(valor) as soma FROM doacoes WHERE status = 'confirmada'");
-    $result = $stmt->fetch();
-    $total_doacoes = $result['total'] ?? 0;
-    $total_valor = $result['soma'] ?? 0;
-} catch (PDOException $e) {
-    error_log("Erro ao obter estatísticas: " . $e->getMessage());
-}
+$tipos_doacao = [
+    'pix' => 'PIX',
+    'cartao' => 'Cartão de Crédito',
+    'boleto' => 'Boleto',
+    'transferencia' => 'Transferência'
+];
+
+$cores_tipos = [
+    'pix' => 'bg-green-100 text-green-600',
+    'cartao' => 'bg-blue-100 text-blue-600',
+    'boleto' => 'bg-yellow-100 text-yellow-600',
+    'transferencia' => 'bg-purple-100 text-purple-600'
+];
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doações e Contribuições | Site da Escola</title>
-    <link rel="stylesheet" href="css/output.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-</head>
-<body class="bg-gray-900 min-h-screen">
-    <!-- Header -->
-    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-lg sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <div class="flex items-center gap-3">
-                    <a href="index.php" class="flex items-center gap-2 group">
-                        <img src="img/logo.jpg" alt="Logo" class="h-12">
-                        <div class="hidden sm:block">
-                            <span class="text-white font-bold text-xs tracking-wide">DOAÇÕES E</span>
-                            <span class="block text-amarelo-destaque font-extrabold text-sm">CONTRIBUIÇÕES</span>
-                        </div>
-                    </a>
-                </div>
+<?php require_once 'includes/header.php'; ?>
 
-                <div class="flex items-center gap-3">
-                    <a href="index.php" class="px-6 py-2.5 bg-white/20 text-white rounded-full font-semibold hover:bg-white/30 transition-all">
-                        <i class="fas fa-arrow-left mr-2"></i>Voltar
-                    </a>
-                </div>
+<!-- Hero Section -->
+<section class="bg-gradient-to-br from-emerald-500 via-emerald-600 to-green-700 py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center text-white">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 font-poppins">Faça uma Doação</h1>
+      <p class="text-xl text-white/90">Apoie nossa missão educacional</p>
+    </div>
+  </div>
+</section>
+
+<!-- Main Content -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <?php if ($success): ?>
+      <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6">
+        <?php echo htmlspecialchars($success); ?>
+      </div>
+    <?php endif; ?>
+    
+    <?php if ($error): ?>
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
+        <?php echo htmlspecialchars($error); ?>
+      </div>
+    <?php endif; ?>
+    
+    <div class="grid lg:grid-cols-2 gap-12">
+      <!-- Donation Form -->
+      <div class="bg-white rounded-2xl shadow-lg p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6 font-poppins">Fazer Doação</h2>
+        
+        <form method="POST" class="space-y-4">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Nome Completo *</label>
+            <input type="text" name="nome" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-gray-800" placeholder="Digite seu nome">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Email *</label>
+            <input type="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-gray-800" placeholder="seu@email.com">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Telefone</label>
+            <input type="tel" name="telefone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-gray-800" placeholder="(11) 12345-6789">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Valor da Doação *</label>
+            <input type="number" name="valor" required min="1" step="0.01" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-gray-800" placeholder="R$ 0,00">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Forma de Pagamento *</label>
+            <select name="tipo" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-gray-800">
+              <?php foreach ($tipos_doacao as $tipo_key => $tipo_nome): ?>
+                <option value="<?php echo $tipo_key; ?>"><?php echo $tipo_nome; ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Mensagem</label>
+            <textarea name="mensagem" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-gray-800" placeholder="Deixe uma mensagem (opcional)"></textarea>
+          </div>
+          
+          <button type="submit" class="btn-primary w-full">
+            <i class="fas fa-heart mr-2"></i>Fazer Doação
+          </button>
+        </form>
+      </div>
+      
+      <!-- Donation Info -->
+      <div>
+        <h2 class="text-2xl font-bold text-gray-900 mb-6 font-poppins">Como sua doação ajuda</h2>
+        
+        <div class="space-y-6">
+          <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-book text-emerald-600 text-xl"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-800 mb-2 font-poppins">Materiais Didáticos</h3>
+                <p class="text-sm text-gray-600">Apoia a compra de livros, materiais e recursos para enriquecer o aprendizado dos alunos.</p>
+              </div>
             </div>
-        </div>
-    </header>
-
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <!-- Banner -->
-        <div class="bg-gradient-to-r from-azul-principal to-verde-complementar rounded-3xl p-8 mb-12 text-center">
-            <h1 class="text-3xl md:text-4xl font-display font-bold text-white mb-4">
-                <i class="fas fa-heart mr-3"></i>Doações e Contribuições
-            </h1>
-            <p class="text-white/90 text-lg max-w-2xl mx-auto">
-                Contribua para o desenvolvimento educacional e ajude a transformar vidas.
-            </p>
-        </div>
-
-        <!-- Estatísticas -->
-        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-12 border border-white/20">
-            <div class="grid md:grid-cols-2 gap-6 text-center">
-                <div>
-                    <div class="text-5xl font-bold text-amarelo-destaque mb-2"><?php echo $total_doacoes; ?></div>
-                    <p class="text-white font-semibold">Doações Realizadas</p>
-                    <p class="text-gray-400 text-sm mt-2">Pessoas que contribuíram</p>
-                </div>
-                <div>
-                    <div class="text-5xl font-bold text-amarelo-destaque mb-2">R$ <?php echo number_format($total_valor, 2, ',', '.'); ?></div>
-                    <p class="text-white font-semibold">Total Arrecadado</p>
-                    <p class="text-gray-400 text-sm mt-2">Valor total das doações</p>
-                </div>
+          </div>
+          
+          <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-laptop text-blue-600 text-xl"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-800 mb-2 font-poppins">Tecnologia</h3>
+                <p class="text-sm text-gray-600">Investe em equipamentos e tecnologia para modernizar o ambiente educacional.</p>
+              </div>
             </div>
-        </div>
-
-        <!-- Formulário de Doação -->
-        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-12 border border-white/20">
-            <h2 class="text-2xl font-bold text-white mb-6 text-center">
-                <i class="fas fa-hand-holding-heart mr-2 text-amarelo-destaque"></i>Faça sua Doação
-            </h2>
-            
-            <?php if ($success): ?>
-                <div class="bg-green-500/20 border border-green-500/30 text-green-300 px-4 py-3 rounded-xl mb-6 text-center">
-                    <i class="fas fa-check-circle mr-2"></i><?php echo $success; ?>
-                </div>
-            <?php endif; ?>
-            
-            <?php if ($error): ?>
-                <div class="bg-red-500/20 border border-red-500/30 text-red-300 px-4 py-3 rounded-xl mb-6 text-center">
-                    <i class="fas fa-exclamation-circle mr-2"></i><?php echo $error; ?>
-                </div>
-            <?php endif; ?>
-
-            <form method="POST" action="" class="max-w-2xl mx-auto">
-                <div class="space-y-4">
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-semibold text-white mb-2">Nome Completo</label>
-                            <input type="text" name="nome" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="Seu nome">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-white mb-2">E-mail</label>
-                            <input type="email" name="email" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="seu@email.com">
-                        </div>
-                    </div>
-                    
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-semibold text-white mb-2">Telefone</label>
-                            <input type="tel" name="telefone" class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="(00) 00000-0000">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-white mb-2">Valor da Doação</label>
-                            <input type="number" name="valor" step="0.01" min="1" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="0,00">
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-sm font-semibold text-white mb-2">Forma de Pagamento</label>
-                        <select name="tipo" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent">
-                            <option value="pix">PIX</option>
-                            <option value="cartao">Cartão de Crédito</option>
-                            <option value="boleto">Boleto</option>
-                            <option value="transferencia">Transferência Bancária</option>
-                        </select>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-sm font-semibold text-white mb-2">Mensagem (opcional)</label>
-                        <textarea name="mensagem" rows="3" class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="Deixe uma mensagem para a escola"></textarea>
-                    </div>
-                    
-                    <button type="submit" class="w-full py-4 bg-gradient-to-r from-amarelo-destaque to-amarelo-claro text-azul-escuro rounded-xl font-bold hover:shadow-xl hover:shadow-yellow-500/30 transition-all duration-300 transform hover:scale-105">
-                        <i class="fas fa-heart mr-2"></i>Doar Agora
-                    </button>
-                </div>
-            </form>
-        </div>
-
-        <!-- Como as Doações São Utilizadas -->
-        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-            <h2 class="text-2xl font-bold text-white mb-6 text-center">
-                <i class="fas fa-chart-line mr-2 text-amarelo-destaque"></i>Como as Doações São Utilizadas
-            </h2>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-book text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-white font-semibold mb-2">Materiais Didáticos</h3>
-                    <p class="text-gray-400 text-sm">Aquisição de livros e materiais para os alunos.</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-laptop text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-white font-semibold mb-2">Tecnologia</h3>
-                    <p class="text-gray-400 text-sm">Investimento em equipamentos e infraestrutura tecnológica.</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-verde-complementar to-verde-claro rounded-xl flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-graduation-cap text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-white font-semibold mb-2">Bolsas de Estudo</h3>
-                    <p class="text-gray-400 text-sm">Apoio a alunos com dificuldades financeiras.</p>
-                </div>
+          </div>
+          
+          <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-user-graduate text-purple-600 text-xl"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-800 mb-2 font-poppins">Bolsas de Estudo</h3>
+                <p class="text-sm text-gray-600">Oferece oportunidades de estudo para alunos que necessitam de apoio financeiro.</p>
+              </div>
             </div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white mt-16 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <p class="text-gray-400 text-sm">© <?php echo date('Y'); ?> [Inserir nome da escola aqui]. Todos os direitos reservados.</p>
+          </div>
+          
+          <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-building text-orange-600 text-xl"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-800 mb-2 font-poppins">Infraestrutura</h3>
+                <p class="text-sm text-gray-600">Contribui para melhorias e manutenção das instalações da escola.</p>
+              </div>
             </div>
+          </div>
         </div>
-    </footer>
-</body>
-</html>
+      </div>
+    </div>
+  </div>
+</section>
+
+<?php require_once 'includes/footer.php'; ?>

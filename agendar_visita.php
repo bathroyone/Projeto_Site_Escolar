@@ -1,5 +1,5 @@
 <?php
-session_start();
+$pageTitle = 'Agendar Visita';
 require_once 'portal/config.php';
 
 $success = '';
@@ -19,8 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         try {
             $pdo = getDBConnection();
-            $stmt = $pdo->prepare("INSERT INTO visitas (nome_visitante, tipo_visita, data_visita, horario, motivo, status, criado_por) VALUES (?, 'agendamento_site', ?, ?, ?, 'agendada', NULL)");
-            $stmt->execute([$nome, $data_visita, $horario, $motivo]);
+            $stmt = $pdo->prepare("INSERT INTO visitas (visitante_nome, visitante_telefone, tipo_visita, motivo, data_visita, hora_entrada, status, observacoes) VALUES (?, ?, 'pais', ?, ?, ?, 'agendada', ?)");
+            $observacoes = "Email: " . $email;
+            $stmt->execute([$nome, $telefone, $motivo, $data_visita, $horario, $observacoes]);
             
             $success = 'Visita agendada com sucesso! Entraremos em contato para confirmar.';
         } catch (PDOException $e) {
@@ -30,97 +31,142 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agendar Visita | Site da Escola</title>
-    <link rel="stylesheet" href="css/output.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-</head>
-<body class="bg-gray-900 min-h-screen">
-    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-md w-full">
-            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-                <div class="text-center mb-8">
-                    <a href="index.php" class="inline-block mb-4">
-                        <i class="fas fa-arrow-left text-white text-2xl"></i>
-                    </a>
-                    <h2 class="text-3xl font-display font-bold text-white mb-2">Agendar Visita</h2>
-                    <p class="text-gray-400">Preencha o formulário para agendar sua visita à escola</p>
-                </div>
+<?php require_once 'includes/header.php'; ?>
 
-                <?php if ($success): ?>
-                    <div class="bg-green-500/20 border border-green-500/30 text-green-300 px-4 py-3 rounded-xl mb-6">
-                        <i class="fas fa-check-circle mr-2"></i><?php echo $success; ?>
-                    </div>
-                <?php endif; ?>
-                
-                <?php if ($error): ?>
-                    <div class="bg-red-500/20 border border-red-500/30 text-red-300 px-4 py-3 rounded-xl mb-6">
-                        <i class="fas fa-exclamation-circle mr-2"></i><?php echo $error; ?>
-                    </div>
-                <?php endif; ?>
-
-                <form method="POST" action="">
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-semibold text-white mb-2">Nome Completo</label>
-                            <input type="text" name="nome" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="Seu nome">
-                        </div>
-                        
-                        <div>
-                            <label class="block text-sm font-semibold text-white mb-2">E-mail</label>
-                            <input type="email" name="email" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="seu@email.com">
-                        </div>
-                        
-                        <div>
-                            <label class="block text-sm font-semibold text-white mb-2">Telefone</label>
-                            <input type="tel" name="telefone" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="(00) 00000-0000">
-                        </div>
-                        
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-semibold text-white mb-2">Data</label>
-                                <input type="date" name="data_visita" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent">
-                            </div>
-                            
-                            <div>
-                                <label class="block text-sm font-semibold text-white mb-2">Horário</label>
-                                <select name="horario" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent">
-                                    <option value="">Selecione</option>
-                                    <option value="08:00">08:00</option>
-                                    <option value="09:00">09:00</option>
-                                    <option value="10:00">10:00</option>
-                                    <option value="11:00">11:00</option>
-                                    <option value="14:00">14:00</option>
-                                    <option value="15:00">15:00</option>
-                                    <option value="16:00">16:00</option>
-                                    <option value="17:00">17:00</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <label class="block text-sm font-semibold text-white mb-2">Motivo da Visita</label>
-                            <textarea name="motivo" rows="3" class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="Conte-nos sobre o motivo da sua visita"></textarea>
-                        </div>
-                        
-                        <button type="submit" class="w-full py-4 bg-gradient-to-r from-amarelo-destaque to-amarelo-claro text-azul-escuro rounded-xl font-bold hover:shadow-xl hover:shadow-yellow-500/30 transition-all duration-300 transform hover:scale-105">
-                            <i class="fas fa-calendar-check mr-2"></i>Agendar Visita
-                        </button>
-                    </div>
-                </form>
-                
-                <div class="mt-6 text-center">
-                    <a href="index.php" class="text-gray-400 hover:text-white transition-colors">
-                        <i class="fas fa-arrow-left mr-2"></i>Voltar para o site
-                    </a>
-                </div>
-            </div>
-        </div>
+<!-- Hero Section -->
+<section class="bg-gradient-to-br from-teal-500 via-teal-600 to-cyan-700 py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center text-white">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 font-poppins">Agendar Visita</h1>
+      <p class="text-xl text-white/90">Conheça nossa escola pessoalmente</p>
     </div>
-</body>
-</html>
+  </div>
+</section>
+
+<!-- Main Content -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <?php if ($success): ?>
+      <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6">
+        <?php echo htmlspecialchars($success); ?>
+      </div>
+    <?php endif; ?>
+    
+    <?php if ($error): ?>
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
+        <?php echo htmlspecialchars($error); ?>
+      </div>
+    <?php endif; ?>
+    
+    <div class="grid lg:grid-cols-2 gap-12">
+      <!-- Visit Form -->
+      <div class="bg-white rounded-2xl shadow-lg p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6 font-poppins">Agende sua Visita</h2>
+        
+        <form method="POST" class="space-y-4">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Nome Completo *</label>
+            <input type="text" name="nome" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent text-gray-800" placeholder="Digite seu nome">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Email *</label>
+            <input type="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent text-gray-800" placeholder="seu@email.com">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Telefone *</label>
+            <input type="tel" name="telefone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent text-gray-800" placeholder="(11) 12345-6789">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Data da Visita *</label>
+            <input type="date" name="data_visita" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent text-gray-800">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Horário *</label>
+            <select name="horario" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent text-gray-800">
+              <option value="">Selecione um horário</option>
+              <option value="08:00">08:00</option>
+              <option value="09:00">09:00</option>
+              <option value="10:00">10:00</option>
+              <option value="11:00">11:00</option>
+              <option value="14:00">14:00</option>
+              <option value="15:00">15:00</option>
+              <option value="16:00">16:00</option>
+              <option value="17:00">17:00</option>
+            </select>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Motivo da Visita</label>
+            <textarea name="motivo" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent text-gray-800" placeholder="Conte o motivo da sua visita"></textarea>
+          </div>
+          
+          <button type="submit" class="btn-primary w-full">
+            <i class="fas fa-calendar-check mr-2"></i>Agendar Visita
+          </button>
+        </form>
+      </div>
+      
+      <!-- Visit Info -->
+      <div>
+        <h2 class="text-2xl font-bold text-gray-900 mb-6 font-poppins">Informações sobre a Visita</h2>
+        
+        <div class="space-y-6">
+          <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-clock text-teal-600 text-xl"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-800 mb-2 font-poppins">Duração</h3>
+                <p class="text-sm text-gray-600">A visita dura aproximadamente 1 hora, incluindo passeio pelas instalações e apresentação.</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-users text-blue-600 text-xl"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-800 mb-2 font-poppins">Quem pode visitar</h3>
+                <p class="text-sm text-gray-600">Pais, responsáveis e interessados em conhecer nossa escola são bem-vindos.</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-map-marker-alt text-green-600 text-xl"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-800 mb-2 font-poppins">Localização</h3>
+                <p class="text-sm text-gray-600">Rua da Escola, 123 - Bairro, Cidade - Estado</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-info-circle text-purple-600 text-xl"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-800 mb-2 font-poppins">O que ver</h3>
+                <p class="text-sm text-gray-600">Salas de aula, laboratórios, biblioteca, quadra esportiva e áreas de convivência.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<?php require_once 'includes/footer.php'; ?>

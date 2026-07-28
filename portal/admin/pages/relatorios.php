@@ -234,10 +234,10 @@ try {
 
 <script>
     function gerarRelatorio(tipo) {
-        window.location.href = '?action=exportar&tipo=' + tipo;
+        window.location.href = '../index.php?page=relatorios&action=exportar&tipo=' + tipo;
     }
     
     function exportarRelatorio() {
-        window.location.href = '?action=exportar&tipo=geral';
+        window.location.href = '../index.php?page=relatorios&action=exportar&tipo=geral';
     }
 </script>

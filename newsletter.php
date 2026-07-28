@@ -1,4 +1,5 @@
 <?php
+$pageTitle = 'Newsletter';
 require_once 'portal/config.php';
 
 $success = '';
@@ -35,17 +36,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 $stmt = $pdo->prepare("INSERT INTO newsletter (nome, email) VALUES (?, ?)");
                 $stmt->execute([$nome, $email]);
-                
-                $success = 'Inscrição realizada com sucesso! Você receberá nossas novidades em breve.';
+                $success = 'Inscrição realizada com sucesso! Você receberá nossas novidades.';
             }
         } catch (PDOException $e) {
+            $error = 'Erro ao processar inscrição. Tente novamente.';
             error_log("Erro ao inscrever na newsletter: " . $e->getMessage());
-            $error = 'Erro ao realizar inscrição. Tente novamente.';
         }
     }
 }
 
-// Obter newsletters recentes (comunicados enviados)
+// Obter newsletters recentes
 $newsletters = [];
 try {
     $pdo = getDBConnection();
@@ -55,161 +55,80 @@ try {
     error_log("Erro ao obter newsletters: " . $e->getMessage());
 }
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Newsletter | Site da Escola</title>
-    <link rel="stylesheet" href="css/output.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-</head>
-<body class="bg-gray-900 min-h-screen">
-    <!-- Header -->
-    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-lg sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <div class="flex items-center gap-3">
-                    <a href="index.php" class="flex items-center gap-2 group">
-                        <img src="img/logo.jpg" alt="Logo" class="h-12">
-                        <div class="hidden sm:block">
-                            <span class="text-white font-bold text-xs tracking-wide">NEWSLETTER E</span>
-                            <span class="block text-amarelo-destaque font-extrabold text-sm">COMUNICAÇÕES</span>
-                        </div>
-                    </a>
-                </div>
+<?php require_once 'includes/header.php'; ?>
 
-                <div class="flex items-center gap-3">
-                    <a href="index.php" class="px-6 py-2.5 bg-white/20 text-white rounded-full font-semibold hover:bg-white/30 transition-all">
-                        <i class="fas fa-arrow-left mr-2"></i>Voltar
-                    </a>
+<!-- Hero Section -->
+<section class="bg-gradient-to-br from-orange-500 via-orange-600 to-amber-700 py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center text-white">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 font-poppins">Newsletter</h1>
+      <p class="text-xl text-white/90">Receba novidades da escola por email</p>
+    </div>
+  </div>
+</section>
+
+<!-- Main Content -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <?php if ($success): ?>
+      <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6">
+        <?php echo htmlspecialchars($success); ?>
+      </div>
+    <?php endif; ?>
+    
+    <?php if ($error): ?>
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
+        <?php echo htmlspecialchars($error); ?>
+      </div>
+    <?php endif; ?>
+    
+    <div class="grid lg:grid-cols-2 gap-12">
+      <!-- Newsletter Form -->
+      <div class="bg-white rounded-2xl shadow-lg p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6 font-poppins">Inscreva-se na Newsletter</h2>
+        
+        <form method="POST" class="space-y-4">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Nome Completo *</label>
+            <input type="text" name="nome" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-800" placeholder="Digite seu nome">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Email *</label>
+            <input type="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-800" placeholder="seu@email.com">
+          </div>
+          
+          <button type="submit" class="btn-primary w-full">
+            <i class="fas fa-envelope mr-2"></i>Inscrever-se
+          </button>
+        </form>
+      </div>
+      
+      <!-- Recent Newsletters -->
+      <div>
+        <h2 class="text-2xl font-bold text-gray-900 mb-6 font-poppins">Comunicações Recentes</h2>
+        <div class="space-y-4">
+          <?php if (!empty($newsletters)): ?>
+            <?php foreach ($newsletters as $newsletter): ?>
+              <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all">
+                <h3 class="font-semibold text-gray-800 mb-2 font-poppins"><?php echo htmlspecialchars($newsletter['titulo']); ?></h3>
+                <p class="text-sm text-gray-600 mb-3"><?php echo htmlspecialchars(substr($newsletter['conteudo'], 0, 100)); ?>...</p>
+                <div class="text-xs text-gray-500">
+                  <i class="fas fa-calendar-alt mr-1"></i><?php echo date('d/m/Y', strtotime($newsletter['data_envio'])); ?>
                 </div>
+              </div>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <div class="bg-white rounded-xl p-8 text-center">
+              <i class="fas fa-newspaper text-4xl text-gray-300 mb-4"></i>
+              <p class="text-gray-600">Nenhuma comunicação recente.</p>
             </div>
+          <?php endif; ?>
         </div>
-    </header>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <!-- Banner -->
-        <div class="bg-gradient-to-r from-azul-principal to-verde-complementar rounded-3xl p-8 mb-12 text-center">
-            <h1 class="text-3xl md:text-4xl font-display font-bold text-white mb-4">
-                <i class="fas fa-envelope mr-3"></i>Newsletter e Comunicações
-            </h1>
-            <p class="text-white/90 text-lg max-w-2xl mx-auto">
-                Receba as últimas novidades, eventos e comunicados da escola diretamente no seu e-mail.
-            </p>
-        </div>
-
-        <!-- Formulário de Inscrição -->
-        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-12 border border-white/20">
-            <h2 class="text-2xl font-bold text-white mb-6 text-center">
-                <i class="fas fa-paper-plane mr-2 text-amarelo-destaque"></i>Inscreva-se na Newsletter
-            </h2>
-            
-            <?php if ($success): ?>
-                <div class="bg-green-500/20 border border-green-500/30 text-green-300 px-4 py-3 rounded-xl mb-6 text-center">
-                    <i class="fas fa-check-circle mr-2"></i><?php echo $success; ?>
-                </div>
-            <?php endif; ?>
-            
-            <?php if ($error): ?>
-                <div class="bg-red-500/20 border border-red-500/30 text-red-300 px-4 py-3 rounded-xl mb-6 text-center">
-                    <i class="fas fa-exclamation-circle mr-2"></i><?php echo $error; ?>
-                </div>
-            <?php endif; ?>
-
-            <form method="POST" action="" class="max-w-md mx-auto">
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-semibold text-white mb-2">Nome Completo</label>
-                        <input type="text" name="nome" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="Seu nome">
-                    </div>
-                    
-                    <div>
-                        <label class="block text-sm font-semibold text-white mb-2">E-mail</label>
-                        <input type="email" name="email" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="seu@email.com">
-                    </div>
-                    
-                    <button type="submit" class="w-full py-4 bg-gradient-to-r from-amarelo-destaque to-amarelo-claro text-azul-escuro rounded-xl font-bold hover:shadow-xl hover:shadow-yellow-500/30 transition-all duration-300 transform hover:scale-105">
-                        <i class="fas fa-envelope mr-2"></i>Inscrever-se
-                    </button>
-                </div>
-            </form>
-            
-            <p class="text-gray-400 text-sm text-center mt-4">
-                Ao se inscrever, você concorda em receber comunicações da escola. Você pode cancelar a qualquer momento.
-            </p>
-        </div>
-
-        <!-- Newsletters Anteriores -->
-        <div>
-            <h2 class="text-2xl font-bold text-white mb-6">
-                <i class="fas fa-history mr-2 text-amarelo-destaque"></i>Comunicações Anteriores
-            </h2>
-            
-            <div class="space-y-4">
-                <?php if (count($newsletters) > 0): ?>
-                    <?php foreach ($newsletters as $newsletter): ?>
-                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                            <div class="flex items-start justify-between">
-                                <div>
-                                    <h3 class="text-white font-semibold mb-2"><?php echo htmlspecialchars($newsletter['titulo']); ?></h3>
-                                    <p class="text-gray-400 text-sm mb-3"><?php echo htmlspecialchars(substr($newsletter['mensagem'], 0, 200)) . '...'; ?></p>
-                                    <span class="text-gray-500 text-xs"><?php echo date('d/m/Y H:i', strtotime($newsletter['data_envio'])); ?></span>
-                                </div>
-                                <i class="fas fa-envelope text-amarelo-destaque text-2xl ml-4"></i>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <div class="text-center py-12 text-gray-400">
-                        <i class="fas fa-envelope text-4xl mb-4"></i>
-                        <p class="text-lg">Nenhuma comunicação enviada ainda.</p>
-                    </div>
-                <?php endif; ?>
-            </div>
-        </div>
-
-        <!-- Benefícios -->
-        <div class="mt-16">
-            <h2 class="text-2xl font-bold text-white mb-6 text-center">
-                <i class="fas fa-star mr-2 text-amarelo-destaque"></i>Por que se inscrever?
-            </h2>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-bell text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-white font-semibold mb-2">Avisos Imediatos</h3>
-                    <p class="text-gray-400 text-sm">Receba avisos importantes sobre a escola em tempo real.</p>
-                </div>
-
-                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-calendar-alt text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-white font-semibold mb-2">Eventos</h3>
-                    <p class="text-gray-400 text-sm">Fique por dentro de todos os eventos e atividades.</p>
-                </div>
-
-                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-verde-complementar to-verde-claro rounded-xl flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-newspaper text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-white font-semibold mb-2">Notícias</h3>
-                    <p class="text-gray-400 text-sm">Receba as últimas notícias e atualizações da escola.</p>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white mt-16 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <p class="text-gray-400 text-sm">© <?php echo date('Y'); ?> [Inserir nome da escola aqui]. Todos os direitos reservados.</p>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
+<?php require_once 'includes/footer.php'; ?>

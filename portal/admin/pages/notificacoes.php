@@ -117,7 +117,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'excluir' && isset($_GET['id']
                         <td class="px-6 py-4 text-gray-600"><?php echo ucfirst($notificacao['destinatario']); ?></td>
                         <td class="px-6 py-4 text-gray-600"><?php echo date('d/m/Y H:i', strtotime($notificacao['data_criacao'])); ?></td>
                         <td class="px-6 py-4 text-sm">
-                            <a href="?action=excluir&id=<?php echo $notificacao['id']; ?>" class="text-red-600 hover:text-red-800" onclick="return confirm('Tem certeza que deseja excluir esta notificação?');">
+                            <a href="../index.php?page=notificacoes&action=excluir&id=<?php echo $notificacao['id']; ?>" class="text-red-600 hover:text-red-800" onclick="return confirm('Tem certeza que deseja excluir esta notificação?');">
                                 <i class="fas fa-trash"></i>
                             </a>
                         </td>
@@ -146,7 +146,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'excluir' && isset($_GET['id']
                     <i class="fas fa-times text-gray-400"></i>
                 </button>
             </div>
-            <form method="POST" action="" class="p-6">
+            <form method="POST" action="../index.php?page=notificacoes" class="p-6">
                 <input type="hidden" name="action" value="criar_notificacao">
                 
                 <div class="mb-4">

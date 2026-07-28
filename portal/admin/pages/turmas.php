@@ -140,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 <!-- Formulário Adicionar/Editar Turma -->
 <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-6">
     <h3 class="text-lg font-semibold text-gray-800 mb-4" id="form-title">Adicionar Nova Turma</h3>
-    <form method="POST" action="turmas.php" class="space-y-4">
+    <form method="POST" action="../index.php?page=turmas" class="space-y-4">
         <input type="hidden" name="action" id="form-action" value="adicionar">
         <input type="hidden" name="turma_id" id="turma-id" value="">
         
@@ -245,7 +245,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                             <button onclick="editTurma(<?php echo $turma['id']; ?>, '<?php echo htmlspecialchars($turma['nome']); ?>', '<?php echo htmlspecialchars($turma['serie']); ?>', <?php echo $turma['ano_letivo']; ?>, <?php echo $turma['professor_id'] ?? 0; ?>)" class="text-blue-600 hover:text-blue-800 mr-3">
                                 <i class="fas fa-edit"></i>
                             </button>
-                            <a href="turmas.php?action=excluir&id=<?php echo $turma['id']; ?>" class="text-red-600 hover:text-red-800" onclick="return confirm('Tem certeza que deseja excluir esta turma?');">
+                            <a href="../index.php?page=turmas&action=excluir&id=<?php echo $turma['id']; ?>" class="text-red-600 hover:text-red-800" onclick="return confirm('Tem certeza que deseja excluir esta turma?');">
                                 <i class="fas fa-trash"></i>
                             </a>
                         </td>

@@ -1,4 +1,5 @@
 <?php
+$pageTitle = 'Trabalhe Conosco';
 require_once 'portal/config.php';
 
 $success = '';
@@ -40,10 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $vaga_id = intval($_POST['vaga_id'] ?? 0);
     $mensagem = sanitizeInput($_POST['mensagem'] ?? '');
     
-    if (empty($nome) || empty($email)) {
+    if (empty($nome) || empty($email) || $vaga_id === 0) {
         $error = 'Por favor, preencha todos os campos obrigatórios.';
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error = 'Por favor, insira um e-mail válido.';
     } else {
         try {
             $stmt = $pdo->prepare("INSERT INTO curriculos (nome, email, telefone, vaga_id, mensagem) VALUES (?, ?, ?, ?, ?)");
@@ -74,218 +73,134 @@ $tipos_vaga = [
 ];
 
 $cores_tipos = [
-    'clt' => 'from-blue-500 to-blue-600',
-    'pj' => 'from-purple-500 to-purple-600',
-    'estagio' => 'from-green-500 to-green-600',
-    'voluntario' => 'from-orange-500 to-orange-600'
+    'clt' => 'bg-blue-100 text-blue-600',
+    'pj' => 'bg-purple-100 text-purple-600',
+    'estagio' => 'bg-green-100 text-green-600',
+    'voluntario' => 'bg-orange-100 text-orange-600'
 ];
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trabalhe Conosco | Site da Escola</title>
-    <link rel="stylesheet" href="css/output.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-</head>
-<body class="bg-gray-900 min-h-screen">
-    <!-- Header -->
-    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-lg sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <div class="flex items-center gap-3">
-                    <a href="index.php" class="flex items-center gap-2 group">
-                        <img src="img/logo.jpg" alt="Logo" class="h-12">
-                        <div class="hidden sm:block">
-                            <span class="text-white font-bold text-xs tracking-wide">TRABALHE</span>
-                            <span class="block text-amarelo-destaque font-extrabold text-sm">CONOSCO</span>
-                        </div>
-                    </a>
-                </div>
+<?php require_once 'includes/header.php'; ?>
 
-                <div class="flex items-center gap-3">
-                    <a href="index.php" class="px-6 py-2.5 bg-white/20 text-white rounded-full font-semibold hover:bg-white/30 transition-all">
-                        <i class="fas fa-arrow-left mr-2"></i>Voltar
-                    </a>
+<!-- Hero Section -->
+<section class="bg-gradient-to-br from-indigo-500 via-indigo-600 to-violet-700 py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center text-white">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 font-poppins">Trabalhe Conosco</h1>
+      <p class="text-xl text-white/90">Faça parte da nossa equipe educacional</p>
+    </div>
+  </div>
+</section>
+
+<!-- Main Content -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <?php if ($success): ?>
+      <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6">
+        <?php echo htmlspecialchars($success); ?>
+      </div>
+    <?php endif; ?>
+    
+    <?php if ($error): ?>
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
+        <?php echo htmlspecialchars($error); ?>
+      </div>
+    <?php endif; ?>
+    
+    <!-- Job Listings -->
+    <div class="mb-12">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6 font-poppins">Vagas Disponíveis</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <?php if (!empty($vagas)): ?>
+          <?php foreach ($vagas as $vaga): ?>
+            <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all">
+              <div class="flex items-start gap-4 mb-4">
+                <div class="w-12 h-12 <?php echo $cores_tipos[$vaga['tipo']]; ?> rounded-lg flex items-center justify-center flex-shrink-0">
+                  <i class="fas fa-briefcase text-xl"></i>
                 </div>
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="px-3 py-1 rounded-full text-xs font-medium <?php echo $cores_tipos[$vaga['tipo']]; ?>">
+                      <?php echo $tipos_vaga[$vaga['tipo']]; ?>
+                    </span>
+                  </div>
+                  <h3 class="font-semibold text-gray-800 mb-2 font-poppins"><?php echo htmlspecialchars($vaga['titulo']); ?></h3>
+                  <p class="text-sm text-gray-600 mb-3"><?php echo htmlspecialchars(substr($vaga['descricao'], 0, 150)); ?>...</p>
+                  <div class="flex items-center gap-4 text-xs text-gray-500">
+                    <?php if (!empty($vaga['salario'])): ?>
+                      <span><i class="fas fa-dollar-sign mr-1"></i><?php echo htmlspecialchars($vaga['salario']); ?></span>
+                    <?php endif; ?>
+                    <?php if (!empty($vaga['carga_horaria'])): ?>
+                      <span><i class="fas fa-clock mr-1"></i><?php echo htmlspecialchars($vaga['carga_horaria']); ?></span>
+                    <?php endif; ?>
+                  </div>
+                </div>
+              </div>
+              <button onclick="openApplicationForm(<?php echo $vaga['id']; ?>, '<?php echo htmlspecialchars($vaga['titulo']); ?>')" class="btn-secondary w-full text-sm">
+                <i class="fas fa-paper-plane mr-2"></i>Candidatar-se
+              </button>
             </div>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <div class="col-span-2 bg-white rounded-xl p-8 text-center">
+            <i class="fas fa-briefcase text-4xl text-gray-300 mb-4"></i>
+            <p class="text-gray-600">Nenhuma vaga disponível no momento.</p>
+          </div>
+        <?php endif; ?>
+      </div>
+    </div>
+    
+    <!-- Application Form Modal -->
+    <div id="application-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+      <div class="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="text-xl font-bold text-gray-900 font-poppins">Candidatar-se</h3>
+          <button onclick="closeApplicationForm()" class="text-gray-400 hover:text-gray-600">
+            <i class="fas fa-times text-xl"></i>
+          </button>
         </div>
-    </header>
+        
+        <form method="POST" class="space-y-4">
+          <input type="hidden" name="vaga_id" id="vaga_id" value="">
+          
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Nome Completo *</label>
+            <input type="text" name="nome" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-800" placeholder="Digite seu nome">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Email *</label>
+            <input type="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-800" placeholder="seu@email.com">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Telefone</label>
+            <input type="tel" name="telefone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-800" placeholder="(11) 12345-6789">
+          </div>
+          
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Mensagem</label>
+            <textarea name="mensagem" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-800" placeholder="Conte um pouco sobre você"></textarea>
+          </div>
+          
+          <button type="submit" class="btn-primary w-full">
+            <i class="fas fa-paper-plane mr-2"></i>Enviar Candidatura
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <!-- Banner -->
-        <div class="bg-gradient-to-r from-azul-principal to-verde-complementar rounded-3xl p-8 mb-12 text-center">
-            <h1 class="text-3xl md:text-4xl font-display font-bold text-white mb-4">
-                <i class="fas fa-briefcase mr-3"></i>Trabalhe Conosco
-            </h1>
-            <p class="text-white/90 text-lg max-w-2xl mx-auto">
-                Junte-se à nossa equipe e faça parte da transformação educacional.
-            </p>
-        </div>
+<script>
+function openApplicationForm(vagaId, vagaTitulo) {
+    document.getElementById('vaga_id').value = vagaId;
+    document.getElementById('application-modal').classList.remove('hidden');
+}
 
-        <!-- Vagas Disponíveis -->
-        <div class="mb-12">
-            <h2 class="text-2xl font-bold text-white mb-6">
-                <i class="fas fa-briefcase mr-2 text-amarelo-destaque"></i>Vagas Disponíveis
-            </h2>
-            
-            <div class="grid md:grid-cols-2 gap-6">
-                <?php if (count($vagas) > 0): ?>
-                    <?php foreach ($vagas as $vaga): ?>
-                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                            <div class="flex items-start justify-between mb-4">
-                                <div>
-                                    <h3 class="text-white font-semibold text-lg"><?php echo htmlspecialchars($vaga['titulo']); ?></h3>
-                                    <span class="inline-block px-3 py-1 bg-gradient-to-r <?php echo $cores_tipos[$vaga['tipo']]; ?> rounded-full text-xs text-white font-semibold mt-2">
-                                        <?php echo $tipos_vaga[$vaga['tipo']]; ?>
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            <p class="text-gray-300 text-sm mb-4"><?php echo htmlspecialchars(substr($vaga['descricao'], 0, 150)); ?>...</p>
-                            
-                            <div class="space-y-2 mb-4">
-                                <?php if ($vaga['salario']): ?>
-                                    <div class="flex items-center gap-2">
-                                        <i class="fas fa-dollar-sign text-amarelo-destaque"></i>
-                                        <span class="text-gray-400 text-sm">Salário: <?php echo htmlspecialchars($vaga['salario']); ?></span>
-                                    </div>
-                                <?php endif; ?>
-                                <?php if ($vaga['carga_horaria']): ?>
-                                    <div class="flex items-center gap-2">
-                                        <i class="fas fa-clock text-amarelo-destaque"></i>
-                                        <span class="text-gray-400 text-sm">Carga Horária: <?php echo htmlspecialchars($vaga['carga_horaria']); ?></span>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-                            
-                            <button onclick="mostrarFormulario(<?php echo $vaga['id']; ?>, '<?php echo htmlspecialchars($vaga['titulo']); ?>')" class="w-full py-3 bg-gradient-to-r from-amarelo-destaque to-amarelo-claro text-azul-escuro rounded-xl font-semibold hover:shadow-xl hover:shadow-yellow-500/30 transition-all">
-                                <i class="fas fa-paper-plane mr-2"></i>Candidatar-se
-                            </button>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <div class="col-span-2 text-center py-12 text-gray-400">
-                        <i class="fas fa-briefcase text-4xl mb-4"></i>
-                        <p class="text-lg">Nenhuma vaga disponível no momento.</p>
-                    </div>
-                <?php endif; ?>
-            </div>
-        </div>
+function closeApplicationForm() {
+    document.getElementById('application-modal').classList.add('hidden');
+}
+</script>
 
-        <!-- Formulário de Candidatura -->
-        <div id="formulario-candidatura" class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white-20 hidden">
-            <h2 class="text-2xl font-bold text-white mb-6 text-center">
-                <i class="fas fa-user-plus mr-2 text-amarelo-destaque"></i>Enviar Currículo
-            </h2>
-            
-            <?php if ($success): ?>
-                <div class="bg-green-500/20 border border-green-500/30 text-green-300 px-4 py-3 rounded-xl mb-6 text-center">
-                    <i class="fas fa-check-circle mr-2"></i><?php echo $success; ?>
-                </div>
-            <?php endif; ?>
-            
-            <?php if ($error): ?>
-                <div class="bg-red-500/20 border border-red-500/30 text-red-300 px-4 py-3 rounded-xl mb-6 text-center">
-                    <i class="fas fa-exclamation-circle mr-2"></i><?php echo $error; ?>
-                </div>
-            <?php endif; ?>
-
-            <form method="POST" action="" class="max-w-2xl mx-auto">
-                <div class="space-y-4">
-                    <input type="hidden" name="vaga_id" id="vaga_id" value="">
-                    
-                    <div class="bg-white/5 rounded-xl p-4 mb-4">
-                        <p class="text-sm text-gray-400">Vaga selecionada</p>
-                        <p class="text-white font-semibold" id="vaga_selecionada"></p>
-                    </div>
-                    
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-semibold text-white mb-2">Nome Completo</label>
-                            <input type="text" name="nome" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="Seu nome">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-white mb-2">E-mail</label>
-                            <input type="email" name="email" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="seu@email.com">
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-sm font-semibold text-white mb-2">Telefone</label>
-                        <input type="tel" name="telefone" class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="(00) 00000-0000">
-                    </div>
-                    
-                    <div>
-                        <label class="block text-sm font-semibold text-white mb-2">Mensagem (opcional)</label>
-                        <textarea name="mensagem" rows="3" class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="Conte-nos sobre você"></textarea>
-                    </div>
-                    
-                    <div class="flex gap-4">
-                        <button type="submit" class="flex-1 py-4 bg-gradient-to-r from-amarelo-destaque to-amarelo-claro text-azul-escuro rounded-xl font-bold hover:shadow-xl hover:shadow-yellow-500/30 transition-all duration-300 transform hover:scale-105">
-                            <i class="fas fa-paper-plane mr-2"></i>Enviar Currículo
-                        </button>
-                        <button type="button" onclick="esconderFormulario()" class="px-6 py-4 bg-white/10 text-white rounded-xl font-semibold hover:bg-white/20 transition-all">
-                            Cancelar
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        <!-- Benefícios -->
-        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-            <h2 class="text-2xl font-bold text-white mb-6 text-center">
-                <i class="fas fa-star mr-2 text-amarelo-destaque"></i>Benefícios
-            </h2>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-heartbeat text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-white font-semibold mb-2">Plano de Saúde</h3>
-                    <p class="text-gray-400 text-sm">Cobertura médica completa para você e sua família.</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-graduation-cap text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-white font-semibold mb-2">Desenvolvimento</h3>
-                    <p class="text-gray-400 text-sm">Cursos e treinamentos contínuos.</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-verde-complementar to-verde-claro rounded-xl flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-umbrella-beach text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-white font-semibold mb-2">Férias Remuneradas</h3>
-                    <p class="text-gray-400 text-sm">30 dias de férias remuneradas anuais.</p>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white mt-16 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <p class="text-gray-400 text-sm">© <?php echo date('Y'); ?> [Inserir nome da escola aqui]. Todos os direitos reservados.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        function mostrarFormulario(vagaId, vagaTitulo) {
-            document.getElementById('vaga_id').value = vagaId;
-            document.getElementById('vaga_selecionada').textContent = vagaTitulo;
-            document.getElementById('formulario-candidatura').classList.remove('hidden');
-            document.getElementById('formulario-candidatura').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function esconderFormulario() {
-            document.getElementById('formulario-candidatura').classList.add('hidden');
-        }
-    </script>
-</body>
-</html>
+<?php require_once 'includes/footer.php'; ?>

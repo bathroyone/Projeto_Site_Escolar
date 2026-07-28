@@ -234,11 +234,11 @@ if (isset($_GET['action']) && $_GET['action'] === 'excluir' && isset($_GET['id']
                             <button onclick="editUsuario(<?php echo $usuario['id']; ?>, '<?php echo htmlspecialchars($usuario['nome_completo'], ENT_QUOTES); ?>', '<?php echo htmlspecialchars($usuario['email'] ?? '', ENT_QUOTES); ?>', '<?php echo $usuario['tipo_usuario']; ?>', '<?php echo htmlspecialchars($usuario['turma'] ?? '', ENT_QUOTES); ?>', '<?php echo htmlspecialchars($usuario['serie'] ?? '', ENT_QUOTES); ?>')" class="text-primary-600 hover:text-primary-800 mr-3">
                                 <i class="fas fa-edit"></i>
                             </button>
-                            <a href="?action=toggle_status&id=<?php echo $usuario['id']; ?>" class="text-gray-600 hover:text-gray-800 mr-3">
+                            <a href="../index.php?page=usuarios&action=toggle_status&id=<?php echo $usuario['id']; ?>" class="text-gray-600 hover:text-gray-800 mr-3">
                                 <i class="fas fa-<?php echo $usuario['ativo'] ? 'ban' : 'check'; ?>"></i>
                             </a>
                             <?php if ($usuario['id'] != $_SESSION['usuario_id']): ?>
-                                <a href="?action=excluir&id=<?php echo $usuario['id']; ?>" class="text-red-600 hover:text-red-800" onclick="return confirm('Tem certeza que deseja excluir este usuário?');">
+                                <a href="../index.php?page=usuarios&action=excluir&id=<?php echo $usuario['id']; ?>" class="text-red-600 hover:text-red-800" onclick="return confirm('Tem certeza que deseja excluir este usuário?');">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             <?php endif; ?>

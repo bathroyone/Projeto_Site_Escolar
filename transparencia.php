@@ -1,185 +1,116 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transparência e Prestação de Contas | Site da Escola</title>
-    <link rel="stylesheet" href="css/output.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-</head>
-<body class="bg-gray-900 min-h-screen">
-    <!-- Header -->
-    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-lg sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <div class="flex items-center gap-3">
-                    <a href="index.php" class="flex items-center gap-2 group">
-                        <img src="img/logo.jpg" alt="Logo" class="h-12">
-                        <div class="hidden sm:block">
-                            <span class="text-white font-bold text-xs tracking-wide">TRANSPARÊNCIA E</span>
-                            <span class="block text-amarelo-destaque font-extrabold text-sm">PRESTAÇÃO DE CONTAS</span>
-                        </div>
-                    </a>
-                </div>
+<?php
+$pageTitle = 'Transparência';
+require_once 'portal/config.php';
+?>
+<?php require_once 'includes/header.php'; ?>
 
-                <div class="flex items-center gap-3">
-                    <a href="index.php" class="px-6 py-2.5 bg-white/20 text-white rounded-full font-semibold hover:bg-white/30 transition-all">
-                        <i class="fas fa-arrow-left mr-2"></i>Voltar
-                    </a>
-                </div>
-            </div>
+<!-- Hero Section -->
+<section class="bg-gradient-to-br from-gray-600 via-gray-700 to-gray-800 py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center text-white">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 font-poppins">Transparência e Prestação de Contas</h1>
+      <p class="text-xl text-white/90">Compromisso com a gestão transparente</p>
+    </div>
+  </div>
+</section>
+
+<!-- Main Content -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Transparency Info -->
+    <div class="bg-white rounded-2xl shadow-lg p-8 mb-12">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4 font-poppins">Nossa Política de Transparência</h2>
+      <p class="text-gray-600 mb-6">A instituição mantém um compromisso permanente com a transparência em todas as suas ações, garantindo o acesso à informação e a prestação de contas à comunidade escolar.</p>
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+            <i class="fas fa-file-invoice-dollar text-gray-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2 font-poppins">Financeiro</h3>
+          <p class="text-sm text-gray-600">Relatórios mensais</p>
         </div>
-    </header>
-
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <!-- Banner -->
-        <div class="bg-gradient-to-r from-azul-principal to-verde-complementar rounded-3xl p-8 mb-12 text-center">
-            <h1 class="text-3xl md:text-4xl font-display font-bold text-white mb-4">
-                <i class="fas fa-balance-scale mr-3"></i>Transparência e Prestação de Contas
-            </h1>
-            <p class="text-white/90 text-lg max-w-2xl mx-auto">
-                Acesso público às informações financeiras e administrativas da instituição.
-            </p>
+        
+        <div class="text-center">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+            <i class="fas fa-chart-bar text-blue-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2 font-poppins">Estatísticas</h3>
+          <p class="text-sm text-gray-600">Dados educacionais</p>
         </div>
-
-        <!-- Documentos -->
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white-20 hover:border-amarelo-destaque/50 transition-all">
-                <div class="flex items-start gap-4 mb-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-file-pdf text-white text-xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-white font-semibold">Balanço Anual</h3>
-                        <p class="text-gray-400 text-sm">Demonstração financeira</p>
-                    </div>
-                </div>
-                <p class="text-gray-400 text-sm mb-4">Relatório completo das receitas e despesas do ano.</p>
-                <button class="w-full py-3 bg-white/10 text-white rounded-xl font-semibold hover:bg-white/20 transition-colors">
-                    <i class="fas fa-download mr-2"></i>Baixar
-                </button>
-            </div>
-
-            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white-20 hover:border-amarelo-destaque/50 transition-all">
-                <div class="flex items-start gap-4 mb-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-file-pdf text-white text-xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-white font-semibold">Relatório de Atividades</h3>
-                        <p class="text-gray-400 text-sm">Resumo anual</p>
-                    </div>
-                </div>
-                <p class="text-gray-400 text-sm mb-4">Principais atividades realizadas no período.</p>
-                <button class="w-full py-3 bg-white/10 text-white rounded-xl font-semibold hover:bg-white/20 transition-colors">
-                    <i class="fas fa-download mr-2"></i>Baixar
-                </button>
-            </div>
-
-            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white-20 hover:border-amarelo-destaque/50 transition-all">
-                <div class="flex items-start gap-4 mb-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-verde-complementar to-verde-claro rounded-xl flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-file-pdf text-white text-xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-white font-semibold">Prestação de Contas</h3>
-                        <p class="text-gray-400 text-sm">Mensal</p>
-                    </div>
-                </div>
-                <p class="text-gray-400 text-sm mb-4">Detalhamento das movimentações financeiras.</p>
-                <button class="w-full py-3 bg-white/10 text-white rounded-xl font-semibold hover:bg-white/20 transition-colors">
-                    <i class="fas fa-download mr-2"></i>Baixar
-                </button>
-            </div>
-
-            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white-20 hover:border-amarelo-destaque/50 transition-all">
-                <div class="flex items-start gap-4 mb-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-pink-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-file-pdf text-white text-xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-white font-semibold">Estatísticas</h3>
-                        <p class="text-gray-400 text-sm">Dados institucionais</p>
-                    </div>
-                </div>
-                <p class="text-gray-400 text-sm mb-4">Números e indicadores da escola.</p>
-                <button class="w-full py-3 bg-white/10 text-white rounded-xl font-semibold hover:bg-white/20 transition-colors">
-                    <i class="fas fa-download mr-2"></i>Baixar
-                </button>
-            </div>
-
-            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white-20 hover:border-amarelo-destaque/50 transition-all">
-                <div class="flex items-start gap-4 mb-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-file-pdf text-white text-xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-white font-semibold">Investimentos</h3>
-                        <p class="text-gray-400 text-sm">Relatório</p>
-                    </div>
-                </div>
-                <p class="text-gray-400 text-sm mb-4">Aplicação de recursos em infraestrutura.</p>
-                <button class="w-full py-3 bg-white/10 text-white rounded-xl font-semibold hover:bg-white/20 transition-colors">
-                    <i class="fas fa-download mr-2"></i>Baixar
-                </button>
-            </div>
-
-            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white-20 hover:border-amarelo-destaque/50 transition-all">
-                <div class="flex items-start gap-4 mb-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-file-pdf text-white text-xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-white font-semibold">Conselho Escolar</h3>
-                        <p class="text-gray-400 text-sm">Atas</p>
-                    </div>
-                </div>
-                <p class="text-gray-400 text-sm mb-4">Documentos das reuniões do conselho.</p>
-                <button class="w-full py-3 bg-white/10 text-white rounded-xl font-semibold hover:bg-white/20 transition-colors">
-                    <i class="fas fa-download mr-2"></i>Baixar
-                </button>
-            </div>
+        
+        <div class="text-center">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+            <i class="fas fa-balance-scale text-green-600 text-2xl"></i>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2 font-poppins">Legal</h3>
+          <p class="text-sm text-gray-600">Conformidade com leis</p>
         </div>
-
-        <!-- Informações -->
-        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white-20">
-            <h2 class="text-2xl font-bold text-white mb-6 text-center">
-                <i class="fas fa-info-circle mr-2 text-amarelo-destaque"></i>Compromisso com a Transparência
-            </h2>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-eye text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-white font-semibold mb-2">Acesso Público</h3>
-                    <p class="text-gray-400 text-sm">Informações disponíveis para toda a comunidade.</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-check-double text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-white font-semibold mb-2">Responsabilidade</h3>
-                    <p class="text-gray-400 text-sm">Gestão responsável dos recursos públicos.</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-verde-complementar to-verde-claro rounded-xl flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-handshake text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-white font-semibold mb-2">Diálogo</h3>
-                    <p class="text-gray-400 text-sm">Canais abertos para esclarecimentos.</p>
-                </div>
+      </div>
+    </div>
+    
+    <!-- Documents Section -->
+    <div class="mb-12">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6 font-poppins">Documentos Disponíveis</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <i class="fas fa-file-pdf text-red-600 text-xl"></i>
             </div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white mt-16 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <p class="text-gray-400 text-sm">© <?php echo date('Y'); ?> [Inserir nome da escola aqui]. Todos os direitos reservados.</p>
+            <div>
+              <h3 class="font-semibold text-gray-800 mb-2 font-poppins">Relatório Financeiro 2024</h3>
+              <p class="text-sm text-gray-600 mb-3">Balanço anual e demonstrações</p>
+              <a href="#" class="text-sm text-blue-600 hover:text-blue-700 font-medium">Baixar PDF</a>
             </div>
+          </div>
         </div>
-    </footer>
-</body>
-</html>
+        
+        <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <i class="fas fa-file-pdf text-red-600 text-xl"></i>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-800 mb-2 font-poppins">Plano de Gestão</h3>
+              <p class="text-sm text-gray-600 mb-3">Metas e objetivos institucionais</p>
+              <a href="#" class="text-sm text-blue-600 hover:text-blue-700 font-medium">Baixar PDF</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <i class="fas fa-file-pdf text-red-600 text-xl"></i>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-800 mb-2 font-poppins">Estatísticas Educacionais</h3>
+              <p class="text-sm text-gray-600 mb-3">Dados de matrícula e desempenho</p>
+              <a href="#" class="text-sm text-blue-600 hover:text-blue-700 font-medium">Baixar PDF</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Contact Section -->
+    <div>
+      <h2 class="text-2xl font-bold text-gray-900 mb-6 font-poppins">Canal de Denúncias e Sugestões</h2>
+      <div class="bg-white rounded-xl p-6 shadow-md">
+        <p class="text-gray-600 mb-4">Para denúncias, sugestões ou dúvidas sobre a transparência institucional, entre em contato conosco:</p>
+        <div class="flex flex-wrap gap-4">
+          <a href="contato_departamentos.php" class="btn-primary">
+            <i class="fas fa-envelope mr-2"></i>Contatar
+          </a>
+          <a href="#" class="btn-secondary">
+            <i class="fas fa-phone mr-2"></i>Telefone
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<?php require_once 'includes/footer.php'; ?>
