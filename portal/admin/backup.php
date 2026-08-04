@@ -8,8 +8,9 @@ if (!isset($_SESSION['usuario_id']) || $_SESSION['tipo_usuario'] !== 'admin') {
     exit();
 }
 
-// Conectar ao banco de dados
-$conn = new mysqli($host, $user, $pass, $db);
+// Conectar ao banco de dados usando config.php
+$pdo = getDBConnection();
+$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 if ($conn->connect_error) {
     die("Erro de conexão: " . $conn->connect_error);
 }

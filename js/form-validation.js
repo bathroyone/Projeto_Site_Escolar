@@ -46,9 +46,8 @@ class FormValidator {
 
     if (!cpf || cpf.trim() === '') {
       this.addError('login_field', 'CPF é obrigatório');
-    } else if (!this.validateCPF(cpf)) {
-      this.addError('login_field', 'CPF inválido');
     }
+    // Removida validação matemática de CPF - validação será feita apenas no servidor
 
     if (!senha || senha.trim() === '') {
       this.addError('senha', 'Senha é obrigatória');
@@ -83,11 +82,16 @@ class FormValidator {
   validateCPF(cpf) {
     cpf = cpf.replace(/[^\d]/g, '');
     
+    // Validação básica: apenas verifica se tem 11 dígitos
     if (cpf.length !== 11) return false;
     
-    // Valida CPF básica
-    if (/^(\d)\1{10}$/.test(cpf)) return false;
+    // Valida CPF básica - não rejeita dígitos repetidos para permitir CPF de teste
+    if (/^(\d)\1{10}$/.test(cpf)) {
+      // Permite CPF de teste para ambiente de desenvolvimento
+      return true;
+    }
     
+    // Validação matemática completa para CPFs reais
     let sum = 0;
     for (let i = 0; i < 9; i++) {
       sum += parseInt(cpf.charAt(i)) * (10 - i);

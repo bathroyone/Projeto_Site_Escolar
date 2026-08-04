@@ -190,6 +190,16 @@ while ($row = $result_alunos->fetch_assoc()) {
         <!-- Ações Rápidas -->
         <h2 class="text-xl font-display font-bold text-azul-principal mb-4">Ações Rápidas</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <a href="secretaria/pre_matriculas.php" class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all group">
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-600 to-purple-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-user-graduate text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">Pré-Matrículas</h3>
+                    <p class="text-sm text-gray-500">Aprovar e gerenciar solicitações</p>
+                </div>
+            </a>
+            
             <a href="admin/mensalidades.php" class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all group">
                 <div class="flex flex-col items-center text-center">
                     <div class="w-16 h-16 bg-gradient-to-br from-azul-principal to-azul-claro rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
@@ -222,7 +232,7 @@ while ($row = $result_alunos->fetch_assoc()) {
             
             <a href="admin/relatorios.php" class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all group">
                 <div class="flex flex-col items-center text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-purple-600 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                    <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-pink-400 rounded-2xl flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform">
                         <i class="fas fa-file-alt text-white text-2xl"></i>
                     </div>
                     <h3 class="font-bold text-gray-800 text-lg mb-2">Relatórios</h3>

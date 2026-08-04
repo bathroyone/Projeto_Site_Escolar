@@ -230,6 +230,10 @@ Projeto_Site_Escolar/
 - CPF: `123.456.789-00`
 - Senha: `aluno123`
 
+**Secretaria:**
+- Usuário: `secretaria`
+- Senha: `sec123`
+
 ⚠️ **Importante**: Altere as senhas padrão após o primeiro acesso!
 
 ## 📱 Funcionalidades

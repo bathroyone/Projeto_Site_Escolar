@@ -1,1216 +1,1016 @@
 <?php
-session_start();
+$pageTitle = 'Início';
 require_once 'portal/config.php';
-$isLoggedIn = isLoggedIn();
-$userName = $_SESSION['nome'] ?? '';
-$userType = $_SESSION['tipo_usuario'] ?? '';
+
+// Buscar imagens do banner de matrícula no banco de dados
+$bannerImages = [];
+try {
+    $pdo = getDBConnection();
+    $stmt = $pdo->prepare("SELECT * FROM site_imagens WHERE categoria = 'banner_matricula' AND ativo = 1 ORDER BY ordem ASC, id ASC");
+    $stmt->execute();
+    $bannerImages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (Exception $e) {
+    $bannerImages = [];
+}
+
+// Imagens padrão caso não haja nenhuma cadastrada
+$defaultImages = [
+    ['url' => 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80', 'alt' => 'Sala de aula'],
+    ['url' => 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=800&q=80', 'alt' => 'Alunos estudando'],
+    ['url' => 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80', 'alt' => 'Biblioteca'],
+    ['url' => 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80', 'alt' => 'Laboratório'],
+];
 ?>
-<!DOCTYPE html>
-<html lang="pt-BR">
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  <!-- Meta Tags SEO -->
-  <title>Site Institucional Moderno e Sistema de Gestão Escolar</title>
-  <meta name="description" content="Site institucional moderno e sistema de gestão escolar completo para instituições educacionais. Portal para alunos, professores e administradores.">
-  <meta name="keywords" content="escola, educação, gestão escolar, portal educacional, sistema escolar, biblioteca virtual, eventos escolares">
-  <meta name="author" content="Sistema de Gestão Escolar">
-  <meta name="robots" content="index, follow">
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://seusite.com.br/">
-  <meta property="og:title" content="Site Institucional Moderno e Sistema de Gestão Escolar">
-  <meta property="og:description" content="Site institucional moderno e sistema de gestão escolar completo para instituições educacionais.">
-  <meta property="og:image" content="https://seusite.com.br/img/og-image.jpg">
-  
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://seusite.com.br/">
-  <meta property="twitter:title" content="Site Institucional Moderno e Sistema de Gestão Escolar">
-  <meta property="twitter:description" content="Site institucional moderno e sistema de gestão escolar completo para instituições educacionais.">
-  <meta property="twitter:image" content="https://seusite.com.br/img/og-image.jpg">
-  
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://seusite.com.br/">
-  
-  <!-- PWA Manifest -->
-  <link rel="manifest" href="manifest.json">
-  
-  <!-- Theme Color -->
-  <meta name="theme-color" content="#0a2463">
-  
-  <!-- Apple Touch Icon -->
-  <link rel="apple-touch-icon" href="img/logo.jpg">
-  
-  <!-- Favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="img/logo.jpg">
-  <link rel="stylesheet" href="css/output.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="js/form-validation.js"></script>
-  <script src="js/loading-states.js"></script>
-  <script src="js/accessibility.js"></script>
-  <script src="js/performance-animations.js"></script>
-  
-  <!-- Service Worker Registration -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then((registration) => {
-            console.log('Service Worker registrado com sucesso:', registration.scope);
-          })
-          .catch((error) => {
-            console.log('Falha ao registrar Service Worker:', error);
-          });
-      });
-    }
-  </script>
-  <style>
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-    }
-    .glass-dark {
-      background: rgba(10, 36, 99, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-    }
-    .carousel-slide {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transition: opacity 0.8s ease;
-    }
-    .carousel-slide.active {
-      opacity: 1;
-    }
-    .carousel-dot {
-      transition: all 0.3s ease;
-    }
-    .carousel-dot.active {
-      transform: scale(1.2);
-    }
-    .card-hover {
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .card-hover:hover {
-      transform: translateY(-12px);
-      box-shadow: 0 25px 50px rgba(10, 36, 99, 0.2);
-    }
-    .input-error {
-      border-color: #ef4444 !important;
-      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
-    }
-    .error-message {
-      animation: shake 0.5s ease-in-out;
-    }
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      75% { transform: translateX(5px); }
-    }
-    .floating {
-      animation: floating 3s ease-in-out infinite;
-    }
-    @keyframes floating {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-    }
-    .gradient-text {
-      background: linear-gradient(135deg, #ffd700, #ffed4a);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .nav-link {
-      position: relative;
-    }
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: #ffd700;
-      transition: width 0.3s ease;
-    }
-    .nav-link:hover::after {
-      width: 100%;
-    }
-  </style>
-</head>
-<body class="bg-gray-900 min-h-screen">
-  
-  <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="main-header">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-20">
-        <a href="#" class="flex items-center gap-3 group">
-          <img src="img/logo.jpg" alt="Logo [Inserir nome da escola aqui]" class="h-14 w-auto">
-        </a>
+<?php require_once 'includes/header.php'; ?>
 
-        <nav class="hidden lg:flex items-center gap-8">
-          <a href="#" class="nav-link text-white/90 hover:text-white font-medium transition-colors">Início</a>
-          <a href="#about" class="nav-link text-white/90 hover:text-white font-medium transition-colors">Sobre</a>
-          <a href="#projects" class="nav-link text-white/90 hover:text-white font-medium transition-colors">Projetos</a>
-          <a href="#gallery" class="nav-link text-white/90 hover:text-white font-medium transition-colors">Fotos</a>
-          <a href="#contact" class="nav-link text-white/90 hover:text-white font-medium transition-colors">Contato</a>
-        </nav>
+<style>
+/* ─── LUXURY HOMEPAGE STYLES ──────────────────────── */
 
-        <div class="hidden md:flex items-center gap-2">
-          <a href="biblioteca_vrtual/biblioteca.html" class="px-4 py-2.5 bg-gradient-to-r from-verde-complementar to-verde-claro text-white rounded-full font-semibold hover:shadow-lg hover:shadow-green-500/30 transition-all duration-300 text-sm whitespace-nowrap">
-            <i class="fas fa-book mr-1"></i>Biblioteca
-          </a>
-          <?php if ($isLoggedIn): ?>
-            <!-- Avatar do usuário logado -->
-            <div class="relative ml-2">
-              <button id="user-menu-btn" class="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-azul-principal to-azul-claro text-white rounded-full font-semibold hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 text-sm whitespace-nowrap">
-                <div class="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
-                  <i class="fas fa-user text-xs"></i>
-                </div>
-                <span class="max-w-[80px] truncate"><?php echo htmlspecialchars(substr($userName, 0, 10)); ?></span>
-                <i class="fas fa-chevron-down text-xs flex-shrink-0"></i>
-              </button>
-              <!-- Menu dropdown -->
-              <div id="user-menu-dropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl py-2 hidden z-50">
-                <div class="px-4 py-2 border-b border-gray-100">
-                  <p class="text-xs text-gray-500">Logado como</p>
-                  <p class="text-sm font-semibold text-gray-800 truncate"><?php echo htmlspecialchars($userName); ?></p>
-                  <p class="text-xs text-azul-principal font-medium capitalize"><?php echo htmlspecialchars($userType); ?></p>
-                </div>
-                <?php if ($userType === 'admin'): ?>
-                  <a href="portal/admin/index.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-azul-principal transition-colors">
-                    <i class="fas fa-cog mr-2"></i>Painel Admin
-                  </a>
-                <?php elseif ($userType === 'professor'): ?>
-                  <a href="portal/professor/index.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-azul-principal transition-colors">
-                    <i class="fas fa-chalkboard-teacher mr-2"></i>Painel Professor
-                  </a>
-                <?php elseif ($userType === 'aluno'): ?>
-                  <a href="portal/aluno/index.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-azul-principal transition-colors">
-                    <i class="fas fa-graduation-cap mr-2"></i>Painel Aluno
-                  </a>
-                <?php endif; ?>
-                <div class="border-t border-gray-100 mt-2 pt-2">
-                  <a href="portal/logout.php" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
-                    <i class="fas fa-sign-out-alt mr-2"></i>Sair
-                  </a>
-                </div>
-              </div>
-            </div>
-          <?php else: ?>
-            <button id="acesso-sistema-btn" class="ml-2 px-4 py-2.5 bg-gradient-to-r from-azul-principal to-azul-claro text-white rounded-full font-semibold hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 text-sm whitespace-nowrap">
-              <i class="fas fa-sign-in-alt mr-1"></i>Acesso
-            </button>
-          <?php endif; ?>
+/* Fonts */
+.font-outfit { font-family: 'Outfit', sans-serif; }
+
+/* ── HERO ── */
+.hero-section {
+  min-height: 90vh;
+  background: #0a0f1e;
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.hero-bg-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-glow-1 {
+  position: absolute;
+  top: -20%; left: -10%;
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(29,78,216,0.25) 0%, transparent 70%);
+  filter: blur(60px);
+}
+.hero-glow-2 {
+  position: absolute;
+  bottom: -20%; right: -5%;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(109,40,217,0.18) 0%, transparent 70%);
+  filter: blur(50px);
+}
+.hero-glow-3 {
+  position: absolute;
+  top: 30%; right: 15%;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245,158,11,0.1) 0%, transparent 70%);
+  filter: blur(40px);
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 100px;
+  padding: 8px 20px;
+  color: rgba(255,255,255,0.85);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+.hero-badge .dot {
+  width: 6px; height: 6px;
+  background: #22d3ee;
+  border-radius: 50%;
+  animation: pulse-dot 2s infinite;
+}
+@keyframes pulse-dot {
+  0%,100%{ opacity:1; transform:scale(1); }
+  50%{ opacity:0.5; transform:scale(1.4); }
+}
+
+.hero-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(2.8rem, 6vw, 5.2rem);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+.hero-title .accent {
+  background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-desc {
+  font-size: 1.15rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.75;
+  max-width: 520px;
+  margin-bottom: 40px;
+  font-weight: 300;
+}
+
+.hero-cta-wrap { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.btn-hero-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 15px 32px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #1d4ed8, #4f46e5);
+  color: white;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  box-shadow: 0 8px 28px rgba(29,78,216,0.45);
+  transition: all 0.3s ease;
+  border: none; cursor: pointer;
+}
+.btn-hero-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(29,78,216,0.55);
+}
+.btn-hero-secondary {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 28px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.07);
+  border: 1.5px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.85);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+.btn-hero-secondary:hover {
+  background: rgba(255,255,255,0.13);
+  border-color: rgba(255,255,255,0.3);
+}
+
+/* Hero stats */
+.hero-stats {
+  display: flex; flex-wrap: wrap; gap: 32px;
+  margin-top: 60px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.stat-item { text-align: left; }
+.stat-number {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: white;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.45);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Hero right card */
+.hero-visual {
+  position: relative;
+}
+.hero-card-main {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-card-main::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+}
+
+.student-photo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.photo-tile {
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  position: relative;
+}
+.photo-tile img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.photo-tile.large {
+  grid-row: span 2;
+  aspect-ratio: auto;
+}
+
+.floating-badge {
+  position: absolute;
+  background: white;
+  border-radius: 14px;
+  padding: 12px 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  display: flex; align-items: center; gap: 10px;
+  white-space: nowrap;
+}
+.floating-badge.top-left {
+  top: -12px; left: -20px;
+}
+.floating-badge.bottom-right {
+  bottom: 60px; right: -20px;
+}
+.floating-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+}
+.floating-label { font-size: 0.75rem; font-weight: 700; color: #0f172a; }
+.floating-sub { font-size: 0.68rem; color: #64748b; font-weight: 500; }
+
+/* ── SECTION TITLES ── */
+.section-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #3b82f6;
+  margin-bottom: 12px;
+}
+.section-eyebrow::before, .section-eyebrow::after {
+  content: '';
+  display: block; width: 20px; height: 2px;
+  background: currentColor; border-radius: 2px;
+}
+.section-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+.section-desc {
+  font-size: 1rem;
+  color: #64748b;
+  line-height: 1.7;
+  max-width: 560px;
+}
+
+/* ── LEVELS / ETAPAS ── */
+.levels-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 20px; }
+.level-card {
+  border-radius: 20px;
+  padding: 32px 28px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+  border: 1px solid transparent;
+}
+.level-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px -10px var(--shadow);
+}
+.level-card .card-icon {
+  width: 56px; height: 56px;
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  background: var(--icon-bg);
+  color: var(--icon-color);
+}
+.level-card .card-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+.level-card .card-sub {
+  font-size: 0.85rem;
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.level-card .card-arrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent);
+  transition: gap 0.2s;
+}
+.level-card:hover .card-arrow { gap: 10px; }
+
+.level-card-1 { background: #f0f9ff; border-color: #bae6fd; --shadow: rgba(14,165,233,0.2); --icon-bg: #e0f2fe; --icon-color: #0284c7; --accent: #0284c7; }
+.level-card-2 { background: #f0fdf4; border-color: #bbf7d0; --shadow: rgba(34,197,94,0.2); --icon-bg: #dcfce7; --icon-color: #16a34a; --accent: #16a34a; }
+.level-card-3 { background: #faf5ff; border-color: #e9d5ff; --shadow: rgba(139,92,246,0.2); --icon-bg: #ede9fe; --icon-color: #7c3aed; --accent: #7c3aed; }
+.level-card-4 { background: #fff7ed; border-color: #fed7aa; --shadow: rgba(249,115,22,0.2); --icon-bg: #ffedd5; --icon-color: #ea580c; --accent: #ea580c; }
+
+/* ── FEATURES STRIP ── */
+.features-strip {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  position: relative;
+  overflow: hidden;
+}
+.features-strip::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -10%;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%);
+  filter: blur(40px);
+}
+.feature-item {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 28px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.feature-item:last-child { border-bottom: none; }
+.feature-dot {
+  width: 44px; height: 44px; flex-shrink: 0;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+}
+.feature-item h4 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem; font-weight: 700;
+  color: white; margin-bottom: 4px;
+}
+.feature-item p { font-size: 0.85rem; color: rgba(255,255,255,0.45); line-height: 1.6; }
+
+/* ── NEWS ── */
+.news-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  transition: all 0.3s ease;
+  border: 1px solid #f1f5f9;
+  text-decoration: none;
+  display: block;
+}
+.news-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 44px rgba(0,0,0,0.1);
+}
+.news-img { width: 100%; height: 200px; object-fit: cover; }
+.news-body { padding: 22px 24px 26px; }
+.news-tag {
+  display: inline-block;
+  padding: 4px 12px; border-radius: 100px;
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.news-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.15rem; font-weight: 700;
+  color: #0f172a; line-height: 1.35;
+  margin-bottom: 8px;
+}
+.news-meta { font-size: 0.8rem; color: #94a3b8; font-weight: 500; }
+
+/* ── EVENTS ── */
+.event-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px 22px;
+  display: flex; align-items: center; gap: 18px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  border: 1px solid #f1f5f9;
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+.event-card:hover {
+  transform: translateX(4px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+  border-color: #e0f2fe;
+}
+.event-date-box {
+  flex-shrink: 0;
+  width: 52px; text-align: center;
+  background: #f0f9ff;
+  border-radius: 12px;
+  padding: 8px 4px;
+}
+.event-date-box .day {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.5rem; font-weight: 800; color: #1d4ed8; line-height: 1;
+}
+.event-date-box .month {
+  font-size: 0.65rem; font-weight: 700;
+  text-transform: uppercase; color: #64748b;
+  letter-spacing: 0.05em;
+}
+.event-info h4 {
+  font-size: 0.9rem; font-weight: 700;
+  color: #0f172a; margin-bottom: 3px;
+}
+.event-info p { font-size: 0.78rem; color: #94a3b8; }
+.event-arrow {
+  margin-left: auto; flex-shrink: 0;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: #f0f9ff;
+  display: flex; align-items: center; justify-content: center;
+  color: #3b82f6; font-size: 0.75rem;
+  transition: background 0.2s;
+}
+.event-card:hover .event-arrow { background: #3b82f6; color: white; }
+
+/* ── QUICK ACCESS ── */
+.qa-card {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 12px;
+  padding: 28px 16px;
+  border-radius: 20px;
+  background: white;
+  border: 1.5px solid #f1f5f9;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+.qa-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+  border-color: transparent;
+}
+.qa-icon {
+  width: 56px; height: 56px;
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+}
+.qa-label {
+  font-weight: 700; font-size: 0.9rem;
+  color: #0f172a;
+}
+.qa-sub { font-size: 0.78rem; color: #94a3b8; }
+
+/* ── TESTIMONIALS ── */
+.testimonial-card {
+  background: white;
+  border-radius: 20px;
+  padding: 30px 28px;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  position: relative;
+}
+.testimonial-card::before {
+  content: '\201C';
+  font-family: 'Outfit', sans-serif;
+  position: absolute;
+  top: 16px; left: 22px;
+  font-size: 5rem;
+  color: #eff6ff;
+  line-height: 1;
+  font-weight: 900;
+}
+.testimonial-text {
+  font-size: 0.9rem;
+  color: #475569;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+.testimonial-author {
+  display: flex; align-items: center; gap: 12px;
+}
+.avatar-circle {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.85rem; color: white;
+}
+.author-name { font-size: 0.875rem; font-weight: 700; color: #0f172a; }
+.author-role { font-size: 0.75rem; color: #94a3b8; }
+
+/* ── CTA BANNER ── */
+.cta-banner {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%);
+  border-radius: 28px;
+  padding: 64px 48px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.cta-banner::before {
+  content: '';
+  position: absolute; top: -60px; right: -60px;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+}
+.cta-banner::after {
+  content: '';
+  position: absolute; bottom: -40px; left: -40px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+}
+.cta-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: white;
+  margin-bottom: 16px;
+  position: relative;
+}
+.cta-desc {
+  color: rgba(255,255,255,0.6);
+  font-size: 1rem;
+  margin-bottom: 36px;
+  position: relative;
+}
+
+/* ── SCROLL ANIMATIONS ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero-section">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+  <div class="hero-glow-3"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20 relative" style="z-index:10;">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+      <!-- Left -->
+      <div>
+        <div class="hero-badge">
+          <span class="dot"></span>
+          Matrículas 2026 abertas
         </div>
-
-        <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-lg text-white hover:bg-white/10 transition-colors">
-          <i class="fas fa-bars text-2xl"></i>
-        </button>
-      </div>
-    </div>
-
-    <div id="mobile-menu" class="fixed inset-0 z-50 lg:hidden">
-      <div id="menu-overlay" class="absolute inset-0 bg-black/95 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
-      <div id="menu-drawer" class="absolute right-0 top-0 h-full w-80 bg-gray-900 shadow-2xl transform translate-x-full transition-transform duration-300">
-        <div class="p-6">
-          <div class="flex items-center justify-between mb-8">
-            <img src="img/logo.jpg" alt="Logo [Inserir nome da escola aqui]" class="h-12">
-            <button id="close-menu" class="p-2 rounded-lg hover:bg-white/10 transition-colors">
-              <i class="fas fa-times text-xl text-white"></i>
-            </button>
-          </div>
-          <nav class="flex flex-col gap-4">
-            <a href="#" class="px-4 py-3 text-white font-semibold hover:bg-white/10 rounded-lg transition-colors">Início</a>
-            <a href="#about" class="px-4 py-3 text-white font-semibold hover:bg-white/10 rounded-lg transition-colors">Sobre</a>
-            <a href="#projects" class="px-4 py-3 text-white font-semibold hover:bg-white/10 rounded-lg transition-colors">Projetos</a>
-            <a href="#gallery" class="px-4 py-3 text-white font-semibold hover:bg-white/10 rounded-lg transition-colors">Fotos</a>
-            <a href="#contact" class="px-4 py-3 text-white font-semibold hover:bg-white/10 rounded-lg transition-colors">Contato</a>
-            <div class="border-t border-white/10 pt-4 mt-4 space-y-3">
-              <a href="biblioteca_vrtual/biblioteca.html" class="block px-4 py-3 bg-gradient-to-r from-verde-complementar to-verde-claro text-white rounded-lg font-semibold text-center hover:shadow-lg transition-all">
-                <i class="fas fa-book mr-2"></i>Biblioteca
-              </a>
-              <?php if ($isLoggedIn): ?>
-                <div class="px-4 py-3 bg-white/10 rounded-lg">
-                  <p class="text-white/70 text-xs mb-1">Logado como</p>
-                  <p class="text-white font-semibold"><?php echo htmlspecialchars(substr($userName, 0, 20)); ?></p>
-                  <p class="text-amarelo-destaque text-xs font-medium capitalize"><?php echo htmlspecialchars($userType); ?></p>
-                </div>
-                <a href="portal/dashboard.php" class="block px-4 py-3 bg-gradient-to-r from-azul-principal to-azul-claro text-white rounded-lg font-semibold text-center hover:shadow-lg transition-all">
-                  <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
-                </a>
-                <?php if ($userType === 'admin'): ?>
-                  <a href="portal/admin/index.php" class="block  px-4 py-3 bg-white/10 text-white rounded-lg font-semibold text-center hover:bg-white/20 transition-all">
-                    <i class="fas fa-cog mr-2"></i>Painel Admin
-                  </a>
-                <?php endif; ?>
-                <a href="portal/logout.php" class="block px-4 py-3 bg-red-500/20 text-red-300 rounded-lg font-semibold text-center hover:bg-red-500/30 transition-all">
-                  <i class="fas fa-sign-out-alt mr-2"></i>Sair
-                </a>
-              <?php else: ?>
-                <button id="acesso-sistema-btn-mobile" class="block w-full px-4 py-3 bg-gradient-to-r from-azul-principal to-azul-claro text-white rounded-lg font-semibold text-center hover:shadow-lg transition-all">
-                  <i class="fas fa-sign-in-alt mr-2"></i>Acesso ao Sistema
-                </button>
-              <?php endif; ?>
-              <a href="aviso2/passo1.html" target="_blank" class="block px-4 py-3 bg-gradient-to-r from-amarelo-destaque to-amarelo-claro text-azul-escuro rounded-lg font-bold text-center hover:shadow-lg transition-all">
-                <i class="fas fa-edit mr-2"></i>Correções
-              </a>
-            </div>
-          </nav>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main class="pt-0">
-    
-    <section id="hero-carousel" class="relative h-screen overflow-hidden">
-      <div class="relative h-full">
-        <div class="carousel-slide active absolute inset-0 w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
-          <div class="text-center p-8">
-            <i class="fas fa-image text-6xl text-white/30 mb-4"></i>
-            <p class="text-white/50 text-lg">Coloque aqui as fotos da sua escola</p>
-          </div>
-        </div>
-        <div class="carousel-slide absolute inset-0 w-full h-full bg-gradient-to-br from-azul-principal to-azul-escuro flex items-center justify-center">
-          <div class="text-center p-8">
-            <i class="fas fa-image text-6xl text-white/30 mb-4"></i>
-            <p class="text-white/50 text-lg">Coloque aqui as fotos da sua escola</p>
-          </div>
-        </div>
-        <div class="carousel-slide absolute inset-0 w-full h-full bg-gradient-to-br from-verde-complementar to-verde-claro flex items-center justify-center">
-          <div class="text-center p-8">
-            <i class="fas fa-image text-6xl text-white/30 mb-4"></i>
-            <p class="text-white/50 text-lg">Coloque aqui as fotos da sua escola</p>
-          </div>
-        </div>
-        <div class="carousel-slide absolute inset-0 w-full h-full bg-gradient-to-br from-amarelo-destaque to-orange-500 flex items-center justify-center">
-          <div class="text-center p-8">
-            <i class="fas fa-image text-6xl text-white/30 mb-4"></i>
-            <p class="text-white/50 text-lg">Coloque aqui as fotos da sua escola</p>
-          </div>
-        </div>
-        
-        <div class="absolute inset-0 bg-gradient-to-r from-gray-900/95 via-gray-900/80 to-transparent"></div>
-        
-        <div class="absolute inset-0 flex items-center">
-          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div class="max-w-3xl">
-              <span class="inline-block px-6 py-3 bg-gradient-to-r from-amarelo-destaque to-amarelo-claro text-azul-escuro rounded-full font-bold text-sm mb-8 animate-on-scroll shadow-lg shadow-yellow-500/30">
-                <i class="fas fa-star mr-2"></i>Matrículas 2026 Abertas
-              </span>
-              <h1 class="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-white mb-6 leading-tight animate-on-scroll">
-                Inserir o Nome da Escola Aqui
-              </h1>
-              <p class="text-xl md:text-2xl text-white/80 mb-10 animate-on-scroll leading-relaxed">
-                Educação de excelência, acolhimento e tecnologia para formar grandes futuros.
-              </p>
-              <div class="flex flex-wrap gap-4 animate-on-scroll">
-                <a href="#contact" class="px-8 py-4 bg-gradient-to-r from-amarelo-destaque to-amarelo-claro text-azul-escuro rounded-full font-bold hover:shadow-xl hover:shadow-yellow-500/30 transition-all duration-300 transform hover:scale-105">
-                  <i class="fas fa-phone mr-2"></i>Fale Conosco
-                </a>
-                <a href="pre_matricula.php" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-400 text-white rounded-full font-bold hover:shadow-xl hover:shadow-purple-500/30 transition-all duration-300 transform hover:scale-105">
-                  <i class="fas fa-user-graduate mr-2"></i>Pré-Matrícula
-                </a>
-                <a href="biblioteca_vrtual/biblioteca.html" target="_blank" class="px-8 py-4 bg-white/10 backdrop-blur-md text-white rounded-full font-semibold hover:bg-white/20 transition-all duration-300 border border-white/30 transform hover:scale-105">
-                  <i class="fas fa-book mr-2"></i>Biblioteca Virtual
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex gap-3">
-          <button class="carousel-dot w-3 h-3 rounded-full bg-white/50 hover:bg-white/80 active" data-index="0"></button>
-          <button class="carousel-dot w-3 h-3 rounded-full bg-white/50 hover:bg-white/80" data-index="1"></button>
-          <button class="carousel-dot w-3 h-3 rounded-full bg-white/50 hover:bg-white/80" data-index="2"></button>
-          <button class="carousel-dot w-3 h-3 rounded-full bg-white/50 hover:bg-white/80" data-index="3"></button>
-        </div>
-      </div>
-    </section>
-
-    <section id="stats" class="py-20 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden">
-      <div class="absolute inset-0 opacity-10">
-        <div class="absolute top-0 left-0 w-96 h-96 bg-amarelo-destaque rounded-full filter blur-3xl"></div>
-        <div class="absolute bottom-0 right-0 w-96 h-96 bg-azul-principal rounded-full filter blur-3xl"></div>
-      </div>
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-          <div class="text-center animate-on-scroll p-6 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10">
-            <div class="text-5xl md:text-6xl font-display font-bold gradient-text mb-2" data-count="28" data-suffix="">0</div>
-            <div class="text-white/80 font-semibold">Anos de Experiência</div>
-          </div>
-          <div class="text-center animate-on-scroll p-6 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10">
-            <div class="text-5xl md:text-6xl font-display font-bold gradient-text mb-2" data-count="14" data-suffix="">0</div>
-            <div class="text-white/80 font-semibold">Salas Climatizadas</div>
-          </div>
-          <div class="text-center animate-on-scroll p-6 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10">
-            <div class="text-5xl md:text-6xl font-display font-bold gradient-text mb-2" data-count="54" data-suffix="">0</div>
-            <div class="text-white/80 font-semibold">Câmeras de Segurança</div>
-          </div>
-          <div class="text-center animate-on-scroll p-6 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10">
-            <div class="text-5xl md:text-6xl font-display font-bold gradient-text mb-2" data-count="4" data-suffix="">0</div>
-            <div class="text-white/80 font-semibold">Alarmes</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="about" class="py-24 bg-gradient-to-b from-gray-900 to-gray-800">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-2 gap-16 items-center">
-          <div class="animate-on-scroll">
-            <span class="text-verde-complementar font-bold text-sm uppercase tracking-wider">Sobre Nós</span>
-            <h2 class="text-4xl md:text-5xl font-display font-bold text-white mt-3 mb-8">
-              Um pouco sobre a nossa escola
-            </h2>
-            <p class="text-gray-300 mb-6 leading-relaxed text-lg">
-              Nossa escola conta com um ambiente agradável e confortável para o bem-estar dos alunos e dos nossos funcionários. Montamos um sistema de segurança para manter nossas crianças e jovens mais protegidos.
-            </p>
-            <p class="text-gray-300 mb-8 leading-relaxed text-lg">
-              O [Inserir nome da escola aqui] oferece formação da educação infantil ao 9º ano, circuito interno de câmera, aulas de informática, língua inglesa e espanhola, atividades extracurriculares, quadra, seguro escolar 24h, Karatê, dança, projetos multidisciplinares, ética e cidadania.
-            </p>
-            <div class="flex flex-wrap gap-3">
-              <span class="px-5 py-2.5 bg-white/10 text-white rounded-full text-sm font-semibold border border-white/20 hover:bg-white/20 transition-colors">Educação Infantil</span>
-              <span class="px-5 py-2.5 bg-white/10 text-white rounded-full text-sm font-semibold border border-white/20 hover:bg-white/20 transition-colors">Ensino Fundamental</span>
-              <span class="px-5 py-2.5 bg-white/10 text-white rounded-full text-sm font-semibold border border-white/20 hover:bg-white/20 transition-colors">Inglês e Espanhol</span>
-              <span class="px-5 py-2.5 bg-white/10 text-white rounded-full text-sm font-semibold border border-white/20 hover:bg-white/20 transition-colors">Informática</span>
-              <span class="px-5 py-2.5 bg-white/10 text-white rounded-full text-sm font-semibold border border-white/20 hover:bg-white/20 transition-colors">Karatê</span>
-            </div>
-          </div>
-          <div class="relative animate-on-scroll">
-            <div class="absolute inset-0 bg-gradient-to-br from-azul-principal to-verde-complementar rounded-3xl transform rotate-6 opacity-50 blur-xl"></div>
-            <div class="relative bg-white/5 backdrop-blur-sm rounded-3xl p-2 border border-white/10">
-              <div class="rounded-2xl w-full h-96 bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
-                <div class="text-center p-8">
-                  <i class="fas fa-image text-5xl text-white/30 mb-4"></i>
-                  <p class="text-white/50">Coloque aqui a foto da escola</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="projects" class="py-24 bg-gray-800">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16 animate-on-scroll">
-          <span class="text-verde-complementar font-bold text-sm uppercase tracking-wider">Projetos</span>
-          <h2 class="text-4xl md:text-5xl font-display font-bold text-white mt-3 mb-6">
-            Aprendizagem em sala e além da sala
-          </h2>
-          <p class="text-gray-400 max-w-2xl mx-auto text-lg italic">
-            "Tenha em mente que tudo que você aprende na escola é trabalho de muitas gerações."
-            <span class="not-italic font-semibold gradient-text"> — Albert Einstein</span>
-          </p>
-        </div>
-
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden card-hover animate-on-scroll">
-            <div class="h-48 bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center p-4">
-              <div class="text-center">
-                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
-                <p class="text-white/50 text-xs">Coloque a imagem</p>
-              </div>
-            </div>
-            <div class="p-6">
-              <h3 class="font-display font-bold text-white text-lg mb-2">Karatê e Muay Thai</h3>
-              <p class="text-gray-400 text-sm">A arte é dividida em Kata e Kumite, desenvolvendo disciplina, foco e respeito.</p>
-            </div>
-          </div>
-          <div class="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden card-hover animate-on-scroll">
-            <div class="h-48 bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center p-4">
-              <div class="text-center">
-                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
-                <p class="text-white/50 text-xs">Coloque a imagem</p>
-              </div>
-            </div>
-            <div class="p-6">
-              <h3 class="font-display font-bold text-white text-lg mb-2">Preparatório 9º Ano</h3>
-              <p class="text-gray-400 text-sm">Capacitação para concursos de admissão em instituições de ensino médio técnico.</p>
-            </div>
-          </div>
-          <div class="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden card-hover animate-on-scroll">
-            <div class="h-48 bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center p-4">
-              <div class="text-center">
-                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
-                <p class="text-white/50 text-xs">Coloque a imagem</p>
-              </div>
-            </div>
-            <div class="p-6">
-              <h3 class="font-display font-bold text-white text-lg mb-2">Informática</h3>
-              <p class="text-gray-400 text-sm">História do computador, internet, Scratch, robótica e tecnologia educativa.</p>
-            </div>
-          </div>
-          <div class="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden card-hover animate-on-scroll">
-            <div class="h-48 bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center p-4">
-              <div class="text-center">
-                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
-                <p class="text-white/50 text-xs">Coloque a imagem</p>
-              </div>
-            </div>
-            <div class="p-6">
-              <h3 class="font-display font-bold text-white text-lg mb-2">Inglês e Espanhol</h3>
-              <p class="text-gray-400 text-sm">Aprender outro idioma é ampliar o mundo e levar um tesouro para toda a vida.</p>
-            </div>
-          </div>
-          <div class="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden card-hover animate-on-scroll">
-            <div class="h-48 bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center p-4">
-              <div class="text-center">
-                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
-                <p class="text-white/50 text-xs">Coloque a imagem</p>
-              </div>
-            </div>
-            <div class="p-6">
-              <h3 class="font-display font-bold text-white text-lg mb-2">Feira Estudantil</h3>
-              <p class="text-gray-400 text-sm">Mostra de trabalhos e projetos desenvolvidos pelos alunos ao longo do ano letivo.</p>
-            </div>
-          </div>
-          <div class="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden card-hover animate-on-scroll">
-            <div class="h-48 bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center p-4">
-              <div class="text-center">
-                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
-                <p class="text-white/50 text-xs">Coloque a imagem</p>
-              </div>
-            </div>
-            <div class="p-6">
-              <h3 class="font-display font-bold text-white text-lg mb-2">Semana do Folclore</h3>
-              <p class="text-gray-400 text-sm">Celebração da cultura brasileira com danças, músicas e histórias tradicionais.</p>
-            </div>
-          </div>
-          <div class="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden card-hover animate-on-scroll">
-            <div class="h-48 bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center p-4">
-              <div class="text-center">
-                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
-                <p class="text-white/50 text-xs">Coloque a imagem</p>
-              </div>
-            </div>
-            <div class="p-6">
-              <h3 class="font-display font-bold text-white text-lg mb-2">Semana da Criança</h3>
-              <p class="text-gray-400 text-sm">Momento especial com atividades lúdicas, brincadeiras e muita diversão.</p>
-            </div>
-          </div>
-          <div class="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden card-hover animate-on-scroll">
-            <div class="h-48 bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center p-4">
-              <div class="text-center">
-                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
-                <p class="text-white/50 text-xs">Coloque a imagem</p>
-              </div>
-            </div>
-            <div class="p-6">
-              <h3 class="font-display font-bold text-white text-lg mb-2">Dia do Cinema</h3>
-              <p class="text-gray-400 text-sm">Exibição de filmes educativos e sessões de cinema para os alunos.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="events" class="py-24 bg-gradient-to-b from-gray-800 to-gray-900">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16 animate-on-scroll">
-          <span class="text-verde-complementar font-bold text-sm uppercase tracking-wider">Eventos</span>
-          <h2 class="text-4xl md:text-5xl font-display font-bold text-white mt-3 mb-6">
-            Próximos Eventos da Escola
-          </h2>
-          <p class="text-gray-400 max-w-2xl mx-auto text-lg">
-            Fique por dentro das atividades e eventos programados para nossa comunidade escolar.
-          </p>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-8">
-          <div class="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden card-hover animate-on-scroll">
-            <div class="bg-gradient-to-r from-azul-principal to-azul-claro p-6">
-              <div class="flex items-center gap-4">
-                <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4 text-center">
-                  <span class="text-white font-bold text-3xl block">15</span>
-                  <span class="text-white/80 text-sm uppercase">Mar</span>
-                </div>
-                <div>
-                  <h3 class="font-display font-bold text-white text-lg">Reunião de Pais</h3>
-                  <p class="text-white/80 text-sm">19:00 - Auditório</p>
-                </div>
-              </div>
-            </div>
-            <div class="p-6">
-              <p class="text-gray-400 text-sm mb-4">Reunião pedagógica com os responsáveis para apresentação do planejamento anual.</p>
-              <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-xs font-semibold border border-blue-500/30">Todos os anos</span>
-            </div>
-          </div>
-
-          <div class="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden card-hover animate-on-scroll">
-            <div class="bg-gradient-to-r from-amarelo-destaque to-orange-500 p-6">
-              <div class="flex items-center gap-4">
-                <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4 text-center">
-                  <span class="text-white font-bold text-3xl block">22</span>
-                  <span class="text-white/80 text-sm uppercase">Mar</span>
-                </div>
-                <div>
-                  <h3 class="font-display font-bold text-white text-lg">Feira de Ciências</h3>
-                  <p class="text-white/80 text-sm">08:00 - Pátio</p>
-                </div>
-              </div>
-            </div>
-            <div class="p-6">
-              <p class="text-gray-400 text-sm mb-4">Exposição de trabalhos científicos desenvolvidos pelos alunos durante o semestre.</p>
-              <span class="inline-block px-3 py-1 bg-orange-500/20 text-orange-400 rounded-full text-xs font-semibold border border-orange-500/30">Fundamental</span>
-            </div>
-          </div>
-
-          <div class="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden card-hover animate-on-scroll">
-            <div class="bg-gradient-to-r from-purple-500 to-pink-500 p-6">
-              <div class="flex items-center gap-4">
-                <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4 text-center">
-                  <span class="text-white font-bold text-3xl block">30</span>
-                  <span class="text-white/80 text-sm uppercase">Mar</span>
-                </div>
-                <div>
-                  <h3 class="font-display font-bold text-white text-lg">Festa Cultural</h3>
-                  <p class="text-white/80 text-sm">14:00 - Ginásio</p>
-                </div>
-              </div>
-            </div>
-            <div class="p-6">
-              <p class="text-gray-400 text-sm mb-4">Celebração da diversidade cultural com apresentações artísticas e gastronômicas.</p>
-              <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-xs font-semibold border border-purple-500/30">Toda a escola</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="text-center mt-12">
-          <a href="eventos/eventos.html" class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-azul-principal to-azul-claro text-white rounded-full font-semibold hover:shadow-xl hover:shadow-blue-500/30 transition-all duration-300 transform hover:scale-105">
-            <i class="fas fa-calendar-alt"></i>
-            Ver Todos os Eventos
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section id="gallery" class="py-24 bg-gray-900">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16 animate-on-scroll">
-          <span class="text-verde-complementar font-bold text-sm uppercase tracking-wider">Galeria</span>
-          <h2 class="text-4xl md:text-5xl font-display font-bold text-white mt-3 mb-6">
-            Momentos especiais da nossa escola
-          </h2>
-        </div>
-
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          <a href="#" class="relative group overflow-hidden rounded-2xl aspect-square animate-on-scroll">
-            <div class="w-full h-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
-              <div class="text-center p-4">
-                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
-                <p class="text-white/50 text-xs">Coloque a foto</p>
-              </div>
-            </div>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-              <span class="text-white font-semibold text-sm">Exposição de Trabalhos</span>
-            </div>
-          </a>
-          <a href="#" class="relative group overflow-hidden rounded-2xl aspect-square animate-on-scroll">
-            <div class="w-full h-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
-              <div class="text-center p-4">
-                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
-                <p class="text-white/50 text-xs">Coloque a foto</p>
-              </div>
-            </div>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-              <span class="text-white font-semibold text-sm">Aula de Campo 6º Ano</span>
-            </div>
-          </a>
-          <a href="#" class="relative group overflow-hidden rounded-2xl aspect-square animate-on-scroll">
-            <div class="w-full h-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
-              <div class="text-center p-4">
-                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
-                <p class="text-white/50 text-xs">Coloque a foto</p>
-              </div>
-            </div>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-              <span class="text-white font-semibold text-sm">Aula de Campo 3º Ano</span>
-            </div>
-          </a>
-          <a href="#" class="relative group overflow-hidden rounded-2xl aspect-square animate-on-scroll">
-            <div class="w-full h-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
-              <div class="text-center p-4">
-                <i class="fas fa-image text-3xl text-white/30 mb-2"></i>
-                <p class="text-white/50 text-xs">Coloque a foto</p>
-              </div>
-            </div>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-              <span class="text-white font-semibold text-sm">Aula de Campo 5º Ano</span>
-            </div>
-          </a>
-        </div>
-
-        <div class="text-center mt-12">
-          <a href="album/Album.html" class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-azul-principal to-azul-claro text-white rounded-full font-semibold hover:shadow-xl hover:shadow-blue-500/30 transition-all duration-300 transform hover:scale-105">
-            <i class="fas fa-images"></i>
-            Ver Todos os Álbuns
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Gallery Modal -->
-    <div id="gallery-modal" class="fixed inset-0 z-50 hidden">
-      <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="closeGallery()"></div>
-      <div class="absolute inset-0 flex items-center justify-center p-4">
-        <button onclick="closeGallery()" class="absolute top-4 right-4 text-white text-4xl hover:text-gray-300 transition-colors z-10">
-          <i class="fas fa-times"></i>
-        </button>
-        <button onclick="prevImage()" class="absolute left-4 text-white text-4xl hover:text-gray-300 transition-colors z-10">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-        <button onclick="nextImage()" class="absolute right-4 text-white text-4xl hover:text-gray-300 transition-colors z-10">
-          <i class="fas fa-chevron-right"></i>
-        </button>
-        <div class="relative w-full h-full flex items-center justify-center">
-          <img id="gallery-image" src="" alt="" class="max-w-full max-h-full object-contain">
-        </div>
-      </div>
-    </div>
-
-    <section class="py-24 bg-gradient-to-r from-azul-principal via-azul-escuro to-gray-900 relative overflow-hidden">
-      <div class="absolute inset-0 opacity-20">
-        <div class="absolute top-0 left-0 w-96 h-96 bg-amarelo-destaque rounded-full filter blur-3xl"></div>
-        <div class="absolute bottom-0 right-0 w-96 h-96 bg-verde-complementar rounded-full filter blur-3xl"></div>
-      </div>
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-on-scroll relative">
-        <h2 class="text-4xl md:text-5xl font-display font-bold text-white mb-6">
-          Estamos de braços abertos para recebê-los!
-        </h2>
-        <p class="text-white/90 mb-10 text-xl">
-          Venha conhecer nossa escola e fazer parte da nossa história.
+        <h1 class="hero-title">
+          Educação que<br>
+          <span class="accent">transforma</span><br>
+          gerações
+        </h1>
+        <p class="hero-desc">
+          Formamos líderes com excelência acadêmica, valores sólidos e visão global — preparando cada estudante para um futuro extraordinário.
         </p>
-        <a href="https://maps.app.goo.gl/fwYKoEHm2eieZ1zg6" target="_blank" class="inline-flex items-center gap-2 px-10 py-5 bg-gradient-to-r from-amarelo-destaque to-amarelo-claro text-azul-escuro rounded-full font-bold hover:shadow-2xl hover:shadow-yellow-500/40 transition-all duration-300 transform hover:scale-105">
-          <i class="fas fa-map-marker-alt"></i>
-          Como Chegar
-        </a>
+        <div class="hero-cta-wrap">
+          <a href="agendar_visita.php" class="btn-hero-primary">
+            <i class="fas fa-calendar-check"></i>
+            Agendar Visita
+          </a>
+          <a href="pre_matricula.php" class="btn-hero-secondary">
+            <i class="fas fa-user-graduate"></i>
+            Pré-Matrícula
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number">+2.500</div>
+            <div class="stat-label">Alunos formados</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">98%</div>
+            <div class="stat-label">Aprovação no ENEM</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">30+</div>
+            <div class="stat-label">Anos de excelência</div>
+          </div>
+        </div>
       </div>
-    </section>
 
-  </main>
-
-  <footer id="contact" class="bg-gray-900 text-white py-20 border-t border-white/10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid md:grid-cols-3 gap-12">
-        <div>
-          <div class="flex items-center gap-3 mb-6">
-            <img src="img/logo.jpg" alt="Logo [Inserir nome da escola aqui]" class="h-14">
+      <!-- Right visual — Dynamic Carousel -->
+      <div class="hero-visual hidden lg:block">
+        <div style="position:relative; padding: 24px 24px 24px 40px;">
+          <!-- Floating badge top -->
+          <div class="floating-badge" style="top:-10px; left:10px; position:absolute; z-index:20;">
+            <div class="floating-icon" style="background:#fef3c7;"><i class="fas fa-trophy" style="color:#d97706;"></i></div>
             <div>
-              <span class="font-bold text-sm text-white">[Inserir nome da escola aqui]</span>
-              <span class="block font-extrabold gradient-text">[Inserir nome da escola aqui]</span>
+              <div class="floating-label">Premiação Nacional</div>
+              <div class="floating-sub">Melhor escola 2025</div>
             </div>
           </div>
-          <p class="text-gray-400 mb-4 leading-relaxed">
-            Estrada do Amapá (Lote 17, Quadra 04)<br>
-            Parque Barão do Amapá - Duque de Caxias - RJ 25235-475
-          </p>
-          <p class="text-gray-400 mb-2">
-            <i class="fas fa-envelope mr-2 text-amarelo-destaque"></i>ima.instituto@gmail.com
-          </p>
-          <p class="text-gray-400">
-            <i class="fas fa-phone mr-2 text-amarelo-destaque"></i>(21) 98855-0912 / (21) 3672-0169
-          </p>
-        </div>
-        <div>
-          <h3 class="font-display font-bold text-lg mb-6">Links Rápidos</h3>
-          <ul class="space-y-3">
-            <li><a href="#" class="text-gray-400 hover:text-amarelo-destaque transition-colors">Início</a></li>
-            <li><a href="#about" class="text-gray-400 hover:text-amarelo-destaque transition-colors">Sobre Nós</a></li>
-            <li><a href="#projects" class="text-gray-400 hover:text-amarelo-destaque transition-colors">Projetos</a></li>
-            <li><a href="biblioteca_vrtual/biblioteca.html" target="_blank" class="text-gray-400 hover:text-amarelo-destaque transition-colors">Biblioteca</a></li>
-            <li><a href="aviso2/passo1.html" target="_blank" class="text-gray-400 hover:text-amarelo-destaque transition-colors">Correções</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="font-display font-bold text-lg mb-6">Redes Sociais</h3>
-          <div class="flex gap-4">
-            <a href="https://www.facebook.com/ceaabrasil" target="_blank" class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-amarelo-destaque hover:text-azul-escuro transition-all duration-300 transform hover:scale-110">
-              <i class="fab fa-facebook-f text-xl"></i>
-            </a>
-            <a href="https://www.instagram.com/ceaa.colegiobrasiloficial" target="_blank" class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-amarelo-destaque hover:text-azul-escuro transition-all duration-300 transform hover:scale-110">
-              <i class="fab fa-instagram text-xl"></i>
-            </a>
-            <a href="#" class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-amarelo-destaque hover:text-azul-escuro transition-all duration-300 transform hover:scale-110">
-              <i class="fab fa-whatsapp text-xl"></i>
-            </a>
+
+          <div class="hero-card-main" style="overflow:visible;">
+            <!-- Carousel -->
+            <div id="hero-carousel" style="position:relative; border-radius:18px; overflow:hidden; aspect-ratio:4/3; background:#111827; margin-bottom:14px;">
+              <?php
+              $slides = !empty($bannerImages) ? array_map(fn($img) => ['src'=>$img['caminho_completo'],'alt'=>$img['descricao']??$img['nome_arquivo'],'local'=>true], $bannerImages) : array_map(fn($img) => ['src'=>$img['url'],'alt'=>$img['alt'],'local'=>false], $defaultImages);
+              foreach($slides as $i => $slide): ?>
+              <div class="c-slide" style="position:absolute;inset:0;opacity:<?= $i===0?'1':'0' ?>;transition:opacity 0.85s ease;z-index:<?= $i===0?'2':'1' ?>;">
+                <img src="<?= htmlspecialchars($slide['src']) ?>" alt="<?= htmlspecialchars($slide['alt']) ?>" style="width:100%;height:100%;object-fit:cover;display:block;">
+                <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.45) 0%,transparent 55%);"></div>
+              </div>
+              <?php endforeach; ?>
+              <!-- Progress bar -->
+              <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:rgba(255,255,255,0.12);z-index:10;">
+                <div id="c-progress" style="height:100%;background:linear-gradient(90deg,#3b82f6,#8b5cf6);width:0;"></div>
+              </div>
+              <!-- Dots -->
+              <div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:10;">
+                <?php foreach($slides as $i=>$s): ?>
+                <button onclick="cGoTo(<?=$i?>)" class="c-dot" style="width:<?=$i===0?'18px':'6px'?>;height:6px;border-radius:3px;border:none;background:<?=$i===0?'white':'rgba(255,255,255,0.35)'?>;cursor:pointer;transition:all 0.3s;padding:0;"></button>
+                <?php endforeach; ?>
+              </div>
+              <!-- Arrows -->
+              <button onclick="cPrev()" style="position:absolute;left:8px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);backdrop-filter:blur(6px);color:white;cursor:pointer;font-size:0.7rem;z-index:10;display:flex;align-items:center;justify-content:center;">
+                <i class="fas fa-chevron-left"></i></button>
+              <button onclick="cNext()" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);backdrop-filter:blur(6px);color:white;cursor:pointer;font-size:0.7rem;z-index:10;display:flex;align-items:center;justify-content:center;">
+                <i class="fas fa-chevron-right"></i></button>
+            </div>
+            <!-- Bottom info -->
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <div style="font-size:0.78rem;color:rgba(255,255,255,0.45);margin-bottom:4px;">Novos alunos este ano</div>
+                <div style="font-size:1.1rem;font-weight:800;color:white;">+380 matrículas</div>
+              </div>
+              <div style="display:flex;align-items:center;"><?php $ac=['#3b82f6','#8b5cf6','#ec4899','#10b981']; for($i=0;$i<4;$i++) echo "<div style='width:32px;height:32px;border-radius:50%;background:{$ac[$i]};border:2px solid #1a1f35;margin-left:".($i>0?'-8px':'0')."px;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;color:white;position:relative;z-index:".($i+1)."'>".chr(65+$i)."</div>"; ?>
+              <div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.1);border:2px solid #1a1f35;margin-left:-8px;display:flex;align-items:center;justify-content:center;font-size:0.6rem;color:rgba(255,255,255,0.6);z-index:5;position:relative;">+96</div></div>
+            </div>
+          </div>
+
+          <!-- Floating badge bottom -->
+          <div class="floating-badge" style="bottom:60px;right:-10px;position:absolute;z-index:20;">
+            <div class="floating-icon" style="background:#f0fdf4;"><i class="fas fa-check-circle" style="color:#16a34a;"></i></div>
+            <div><div class="floating-label">IDEB 9.8</div><div class="floating-sub">Nota máxima MEC</div></div>
           </div>
         </div>
       </div>
-      <div class="border-t border-white/10 mt-12 pt-8 text-center">
-        <p class="text-gray-500 text-sm">
-          © 2026 [Inserir nome da escola aqui]. Todos os direitos reservados.
-        </p>
-      </div>
+
+      <script>
+      (function(){
+        const N = <?= count($slides) ?>;
+        let cur = 0, timer, INTERVAL = 5000;
+        const sls = document.querySelectorAll('.c-slide');
+        const dots = document.querySelectorAll('.c-dot');
+        const bar  = document.getElementById('c-progress');
+        function show(i){
+          sls.forEach((s,j)=>{s.style.opacity=j===i?'1':'0';s.style.zIndex=j===i?'2':'1';});
+          dots.forEach((d,j)=>{d.style.width=j===i?'18px':'6px';d.style.background=j===i?'white':'rgba(255,255,255,0.35)';});
+          cur=i; startBar();
+        }
+        function startBar(){
+          if(!bar) return;
+          bar.style.transition='none'; bar.style.width='0%';
+          requestAnimationFrame(()=>requestAnimationFrame(()=>{
+            bar.style.transition='width '+INTERVAL+'ms linear'; bar.style.width='100%';
+          }));
+        }
+        function go(){ show((cur+1)%N); }
+        function rst(){ clearInterval(timer); timer=setInterval(go,INTERVAL); }
+        window.cNext=()=>{show((cur+1)%N);rst();};
+        window.cPrev=()=>{show((cur-1+N)%N);rst();};
+        window.cGoTo=(i)=>{show(i);rst();};
+        if(N>1){ startBar(); timer=setInterval(go,INTERVAL); }
+      })();
+      </script>
+
     </div>
-  </footer>
+  </div>
+</section>
 
-  <a href="https://wa.me/5521988550912" target="_blank" class="fixed bottom-6 right-6 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-50">
-    <i class="fab fa-whatsapp text-white text-2xl"></i>
-  </a>
+<!-- ══════════ NÍVEIS DE ENSINO ══════════ -->
+<section class="py-24 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16 reveal">
+      <div class="section-eyebrow" style="justify-content:center;">Etapas de Ensino</div>
+      <h2 class="section-title" style="max-width:600px; margin:0 auto 16px;">Uma jornada completa de aprendizado</h2>
+      <p class="section-desc" style="margin:0 auto; text-align:center;">Do berçário ao ensino médio, cada etapa é cuidadosamente planejada para o pleno desenvolvimento do seu filho.</p>
+    </div>
 
-  <button id="back-to-top" class="fixed bottom-6 left-6 w-12 h-12 bg-amarelo-destaque rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-50 opacity-0 invisible">
-    <i class="fas fa-arrow-up text-azul-escuro"></i>
-  </button>
+    <div class="levels-grid reveal">
+      <a href="educacao_infantil.php" class="level-card level-card-1">
+        <div class="card-icon"><i class="fas fa-child"></i></div>
+        <div class="card-title">Educação Infantil</div>
+        <div class="card-sub">Berçário ao Pré-Escolar. Aprendizado lúdico com afetividade e estimulação do desenvolvimento integral.</div>
+        <div class="card-arrow" style="color:#0284c7;">Conhecer <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i></div>
+      </a>
+      <a href="ensino_fundamental_i.php" class="level-card level-card-2">
+        <div class="card-icon"><i class="fas fa-star"></i></div>
+        <div class="card-title">Ensino Fundamental I</div>
+        <div class="card-sub">1º ao 5º Ano. Construção de base sólida em alfabetização, raciocínio e valores humanos.</div>
+        <div class="card-arrow" style="color:#16a34a;">Conhecer <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i></div>
+      </a>
+      <a href="ensino_fundamental_ii.php" class="level-card level-card-3">
+        <div class="card-icon"><i class="fas fa-atom"></i></div>
+        <div class="card-title">Ensino Fundamental II</div>
+        <div class="card-sub">6º ao 9º Ano. Pensamento crítico, investigação científica e desenvolvimento da autonomia.</div>
+        <div class="card-arrow" style="color:#7c3aed;">Conhecer <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i></div>
+      </a>
+      <a href="ensino_medio.php" class="level-card level-card-4">
+        <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
+        <div class="card-title">Ensino Médio</div>
+        <div class="card-sub">1º ao 3º Ano. Preparação intensiva para vestibulares de elite e para o sucesso profissional.</div>
+        <div class="card-arrow" style="color:#ea580c;">Conhecer <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i></div>
+      </a>
+    </div>
+  </div>
+</section>
 
-  <script>
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const menuOverlay = document.getElementById('menu-overlay');
-    const menuDrawer = document.getElementById('menu-drawer');
-    const closeMenuBtn = document.getElementById('close-menu');
+<!-- ══════════ DIFERENCIAIS ══════════ -->
+<section class="features-strip py-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
 
-    function openMenu() {
-      mobileMenu.classList.remove('hidden');
-      setTimeout(() => {
-        menuOverlay.classList.remove('opacity-0');
-        menuDrawer.classList.remove('translate-x-full');
-      }, 10);
-      document.body.style.overflow = 'hidden';
-    }
+      <div class="reveal">
+        <div class="section-eyebrow" style="color:rgba(148,163,184,0.8);">Por que nos escolher</div>
+        <h2 style="font-family:'Outfit',sans-serif; font-size:clamp(1.8rem,3.5vw,2.6rem); font-weight:800; color:white; line-height:1.2; margin-bottom:16px;">
+          Padrão de excelência em cada detalhe
+        </h2>
+        <p style="font-size:0.95rem; color:rgba(255,255,255,0.45); line-height:1.8; max-width:440px; margin-bottom:32px;">
+          Somos referência regional em qualidade de ensino. Combinamos metodologias inovadoras com professores altamente qualificados.
+        </p>
+        <a href="historico.php" style="display:inline-flex; align-items:center; gap:10px; padding:13px 26px; border-radius:12px; background:rgba(255,255,255,0.08); border:1.5px solid rgba(255,255,255,0.15); color:white; font-weight:600; font-size:0.9rem; text-decoration:none; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.14)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
+          Nossa história <i class="fas fa-arrow-right" style="font-size:0.8rem;"></i>
+        </a>
+      </div>
 
-    function closeMenu() {
-      menuOverlay.classList.add('opacity-0');
-      menuDrawer.classList.add('translate-x-full');
-      setTimeout(() => {
-        mobileMenu.classList.add('hidden');
-        // Resetar opacidade para a próxima abertura
-        menuOverlay.classList.remove('opacity-0');
-      }, 300);
-      document.body.style.overflow = '';
-    }
-
-    mobileMenuBtn.addEventListener('click', openMenu);
-    closeMenuBtn.addEventListener('click', closeMenu);
-    menuOverlay.addEventListener('click', closeMenu);
-    
-    // Fechar menu ao clicar em links
-    const mobileMenuLinks = document.querySelectorAll('#mobile-menu a');
-    mobileMenuLinks.forEach(link => {
-      link.addEventListener('click', closeMenu);
-    });
-
-    const slides = document.querySelectorAll('.carousel-slide');
-    const dots = document.querySelectorAll('.carousel-dot');
-    let currentSlide = 0;
-    let autoSlideInterval;
-
-    function showSlide(index) {
-      slides.forEach((slide, i) => {
-        slide.classList.remove('active');
-        dots[i].classList.remove('active');
-      });
-      slides[index].classList.add('active');
-      dots[index].classList.add('active');
-      currentSlide = index;
-    }
-
-    function nextSlide() {
-      const next = (currentSlide + 1) % slides.length;
-      showSlide(next);
-    }
-
-    function startAutoSlide() {
-      autoSlideInterval = setInterval(nextSlide, 5000);
-    }
-
-    function stopAutoSlide() {
-      clearInterval(autoSlideInterval);
-    }
-
-    dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => {
-        stopAutoSlide();
-        showSlide(index);
-        startAutoSlide();
-      });
-    });
-
-    startAutoSlide();
-
-    const statsSection = document.getElementById('stats');
-    const counters = document.querySelectorAll('[data-count]');
-    let counted = false;
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !counted) {
-          counted = true;
-          counters.forEach(counter => {
-            const target = parseInt(counter.dataset.count);
-            const duration = 2000;
-            const step = target / (duration / 16);
-            let current = 0;
-
-            const updateCounter = () => {
-              current += step;
-              if (current < target) {
-                counter.textContent = Math.floor(current);
-                requestAnimationFrame(updateCounter);
-              } else {
-                counter.textContent = target;
-              }
-            };
-
-            updateCounter();
-          });
-        }
-      });
-    }, { threshold: 0.5 });
-
-    observer.observe(statsSection);
-
-    const backToTop = document.getElementById('back-to-top');
-
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 500) {
-        backToTop.classList.remove('opacity-0', 'invisible');
-      } else {
-        backToTop.classList.add('opacity-0', 'invisible');
-      }
-    });
-
-    backToTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    // Header scroll effect
-    const header = document.getElementById('main-header');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
-        header.classList.add('glass-dark');
-      } else {
-        header.classList.remove('glass-dark');
-      }
-    });
-
-    const animateElements = document.querySelectorAll('.animate-on-scroll');
-
-    const scrollObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-fade-in-up');
-          scrollObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    animateElements.forEach(el => scrollObserver.observe(el));
-  </script>
-
-  <style>
-    .animate-fade-in-up {
-      animation: fade-in-up 0.6s ease-out forwards;
-    }
-
-    @keyframes fade-in-up {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  </style>
-
-  <!-- Modal de Acesso ao Sistema -->
-  <div id="acesso-sistema-modal" class="fixed inset-0 z-[100] hidden">
-    <div id="modal-overlay" class="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
-    <div id="modal-content" class="absolute inset-0 flex items-center justify-center p-4">
-      <div class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl transform scale-95 opacity-0 transition-all duration-300">
-        <div class="p-6 border-b border-gray-100">
-          <div class="flex items-center justify-between">
-            <h2 class="text-2xl font-display font-bold text-azul-principal">Acesso ao Sistema</h2>
-            <button id="close-modal" class="p-2 rounded-full hover:bg-gray-100 transition-colors">
-              <i class="fas fa-times text-gray-500 text-xl"></i>
-            </button>
+      <div class="reveal">
+        <div class="feature-item">
+          <div class="feature-dot" style="background:rgba(59,130,246,0.15);">
+            <i class="fas fa-medal" style="color:#60a5fa;"></i>
+          </div>
+          <div>
+            <h4>Corpo docente de excelência</h4>
+            <p>100% dos professores com pós-graduação. Formação contínua e pedagogia de vanguarda.</p>
           </div>
         </div>
-        
-        <div class="p-6">
-          <!-- Tabs -->
-          <div class="flex gap-2 mb-6 bg-gray-100 p-1 rounded-xl">
-            <button class="login-tab flex-1 py-3 px-4 rounded-lg font-semibold transition-all bg-white text-azul-principal shadow-sm" data-tab="professor">
-              <i class="fas fa-chalkboard-teacher mr-2"></i>Professor
-            </button>
-            <button class="login-tab flex-1 py-3 px-4 rounded-lg font-semibold transition-all text-gray-600 hover:text-azul-principal" data-tab="aluno">
-              <i class="fas fa-user-graduate mr-2"></i>Aluno
-            </button>
-            <button class="login-tab flex-1 py-3 px-4 rounded-lg font-semibold transition-all text-gray-600 hover:text-azul-principal" data-tab="admin">
-              <i class="fas fa-user-shield mr-2"></i>Admin
-            </button>
+        <div class="feature-item">
+          <div class="feature-dot" style="background:rgba(139,92,246,0.15);">
+            <i class="fas fa-laptop-code" style="color:#a78bfa;"></i>
           </div>
-
-          <!-- Login Form Professor -->
-          <div id="login-professor" class="login-form">
-            <form id="form-professor" class="space-y-4">
-              <input type="hidden" name="tipo_usuario" value="professor">
-              <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Número de Matrícula</label>
-                <input type="text" name="login_field" required placeholder="Digite sua matrícula" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent outline-none transition-all">
-              </div>
-              <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Senha</label>
-                <input type="password" name="senha" required placeholder="Digite sua senha" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent outline-none transition-all">
-              </div>
-              <button type="submit" class="w-full py-3 bg-azul-principal text-white rounded-xl font-semibold hover:bg-azul-escuro transition-colors">
-                <i class="fas fa-spinner fa-spin mr-2 hidden" id="loading-professor"></i>Entrar como Professor
-              </button>
-              <div id="error-professor" class="hidden text-red-600 text-sm text-center mt-2"></div>
-            </form>
+          <div>
+            <h4>Tecnologia integrada ao ensino</h4>
+            <p>Salas com lousas digitais, laboratórios de robótica e plataformas de ensino personalizadas.</p>
           </div>
-
-          <!-- Login Form Aluno -->
-          <div id="login-aluno" class="login-form hidden">
-            <form id="form-aluno" class="space-y-4">
-              <input type="hidden" name="tipo_usuario" value="aluno">
-              <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">CPF do Responsável</label>
-                <input type="text" name="login_field" required placeholder="Digite o CPF (000.000.000-00)" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-verde-complementar focus:border-transparent outline-none transition-all">
-              </div>
-              <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Senha</label>
-                <input type="password" name="senha" required placeholder="Digite sua senha" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-verde-complementar focus:border-transparent outline-none transition-all">
-              </div>
-              <button type="submit" class="w-full py-3 bg-verde-complementar text-white rounded-xl font-semibold hover:bg-verde-claro transition-colors">
-                <i class="fas fa-spinner fa-spin mr-2 hidden" id="loading-aluno"></i>Entrar como Aluno
-              </button>
-              <div id="error-aluno" class="hidden text-red-600 text-sm text-center mt-2"></div>
-              <div class="mt-4 text-center">
-                <a href="portal/register.php" class="text-sm text-verde-complementar hover:underline">Não tem conta? Cadastre-se</a>
-              </div>
-            </form>
+        </div>
+        <div class="feature-item">
+          <div class="feature-dot" style="background:rgba(236,72,153,0.15);">
+            <i class="fas fa-heart" style="color:#f472b6;"></i>
           </div>
-
-          <!-- Login Form Admin -->
-          <div id="login-admin" class="login-form hidden">
-            <form id="form-admin" class="space-y-4">
-              <input type="hidden" name="tipo_usuario" value="admin">
-              <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Usuário</label>
-                <input type="text" name="login_field" required placeholder="Digite seu usuário" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent outline-none transition-all">
-              </div>
-              <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Senha</label>
-                <input type="password" name="senha" required placeholder="Digite sua senha" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent outline-none transition-all">
-              </div>
-              <button type="submit" class="w-full py-3 bg-amarelo-destaque text-azul-escuro rounded-xl font-semibold hover:bg-amarelo-claro transition-colors">
-                <i class="fas fa-spinner fa-spin mr-2 hidden" id="loading-admin"></i>Entrar como Admin
-              </button>
-              <div id="error-admin" class="hidden text-red-600 text-sm text-center mt-2"></div>
-            </form>
+          <div>
+            <h4>Acompanhamento individual</h4>
+            <p>Cada aluno é único. Equipe de psicopedagogia e tutoria personalizada para todos os níveis.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-dot" style="background:rgba(16,185,129,0.15);">
+            <i class="fas fa-globe" style="color:#34d399;"></i>
+          </div>
+          <div>
+            <h4>Visão global e cidadania</h4>
+            <p>Inglês desde o berçário, intercâmbios e projetos sociais formando cidadãos do mundo.</p>
           </div>
         </div>
       </div>
     </div>
   </div>
+</section>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Modal de Acesso ao Sistema
-      const acessoSistemaBtn = document.getElementById('acesso-sistema-btn');
-      const acessoSistemaBtnMobile = document.getElementById('acesso-sistema-btn-mobile');
-      const acessoSistemaModal = document.getElementById('acesso-sistema-modal');
-      const modalOverlay = document.getElementById('modal-overlay');
-      const modalContent = document.getElementById('modal-content');
-      const closeModal = document.getElementById('close-modal');
-      const loginTabs = document.querySelectorAll('.login-tab');
-      const loginForms = document.querySelectorAll('.login-form');
+<!-- ══════════ NOTÍCIAS + EVENTOS ══════════ -->
+<section class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-5 gap-12">
 
-    function openModal() {
-      acessoSistemaModal.classList.remove('hidden');
-      setTimeout(() => {
-        modalOverlay.classList.remove('opacity-0');
-        modalContent.querySelector('div').classList.remove('scale-95', 'opacity-0');
-        modalContent.querySelector('div').classList.add('scale-100', 'opacity-100');
-      }, 10);
+      <!-- News (col 3) -->
+      <div class="lg:col-span-3">
+        <div class="flex items-center justify-between mb-10 reveal">
+          <div>
+            <div class="section-eyebrow">Novidades</div>
+            <h2 class="section-title" style="margin-bottom:0;">Notícias & Comunicados</h2>
+          </div>
+          <a href="noticias.php" style="font-size:0.85rem; font-weight:700; color:#3b82f6; text-decoration:none; display:flex; align-items:center; gap:6px; white-space:nowrap;" class="hidden md:flex">
+            Ver todas <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i>
+          </a>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-6 reveal">
+          <a href="noticias.php" class="news-card" style="sm:col-span-2;">
+            <div style="height:180px; background:linear-gradient(135deg,#1d4ed8,#4f46e5); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+              <div style="position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=700&q=70') center/cover;"></div>
+              <div style="position:absolute; inset:0; background:linear-gradient(135deg, rgba(29,78,216,0.8), rgba(79,70,229,0.7));"></div>
+              <div style="position:relative; text-align:center; color:white;">
+                <div style="font-size:0.7rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; opacity:0.7; margin-bottom:6px;"><i class="fas fa-thumbtack"></i> Destaque</div>
+                <div style="font-family:'Outfit',sans-serif; font-size:1.3rem; font-weight:700;">Matrículas 2026 Abertas</div>
+              </div>
+            </div>
+            <div class="news-body">
+              <span class="news-tag" style="background:#dbeafe; color:#1d4ed8;">Institucional</span>
+              <div class="news-title">Vagas limitadas para o ano letivo 2026 — Inscreva-se agora</div>
+              <div class="news-meta"><i class="fas fa-clock" style="margin-right:4px;"></i> Hoje · 2 min de leitura</div>
+            </div>
+          </a>
+
+          <a href="noticias.php" class="news-card">
+            <div class="news-body" style="padding-top:24px;">
+              <span class="news-tag" style="background:#f0fdf4; color:#16a34a;">Calendário</span>
+              <div class="news-title">Calendário Escolar 2026 disponível para download</div>
+              <div class="news-meta"><i class="fas fa-clock" style="margin-right:4px;"></i> 2 dias atrás</div>
+            </div>
+          </a>
+
+          <a href="noticias.php" class="news-card">
+            <div class="news-body" style="padding-top:24px;">
+              <span class="news-tag" style="background:#faf5ff; color:#7c3aed;">Premiação</span>
+              <div class="news-title">Alunos conquistam 1º lugar nas Olimpíadas de Matemática</div>
+              <div class="news-meta"><i class="fas fa-clock" style="margin-right:4px;"></i> 5 dias atrás</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Events (col 2) -->
+      <div class="lg:col-span-2">
+        <div class="flex items-center justify-between mb-10 reveal">
+          <div>
+            <div class="section-eyebrow">Agenda</div>
+            <h2 class="section-title" style="margin-bottom:0;">Próximos Eventos</h2>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:12px;" class="reveal">
+          <a href="inscrever_evento.php" class="event-card">
+            <div class="event-date-box"><div class="day">15</div><div class="month">DEZ</div></div>
+            <div class="event-info">
+              <h4>Formatura Ensino Médio</h4>
+              <p><i class="fas fa-map-marker-alt" style="margin-right:4px;"></i>Teatro Municipal</p>
+            </div>
+            <div class="event-arrow"><i class="fas fa-chevron-right"></i></div>
+          </a>
+          <a href="inscrever_evento.php" class="event-card">
+            <div class="event-date-box" style="background:#f0fdf4;"><div class="day" style="color:#16a34a;">20</div><div class="month">MAR</div></div>
+            <div class="event-info">
+              <h4>Gincana Escolar 2026</h4>
+              <p><i class="fas fa-map-marker-alt" style="margin-right:4px;"></i>Quadra Poliesportiva</p>
+            </div>
+            <div class="event-arrow"><i class="fas fa-chevron-right"></i></div>
+          </a>
+          <a href="inscrever_evento.php" class="event-card">
+            <div class="event-date-box" style="background:#faf5ff;"><div class="day" style="color:#7c3aed;">10</div><div class="month">ABR</div></div>
+            <div class="event-info">
+              <h4>Feira de Ciências</h4>
+              <p><i class="fas fa-map-marker-alt" style="margin-right:4px;"></i>Ginásio Principal</p>
+            </div>
+            <div class="event-arrow"><i class="fas fa-chevron-right"></i></div>
+          </a>
+          <a href="inscrever_evento.php" class="event-card">
+            <div class="event-date-box" style="background:#fff7ed;"><div class="day" style="color:#ea580c;">25</div><div class="month">MAI</div></div>
+            <div class="event-info">
+              <h4>Festival de Música</h4>
+              <p><i class="fas fa-map-marker-alt" style="margin-right:4px;"></i>Auditório Central</p>
+            </div>
+            <div class="event-arrow"><i class="fas fa-chevron-right"></i></div>
+          </a>
+          <a href="inscrever_evento.php" class="event-card">
+            <div class="event-date-box" style="background:#fef2f2;"><div class="day" style="color:#dc2626;">08</div><div class="month">JUN</div></div>
+            <div class="event-info">
+              <h4>Dia do Meio Ambiente</h4>
+              <p><i class="fas fa-map-marker-alt" style="margin-right:4px;"></i>Área Verde da Escola</p>
+            </div>
+            <div class="event-arrow"><i class="fas fa-chevron-right"></i></div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ ACESSO RÁPIDO ══════════ -->
+<section class="py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-14 reveal">
+      <div class="section-eyebrow" style="justify-content:center;">Serviços Online</div>
+      <h2 class="section-title" style="margin:0 auto 14px;">Tudo o que você precisa, a um clique</h2>
+      <p class="section-desc" style="margin:0 auto; text-align:center;">Acesse os serviços mais utilizados da nossa comunidade escolar de forma rápida e prática.</p>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-5 reveal">
+      <a href="biblioteca.php" class="qa-card">
+        <div class="qa-icon" style="background:#dbeafe;"><i class="fas fa-book" style="color:#1d4ed8;"></i></div>
+        <div class="qa-label">Biblioteca</div>
+        <div class="qa-sub">Acervo digital</div>
+      </a>
+      <a href="portal_pais.php" class="qa-card">
+        <div class="qa-icon" style="background:#dcfce7;"><i class="fas fa-users" style="color:#16a34a;"></i></div>
+        <div class="qa-label">Portal dos Pais</div>
+        <div class="qa-sub">Área do responsável</div>
+      </a>
+      <a href="calendario_escolar.php" class="qa-card">
+        <div class="qa-icon" style="background:#ede9fe;"><i class="fas fa-calendar" style="color:#7c3aed;"></i></div>
+        <div class="qa-label">Calendário</div>
+        <div class="qa-sub">Datas importantes</div>
+      </a>
+      <a href="formularios.php" class="qa-card">
+        <div class="qa-icon" style="background:#ffedd5;"><i class="fas fa-file-download" style="color:#ea580c;"></i></div>
+        <div class="qa-label">Formulários</div>
+        <div class="qa-sub">Downloads</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ DEPOIMENTOS ══════════ -->
+<section class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16 reveal">
+      <div class="section-eyebrow" style="justify-content:center;">Depoimentos</div>
+      <h2 class="section-title" style="margin:0 auto;">O que dizem as famílias</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6 reveal">
+      <div class="testimonial-card">
+        <p class="testimonial-text">"Meu filho cresceu de uma forma extraordinária aqui. A escola vai muito além das notas — forma o caráter e a visão de mundo."</p>
+        <div class="testimonial-author">
+          <div class="avatar-circle" style="background:linear-gradient(135deg,#1d4ed8,#7c3aed);">MA</div>
+          <div><div class="author-name">Maria Aparecida S.</div><div class="author-role">Mãe de aluno do 9º ano</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-text">"A qualidade dos professores e a estrutura da escola são impressionantes. Minha filha aprovada na federal com 18 anos. Resultado do trabalho desta instituição!"</p>
+        <div class="testimonial-author">
+          <div class="avatar-circle" style="background:linear-gradient(135deg,#16a34a,#0284c7);">JR</div>
+          <div><div class="author-name">João Roberto M.</div><div class="author-role">Pai de ex-aluna</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-text">"Desde a educação infantil percebemos a diferença. Atendimento humanizado, professores dedicados e um ambiente seguro e estimulante."</p>
+        <div class="testimonial-author">
+          <div class="avatar-circle" style="background:linear-gradient(135deg,#ec4899,#ea580c);">CF</div>
+          <div><div class="author-name">Camila Figueiredo</div><div class="author-role">Mãe de aluno do Pré</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CTA BANNER ══════════ -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+    <div class="cta-banner">
+      <div class="section-eyebrow" style="justify-content:center; color:rgba(148,163,184,0.7); margin-bottom:16px;">
+        Vagas Limitadas
+      </div>
+      <div class="cta-title">Garanta a vaga do seu filho hoje</div>
+      <p class="cta-desc">
+        As matrículas para 2026 estão abertas. Agende uma visita e conheça pessoalmente nossa estrutura de excelência.
+      </p>
+      <div style="display:flex; flex-wrap:wrap; gap:14px; justify-content:center; position:relative;">
+        <a href="pre_matricula.php" class="btn-hero-primary" style="font-size:1rem; padding:16px 36px;">
+          <i class="fas fa-user-graduate"></i> Fazer Pré-Matrícula
+        </a>
+        <a href="agendar_visita.php" class="btn-hero-secondary" style="font-size:1rem; padding:15px 30px;">
+          <i class="fas fa-calendar-check"></i> Agendar Visita
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
     }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => revealObserver.observe(el));
+</script>
 
-    function closeModalFn() {
-      modalOverlay.classList.add('opacity-0');
-      modalContent.querySelector('div').classList.add('scale-95', 'opacity-0');
-      modalContent.querySelector('div').classList.remove('scale-100', 'opacity-100');
-      setTimeout(() => {
-        acessoSistemaModal.classList.add('hidden');
-      }, 300);
-    }
+<?php require_once 'includes/footer.php'; ?>
 
-    if (acessoSistemaBtn) {
-      acessoSistemaBtn.addEventListener('click', openModal);
-    } else {
-      console.error('Botão acesso-sistema-btn não encontrado');
-    }
-    
-    if (acessoSistemaBtnMobile) {
-      acessoSistemaBtnMobile.addEventListener('click', () => {
-        closeMenu();
-        openModal();
-      });
-    }
-    closeModal.addEventListener('click', closeModalFn);
-    modalOverlay.addEventListener('click', closeModalFn);
-
-    // Tabs de Login
-    loginTabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        const tabName = tab.dataset.tab;
-        
-        // Update tabs
-        loginTabs.forEach(t => {
-          t.classList.remove('bg-white', 'text-azul-principal', 'shadow-sm');
-          t.classList.add('text-gray-600');
-        });
-        tab.classList.add('bg-white', 'text-azul-principal', 'shadow-sm');
-        tab.classList.remove('text-gray-600');
-        
-        // Update forms
-        loginForms.forEach(form => {
-          form.classList.add('hidden');
-        });
-        document.getElementById(`login-${tabName}`).classList.remove('hidden');
-      });
-    });
-
-    // Login via AJAX
-    function handleLogin(formId, loadingId, errorId) {
-      const form = document.getElementById(formId);
-      const loading = document.getElementById(loadingId);
-      const error = document.getElementById(errorId);
-      
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        // Show loading
-        loading.classList.remove('hidden');
-        error.classList.add('hidden');
-        
-        const formData = new FormData(form);
-        
-        try {
-          const response = await fetch('portal/api/login.php', {
-            method: 'POST',
-            body: formData
-          });
-          
-          const data = await response.json();
-          
-          if (data.success) {
-            // Redirect to dashboard
-            window.location.href = data.redirect;
-          } else {
-            // Show error
-            error.textContent = data.message;
-            error.classList.remove('hidden');
-          }
-        } catch (err) {
-          error.textContent = 'Erro ao fazer login. Tente novamente.';
-          error.classList.remove('hidden');
-        } finally {
-          loading.classList.add('hidden');
-        }
-      });
-    }
-    
-    // Initialize login handlers
-    handleLogin('form-professor', 'loading-professor', 'error-professor');
-    handleLogin('form-aluno', 'loading-aluno', 'error-aluno');
-    handleLogin('form-admin', 'loading-admin', 'error-admin');
-
-    // User menu dropdown toggle
-    const userMenuBtn = document.getElementById('user-menu-btn');
-    const userMenuDropdown = document.getElementById('user-menu-dropdown');
-    
-    if (userMenuBtn && userMenuDropdown) {
-      userMenuBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        userMenuDropdown.classList.toggle('hidden');
-      });
-      
-      // Close dropdown when clicking outside
-      document.addEventListener('click', () => {
-        userMenuDropdown.classList.add('hidden');
-      });
-      
-      // Prevent closing when clicking inside dropdown
-      userMenuDropdown.addEventListener('click', (e) => {
-        e.stopPropagation();
-      });
-    }
-
-    // Gallery Modal Functions
-    let currentImages = [];
-    let currentIndex = 0;
-
-    // Mapeamento de imagens disponíveis em cada álbum
-    const albumImages = {
-      'A1': Array.from({length: 27}, (_, i) => `album/img/A1/${i + 1}.jpg`),
-      'A2': Array.from({length: 36}, (_, i) => `album/img/A2/${i + 1}.jpg`),
-      'A3': Array.from({length: 27}, (_, i) => `album/img/A3/${i + 1}.jpg`),
-      'A4': Array.from({length: 11}, (_, i) => `album/img/A4/${i + 1}.jpg`)
-    };
-
-    function openGallery(albumId) {
-      currentImages = albumImages[albumId] || [];
-      currentIndex = 0;
-      
-      if (currentImages.length > 0) {
-        document.getElementById('gallery-modal').classList.remove('hidden');
-        updateGalleryImage();
-        document.body.style.overflow = 'hidden';
-      }
-    }
-
-    function closeGallery() {
-      document.getElementById('gallery-modal').classList.add('hidden');
-      document.body.style.overflow = '';
-    }
-
-    function updateGalleryImage() {
-      const img = document.getElementById('gallery-image');
-      img.src = currentImages[currentIndex];
-    }
-
-    function nextImage() {
-      if (currentIndex < currentImages.length - 1) {
-        currentIndex++;
-        updateGalleryImage();
-      }
-    }
-
-    function prevImage() {
-      if (currentIndex > 0) {
-        currentIndex--;
-        updateGalleryImage();
-      }
-    }
-
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      if (!document.getElementById('gallery-modal').classList.contains('hidden')) {
-        if (e.key === 'Escape') closeGallery();
-        if (e.key === 'ArrowRight') nextImage();
-        if (e.key === 'ArrowLeft') prevImage();
-      }
-    });
-
-    // Make functions global
-    window.openGallery = openGallery;
-    window.closeGallery = closeGallery;
-    });
-    window.nextImage = nextImage;
-    window.prevImage = prevImage;
-  </script>
-
-</body>
-
-</html>

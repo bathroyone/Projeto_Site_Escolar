@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once 'portal/config.php';
 
 $success = '';
@@ -167,12 +167,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
     <!-- Header -->
-    <header class="gradient-bg shadow-lg">
+    <header class="gradient-bg shadow-[0_8px_30px_rgb(0,0,0,0.5)]">
         <div class="px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16 sm:h-20">
                 <div class="flex items-center gap-3">
                     <a href="index.php" class="flex items-center gap-2 sm:gap-3 group">
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm group-hover:bg-white/30 transition-all">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white/5 border border-white/10 backdrop-blur-sm/20 rounded-xl flex items-center justify-center backdrop-blur-sm group-hover:bg-white/5 border border-white/10 backdrop-blur-sm/30 transition-all">
                             <i class="fas fa-arrow-left text-white text-lg sm:text-xl"></i>
                         </div>
                         <div class="hidden sm:block">
@@ -218,8 +218,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if (!$success): ?>
             <div class="glass-card rounded-3xl shadow-2xl overflow-hidden">
                 <div class="h-24 sm:h-32 gradient-bg flex items-center justify-center relative overflow-hidden">
-                    <div class="absolute inset-0 bg-white/10"></div>
-                    <div class="absolute top-10 left-10 w-20 h-20 bg-white/10 rounded-full blur-2xl"></div>
+                    <div class="absolute inset-0 bg-white/5 border border-white/10 backdrop-blur-sm/10"></div>
+                    <div class="absolute top-10 left-10 w-20 h-20 bg-white/5 border border-white/10 backdrop-blur-sm/10 rounded-full blur-2xl"></div>
                     <div class="absolute bottom-10 right-10 w-24 h-24 bg-amarelo-destaque/20 rounded-full blur-2xl"></div>
                     <div class="relative z-10 text-center">
                         <i class="fas fa-user-graduate text-white text-3xl sm:text-4xl mb-2"></i>
@@ -230,7 +230,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="p-4 sm:p-8">
                     <div class="text-center mb-6 sm:mb-8">
                         <h2 class="font-display font-bold text-azul-principal text-xl sm:text-2xl mb-2">Formulário de Pré-Matrícula</h2>
-                        <p class="text-gray-600 text-xs sm:text-sm">Preencha todos os dados e anexe os documentos necessários</p>
+                        <p class="text-white/60 text-xs sm:text-sm">Preencha todos os dados e anexe os documentos necessários</p>
                     </div>
                     
                     <form method="POST" action="" enctype="multipart/form-data" class="space-y-6 sm:space-y-8">
@@ -241,36 +241,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </h3>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Nome Completo *</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Nome Completo *</label>
                                     <input type="text" name="nome_aluno" required
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
                                         placeholder="Nome completo do aluno">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Data de Nascimento *</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Data de Nascimento *</label>
                                     <input type="date" name="data_nascimento" required
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">CPF</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">CPF</label>
                                     <input type="text" name="cpf_aluno"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
                                         placeholder="000.000.000-00">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">RG</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">RG</label>
                                     <input type="text" name="rg_aluno"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
                                         placeholder="RG do aluno">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Sexo *</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Sexo *</label>
                                     <select name="sexo" required
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all appearance-none bg-white">
+                                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-azul-principal transition-all bg-white/5 border border-white/10 backdrop-blur-sm text-white/90 font-medium">
                                         <option value="">Selecione</option>
                                         <option value="M">Masculino</option>
                                         <option value="F">Feminino</option>
@@ -286,37 +286,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </h3>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Nome Completo *</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Nome Completo *</label>
                                     <input type="text" name="nome_responsavel" required
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
                                         placeholder="Nome do responsável">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">CPF *</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">CPF *</label>
                                     <input type="text" name="cpf_responsavel" required
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
                                         placeholder="000.000.000-00">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">RG</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">RG</label>
                                     <input type="text" name="rg_responsavel"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
                                         placeholder="RG do responsável">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Email *</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Email *</label>
                                     <input type="email" name="email_responsavel" required
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
                                         placeholder="email@exemplo.com">
                                 </div>
                                 
                                 <div class="md:col-span-2">
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Telefone *</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Telefone *</label>
                                     <input type="text" name="telefone_responsavel" required
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
                                         placeholder="(00) 00000-0000">
                                 </div>
                             </div>
@@ -329,37 +329,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </h3>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div class="col-span-1 sm:col-span-2">
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Endereço Completo *</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Endereço Completo *</label>
                                     <input type="text" name="endereco" required
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
                                         placeholder="Rua, número, complemento">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Bairro *</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Bairro *</label>
                                     <input type="text" name="bairro" required
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
                                         placeholder="Bairro">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">CEP *</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">CEP *</label>
                                     <input type="text" name="cep" required
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
                                         placeholder="00000-000">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Cidade *</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Cidade *</label>
                                     <input type="text" name="cidade" required
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
                                         placeholder="Cidade">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Estado *</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Estado *</label>
                                     <select name="estado" required
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all appearance-none bg-white">
+                                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-azul-principal transition-all bg-white/5 border border-white/10 backdrop-blur-sm text-white/90 font-medium">
                                         <option value="">Selecione</option>
                                         <option value="AC">Acre</option>
                                         <option value="AL">Alagoas</option>
@@ -400,23 +400,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </h3>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Série Desejada</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Série Desejada</label>
                                     <input type="text" name="serie_desejada"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
                                         placeholder="Ex: 1º Ano, 2º Ano">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Turma Desejada</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Turma Desejada</label>
                                     <input type="text" name="turma_desejada"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
                                         placeholder="Ex: Turma A, Turma B">
                                 </div>
                                 
                                 <div class="col-span-1 sm:col-span-2">
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Escola de Origem</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Escola de Origem</label>
                                     <input type="text" name="escola_origem"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all"
                                         placeholder="Nome da escola anterior">
                                 </div>
                             </div>
@@ -427,43 +427,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <h3 class="text-base sm:text-lg font-bold text-azul-principal mb-3 sm:mb-4 flex items-center gap-2">
                                 <i class="fas fa-file-upload"></i>Documentos Obrigatórios
                             </h3>
-                            <p class="text-xs sm:text-sm text-gray-600 mb-4">Envie os documentos em formato PDF ou imagem (JPG, PNG). Tamanho máximo: 5MB por arquivo.</p>
+                            <p class="text-xs sm:text-sm text-white/60 mb-4">Envie os documentos em formato PDF ou imagem (JPG, PNG). Tamanho máximo: 5MB por arquivo.</p>
                             
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Certidão de Nascimento *</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Certidão de Nascimento *</label>
                                     <input type="file" name="certidao_nascimento" accept=".pdf,.jpg,.jpeg,.png"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">RG do Aluno</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">RG do Aluno</label>
                                     <input type="file" name="rg_aluno" accept=".pdf,.jpg,.jpeg,.png"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">CPF do Aluno</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">CPF do Aluno</label>
                                     <input type="file" name="cpf_aluno" accept=".pdf,.jpg,.jpeg,.png"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">RG do Responsável *</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">RG do Responsável *</label>
                                     <input type="file" name="rg_responsavel" accept=".pdf,.jpg,.jpeg,.png"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">CPF do Responsável *</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">CPF do Responsável *</label>
                                     <input type="file" name="cpf_responsavel" accept=".pdf,.jpg,.jpeg,.png"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Comprovante de Residência *</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Comprovante de Residência *</label>
                                     <input type="file" name="comprovante_residencia" accept=".pdf,.jpg,.jpeg,.png"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
                                 </div>
                             </div>
                         </div>
@@ -473,80 +473,80 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <h3 class="text-base sm:text-lg font-bold text-azul-principal mb-3 sm:mb-4 flex items-center gap-2">
                                 <i class="fas fa-folder-open"></i>Documentos Adicionais
                             </h3>
-                            <p class="text-xs sm:text-sm text-gray-600 mb-4">Documentos complementares (quando aplicável)</p>
+                            <p class="text-xs sm:text-sm text-white/60 mb-4">Documentos complementares (quando aplicável)</p>
                             
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Histórico Escolar</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Histórico Escolar</label>
                                     <input type="file" name="historico_escolar" accept=".pdf,.jpg,.jpeg,.png"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Declaração de Matrícula</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Declaração de Matrícula</label>
                                     <input type="file" name="declaracao_matricula" accept=".pdf,.jpg,.jpeg,.png"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Carteira de Vacinação *</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Carteira de Vacinação *</label>
                                     <input type="file" name="carteira_vacinacao" accept=".pdf,.jpg,.jpeg,.png"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Exame de Sangue</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Exame de Sangue</label>
                                     <input type="file" name="exame_sangue" accept=".pdf,.jpg,.jpeg,.png"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Atestado de Saúde</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Atestado de Saúde</label>
                                     <input type="file" name="atestado_saude" accept=".pdf,.jpg,.jpeg,.png"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Foto 3x4</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Foto 3x4</label>
                                     <input type="file" name="foto_3x4" accept=".jpg,.jpeg,.png"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Comprovante de Renda</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Comprovante de Renda</label>
                                     <input type="file" name="comprovante_renda" accept=".pdf,.jpg,.jpeg,.png"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Contrato de Prestação</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Contrato de Prestação</label>
                                     <input type="file" name="contrato_prestacao" accept=".pdf,.jpg,.jpeg,.png"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Autorização de Uso de Imagem</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Autorização de Uso de Imagem</label>
                                     <input type="file" name="autorizacao_imagem" accept=".pdf,.jpg,.jpeg,.png"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Ficha Médica</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Ficha Médica</label>
                                     <input type="file" name="ficha_medica" accept=".pdf,.jpg,.jpeg,.png"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Declaração de Responsabilidade</label>
+                                    <label class="block text-sm font-semibold text-white/70 mb-2">Declaração de Responsabilidade</label>
                                     <input type="file" name="declaracao_responsabilidade" accept=".pdf,.jpg,.jpeg,.png"
-                                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
+                                        class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent transition-all">
                                 </div>
                             </div>
                         </div>
                         
                         <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
                             <div class="flex items-start gap-3">
-                                <i class="fas fa-info-circle text-yellow-600 mt-1"></i>
+                                <i class="fas fa-info-circle text-yellow-400 mt-1"></i>
                                 <div class="text-sm text-yellow-800">
                                     <p class="font-semibold mb-1">Informações Importantes:</p>
                                     <ul class="list-disc list-inside space-y-1">
@@ -560,7 +560,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         
                         <button type="submit"
-                            class="w-full bg-gradient-to-r from-azul-principal to-verde-complementar text-white font-bold py-4 rounded-xl hover:from-azul-escuro hover:to-verde-claro transition-all shadow-lg text-lg">
+                            class="w-full bg-gradient-to-r from-azul-principal to-verde-complementar text-white font-bold py-4 rounded-xl hover:from-azul-escuro hover:to-verde-claro transition-all shadow-[0_8px_30px_rgb(0,0,0,0.5)] text-lg">
                             <i class="fas fa-paper-plane mr-2"></i>Enviar Pré-Matrícula
                         </button>
                     </form>
@@ -576,3 +576,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </footer>
 </body>
 </html>
+
