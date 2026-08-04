@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();
 require_once 'portal/config.php';
 
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="bg-gray-900 min-h-screen">
     <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full">
-            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+            <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
                 <div class="text-center mb-8">
                     <a href="index.php" class="inline-block mb-4">
                         <i class="fas fa-arrow-left text-white text-2xl"></i>
@@ -68,28 +68,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="space-y-4">
                         <div>
                             <label class="block text-sm font-semibold text-white mb-2">Nome Completo</label>
-                            <input type="text" name="nome" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="Seu nome">
+                            <input type="text" name="nome" required class="w-full px-4 py-3 bg-white/5 border border-white/10 backdrop-blur-sm/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="Seu nome">
                         </div>
                         
                         <div>
                             <label class="block text-sm font-semibold text-white mb-2">E-mail</label>
-                            <input type="email" name="email" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="seu@email.com">
+                            <input type="email" name="email" required class="w-full px-4 py-3 bg-white/5 border border-white/10 backdrop-blur-sm/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="seu@email.com">
                         </div>
                         
                         <div>
                             <label class="block text-sm font-semibold text-white mb-2">Telefone</label>
-                            <input type="tel" name="telefone" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="(00) 00000-0000">
+                            <input type="tel" name="telefone" required class="w-full px-4 py-3 bg-white/5 border border-white/10 backdrop-blur-sm/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="(00) 00000-0000">
                         </div>
                         
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-sm font-semibold text-white mb-2">Data</label>
-                                <input type="date" name="data_visita" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent">
+                                <input type="date" name="data_visita" required class="w-full px-4 py-3 bg-white/5 border border-white/10 backdrop-blur-sm/10 border border-white/20 rounded-xl text-white focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent">
                             </div>
                             
                             <div>
                                 <label class="block text-sm font-semibold text-white mb-2">Horário</label>
-                                <select name="horario" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent">
+                                <select name="horario" required class="w-full px-4 py-3 bg-white/5 border border-white/10 backdrop-blur-sm/10 border border-white/20 rounded-xl text-white focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent">
                                     <option value="">Selecione</option>
                                     <option value="08:00">08:00</option>
                                     <option value="09:00">09:00</option>
@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         
                         <div>
                             <label class="block text-sm font-semibold text-white mb-2">Motivo da Visita</label>
-                            <textarea name="motivo" rows="3" class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="Conte-nos sobre o motivo da sua visita"></textarea>
+                            <textarea name="motivo" rows="3" class="w-full px-4 py-3 bg-white/5 border border-white/10 backdrop-blur-sm/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="Conte-nos sobre o motivo da sua visita"></textarea>
                         </div>
                         
                         <button type="submit" class="w-full py-4 bg-gradient-to-r from-amarelo-destaque to-amarelo-claro text-azul-escuro rounded-xl font-bold hover:shadow-xl hover:shadow-yellow-500/30 transition-all duration-300 transform hover:scale-105">
@@ -124,3 +124,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </body>
 </html>
+

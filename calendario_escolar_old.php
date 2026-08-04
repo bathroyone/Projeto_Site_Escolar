@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $pageTitle = 'Calendário Escolar';
 require_once 'portal/config.php';
 
@@ -49,11 +49,11 @@ $tipos_eventos = [
 ];
 
 $cores_tipos = [
-    'feriado' => 'bg-red-100 text-red-600 border-red-200',
-    'evento' => 'bg-blue-100 text-blue-600 border-blue-200',
-    'prova' => 'bg-purple-100 text-purple-600 border-purple-200',
-    'reuniao' => 'bg-green-100 text-green-600 border-green-200',
-    'outro' => 'bg-gray-100 text-gray-600 border-gray-200'
+    'feriado' => 'bg-red-500/20 text-red-400 border-red-200',
+    'evento' => 'bg-blue-500/20 text-blue-400 border-blue-200',
+    'prova' => 'bg-purple-500/20 text-purple-400 border-purple-200',
+    'reuniao' => 'bg-green-500/20 text-green-400 border-green-200',
+    'outro' => 'bg-gray-100 text-white/60 border-white/10'
 ];
 ?>
 <!DOCTYPE html>
@@ -68,7 +68,7 @@ $cores_tipos = [
 </head>
 <body class="bg-gray-900 min-h-screen">
     <!-- Header -->
-    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-lg sticky top-0 z-40">
+    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-[0_8px_30px_rgb(0,0,0,0.5)] sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <div class="flex items-center gap-3">
@@ -82,7 +82,7 @@ $cores_tipos = [
                 </div>
 
                 <div class="flex items-center gap-3">
-                    <a href="index.php" class="px-6 py-2.5 bg-white/20 text-white rounded-full font-semibold hover:bg-white/30 transition-all">
+                    <a href="index.php" class="px-6 py-2.5 bg-white/5 border border-white/10 backdrop-blur-sm/20 text-white rounded-full font-semibold hover:bg-white/5 border border-white/10 backdrop-blur-sm/30 transition-all">
                         <i class="fas fa-arrow-left mr-2"></i>Voltar
                     </a>
                 </div>
@@ -102,14 +102,14 @@ $cores_tipos = [
         </div>
 
         <!-- Filtros -->
-        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-8 border border-white/20">
+        <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-6 mb-8 border border-white/20">
             <div class="flex flex-wrap gap-4 items-center">
                 <span class="text-white font-semibold">Filtrar por tipo:</span>
                 <button onclick="filtrarTipo('todos')" class="px-4 py-2 bg-amarelo-destaque text-azul-escuro rounded-full font-semibold text-sm hover:bg-amarelo-claro transition-colors">
                     Todos
                 </button>
                 <?php foreach ($tipos_eventos as $tipo => $label): ?>
-                    <button onclick="filtrarTipo('<?php echo $tipo; ?>')" class="px-4 py-2 bg-white/10 text-white rounded-full font-semibold text-sm hover:bg-white/20 transition-colors">
+                    <button onclick="filtrarTipo('<?php echo $tipo; ?>')" class="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-sm/10 text-white rounded-full font-semibold text-sm hover:bg-white/5 border border-white/10 backdrop-blur-sm/20 transition-colors">
                         <?php echo $label; ?>
                     </button>
                 <?php endforeach; ?>
@@ -124,7 +124,7 @@ $cores_tipos = [
                 </h2>
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <?php foreach ($feriados as $feriado): ?>
-                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                        <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
                             <div class="flex items-center gap-4">
                                 <div class="bg-gradient-to-br from-red-500 to-red-600 rounded-xl p-4 text-center min-w-[70px]">
                                     <span class="text-white font-bold text-2xl block"><?php echo date('d', strtotime($feriado['data_inicio'])); ?></span>
@@ -150,7 +150,7 @@ $cores_tipos = [
             <div class="space-y-4" id="eventos-lista">
                 <?php if (count($eventos) > 0): ?>
                     <?php foreach ($eventos as $evento): ?>
-                        <div class="evento-item bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20" data-tipo="<?php echo $evento['tipo']; ?>">
+                        <div class="evento-item bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20" data-tipo="<?php echo $evento['tipo']; ?>">
                             <div class="flex items-start justify-between">
                                 <div class="flex items-start gap-4">
                                     <div class="bg-gradient-to-br from-azul-principal to-verde-complementar rounded-xl p-4 text-center min-w-[70px] flex-shrink-0">
@@ -192,7 +192,7 @@ $cores_tipos = [
         </div>
 
         <!-- Informações -->
-        <div class="mt-16 bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+        <div class="mt-16 bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
             <h2 class="text-2xl font-bold text-white mb-6 text-center">
                 <i class="fas fa-info-circle mr-2 text-amarelo-destaque"></i>Informações Importantes
             </h2>
@@ -240,3 +240,4 @@ $cores_tipos = [
     </script>
 </body>
 </html>
+

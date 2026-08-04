@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once 'portal/config.php';
 
 // Criar tabela de mensagens de chat se não existir
@@ -73,9 +73,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         }
     </script>
 </head>
-<body class="bg-gray-50">
+<body class="bg-[#030814]">
     <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-40">
+    <header class="bg-white/5 border border-white/10 backdrop-blur-sm shadow-sm sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center gap-3">
@@ -89,17 +89,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 </div>
                 
                 <nav class="hidden md:flex items-center gap-6">
-                    <a href="index.php" class="text-gray-600 hover:text-azul-principal transition-colors">Início</a>
-                    <a href="noticias.php" class="text-gray-600 hover:text-azul-principal transition-colors">Notícias</a>
-                    <a href="eventos/eventos.html" class="text-gray-600 hover:text-azul-principal transition-colors">Eventos</a>
-                    <a href="biblioteca_vrtual/livro.html" class="text-gray-600 hover:text-azul-principal transition-colors">Biblioteca</a>
+                    <a href="index.php" class="text-white/60 hover:text-azul-principal transition-colors">Início</a>
+                    <a href="noticias.php" class="text-white/60 hover:text-azul-principal transition-colors">Notícias</a>
+                    <a href="eventos/eventos.html" class="text-white/60 hover:text-azul-principal transition-colors">Eventos</a>
+                    <a href="biblioteca_vrtual/livro.html" class="text-white/60 hover:text-azul-principal transition-colors">Biblioteca</a>
                     <a href="portal/login.php" class="px-4 py-2 bg-gradient-to-r from-azul-principal to-verde-complementar text-white font-bold rounded-xl hover:from-azul-escuro hover:to-verde-claro transition-all">
                         Acesso
                     </a>
                 </nav>
                 
                 <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
-                    <i class="fas fa-bars text-gray-600"></i>
+                    <i class="fas fa-bars text-white/60"></i>
                 </button>
             </div>
         </div>
@@ -132,13 +132,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="text-center mb-12">
             <h1 class="text-4xl md:text-5xl font-display font-bold text-azul-principal mb-4">Chat Online</h1>
-            <p class="text-gray-600 text-lg">Entre em contato conosco</p>
+            <p class="text-white/60 text-lg">Entre em contato conosco</p>
         </div>
 
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-            <div class="p-6 border-b border-gray-100 bg-gradient-to-r from-azul-principal to-verde-complementar">
+        <div class="bg-white/5 border border-white/10 backdrop-blur-sm rounded-2xl shadow-sm border border-white/5 overflow-hidden">
+            <div class="p-6 border-b border-white/5 bg-gradient-to-r from-azul-principal to-verde-complementar">
                 <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                    <div class="w-12 h-12 bg-white/5 border border-white/10 backdrop-blur-sm/20 rounded-full flex items-center justify-center">
                         <i class="fas fa-comments text-white text-xl"></i>
                     </div>
                     <div>
@@ -167,28 +167,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     <input type="hidden" name="action" value="enviar">
                     
                     <div class="mb-4">
-                        <label for="nome" class="block text-sm font-semibold text-gray-700 mb-2">Nome *</label>
+                        <label for="nome" class="block text-sm font-semibold text-white/70 mb-2">Nome *</label>
                         <input type="text" id="nome" name="nome" required
-                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent"
+                            class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent"
                             placeholder="Seu nome">
                     </div>
                     
                     <div class="mb-4">
-                        <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                        <label for="email" class="block text-sm font-semibold text-white/70 mb-2">Email</label>
                         <input type="email" id="email" name="email"
-                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent"
+                            class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent"
                             placeholder="seu@email.com">
                     </div>
                     
                     <div class="mb-4">
-                        <label for="mensagem" class="block text-sm font-semibold text-gray-700 mb-2">Mensagem *</label>
+                        <label for="mensagem" class="block text-sm font-semibold text-white/70 mb-2">Mensagem *</label>
                         <textarea id="mensagem" name="mensagem" rows="5" required
-                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent"
+                            class="w-full px-4 py-3 border border-white/10 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent"
                             placeholder="Como podemos ajudar?"></textarea>
                     </div>
                     
                     <button type="submit"
-                        class="w-full bg-gradient-to-r from-azul-principal to-verde-complementar text-white font-bold py-3 rounded-xl hover:from-azul-escuro hover:to-verde-claro transition-all shadow-lg">
+                        class="w-full bg-gradient-to-r from-azul-principal to-verde-complementar text-white font-bold py-3 rounded-xl hover:from-azul-escuro hover:to-verde-claro transition-all shadow-[0_8px_30px_rgb(0,0,0,0.5)]">
                         <i class="fas fa-paper-plane mr-2"></i>
                         Enviar Mensagem
                     </button>
@@ -198,28 +198,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
         <!-- Informações de Contato -->
         <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center">
+            <div class="bg-white/5 border border-white/10 backdrop-blur-sm rounded-2xl shadow-sm border border-white/5 p-6 text-center">
                 <div class="w-14 h-14 bg-azul-principal/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-phone text-azul-principal text-2xl"></i>
                 </div>
-                <h3 class="font-bold text-gray-800 mb-2">Telefone</h3>
-                <p class="text-gray-600">(XX) XXXX-XXXX</p>
+                <h3 class="font-bold text-white/90 mb-2">Telefone</h3>
+                <p class="text-white/60">(XX) XXXX-XXXX</p>
             </div>
             
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center">
-                <div class="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-envelope text-green-600 text-2xl"></i>
+            <div class="bg-white/5 border border-white/10 backdrop-blur-sm rounded-2xl shadow-sm border border-white/5 p-6 text-center">
+                <div class="w-14 h-14 bg-green-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-envelope text-green-400 text-2xl"></i>
                 </div>
-                <h3 class="font-bold text-gray-800 mb-2">Email</h3>
-                <p class="text-gray-600">contato@escola.com</p>
+                <h3 class="font-bold text-white/90 mb-2">Email</h3>
+                <p class="text-white/60">contato@escola.com</p>
             </div>
             
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center">
+            <div class="bg-white/5 border border-white/10 backdrop-blur-sm rounded-2xl shadow-sm border border-white/5 p-6 text-center">
                 <div class="w-14 h-14 bg-orange-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-map-marker-alt text-orange-600 text-2xl"></i>
                 </div>
-                <h3 class="font-bold text-gray-800 mb-2">Endereço</h3>
-                <p class="text-gray-600">Rua da Escola, 123</p>
+                <h3 class="font-bold text-white/90 mb-2">Endereço</h3>
+                <p class="text-white/60">Rua da Escola, 123</p>
             </div>
         </div>
     </main>
@@ -287,3 +287,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     </script>
 </body>
 </html>
+

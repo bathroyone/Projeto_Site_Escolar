@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $pageTitle = 'Contato';
 require_once 'portal/config.php';
 
@@ -66,54 +66,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php require_once 'includes/header.php'; ?>
 
 <!-- Hero Section -->
-<section class="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 py-16">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center text-white">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4 font-poppins">Contato</h1>
-      <p class="text-xl text-white/90">Entre em contato conosco</p>
-    </div>
-  </div>
-</section>
+
+<?php
+$pageHero = [
+  'title'  => 'Fale Conosco',
+  'sub'    => 'Entre em contato com os departamentos da escola. Estamos prontos para atendê-lo.',
+  'icon'   => 'fas fa-envelope-open-text',
+  'accent' => '#0284c7',
+  'badge'  => 'Contato',
+];
+require_once 'includes/page_hero.php';
+?>
 
 <!-- Main Content -->
-<section class="py-16 bg-gray-50">
+<section class="py-16 bg-[#030814]">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <?php if ($success): ?>
-      <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6">
+      <div class="bg-green-500/20 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6">
         <?php echo htmlspecialchars($success); ?>
       </div>
     <?php endif; ?>
     
     <?php if ($error): ?>
-      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
+      <div class="bg-red-500/20 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
         <?php echo htmlspecialchars($error); ?>
       </div>
     <?php endif; ?>
     
     <div class="grid lg:grid-cols-2 gap-12">
       <!-- Contact Form -->
-      <div class="bg-white rounded-2xl shadow-lg p-8">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6 font-poppins">Envie uma Mensagem</h2>
+      <div class="bg-white/5 border border-white/10 backdrop-blur-sm rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.5)] p-8">
+        <h2 class="text-2xl font-bold text-white mb-6 font-poppins">Envie uma Mensagem</h2>
         
         <form method="POST" class="space-y-6">
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Nome Completo *</label>
+            <label class="block text-sm font-semibold text-white/70 mb-2">Nome Completo *</label>
             <input type="text" name="nome" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Digite seu nome">
           </div>
           
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Email *</label>
+            <label class="block text-sm font-semibold text-white/70 mb-2">Email *</label>
             <input type="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="seu@email.com">
           </div>
           
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Telefone</label>
+            <label class="block text-sm font-semibold text-white/70 mb-2">Telefone</label>
             <input type="tel" name="telefone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="(11) 12345-6789">
           </div>
           
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Departamento *</label>
+            <label class="block text-sm font-semibold text-white/70 mb-2">Departamento *</label>
             <select name="departamento_id" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
               <option value="">Selecione um departamento</option>
               <?php foreach ($departamentos as $dept): ?>
@@ -123,12 +126,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           </div>
           
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Assunto *</label>
+            <label class="block text-sm font-semibold text-white/70 mb-2">Assunto *</label>
             <input type="text" name="assunto" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Assunto da mensagem">
           </div>
           
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Mensagem *</label>
+            <label class="block text-sm font-semibold text-white/70 mb-2">Mensagem *</label>
             <textarea name="mensagem" required rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Digite sua mensagem"></textarea>
           </div>
           
@@ -140,23 +143,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       
       <!-- Departments -->
       <div>
-        <h2 class="text-2xl font-bold text-gray-900 mb-6 font-poppins">Departamentos</h2>
+        <h2 class="text-2xl font-bold text-white mb-6 font-poppins">Departamentos</h2>
         <div class="space-y-4">
           <?php foreach ($departamentos as $dept): ?>
-            <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all">
-              <h3 class="font-semibold text-gray-800 mb-2 font-poppins"><?php echo htmlspecialchars($dept['nome']); ?></h3>
-              <p class="text-sm text-gray-600 mb-3"><?php echo htmlspecialchars($dept['descricao']); ?></p>
+            <div class="bg-white/5 border border-white/10 backdrop-blur-sm rounded-xl p-6 shadow-[0_4px_20px_rgb(0,0,0,0.3)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.5)] transition-all">
+              <h3 class="font-semibold text-white/90 mb-2 font-poppins"><?php echo htmlspecialchars($dept['nome']); ?></h3>
+              <p class="text-sm text-white/60 mb-3"><?php echo htmlspecialchars($dept['descricao']); ?></p>
               <div class="space-y-2 text-sm">
                 <?php if (!empty($dept['email'])): ?>
-                  <div class="flex items-center gap-2 text-gray-600">
+                  <div class="flex items-center gap-2 text-white/60">
                     <i class="fas fa-envelope text-gray-400"></i>
-                    <a href="mailto:<?php echo htmlspecialchars($dept['email']); ?>" class="text-blue-600 hover:text-blue-700"><?php echo htmlspecialchars($dept['email']); ?></a>
+                    <a href="mailto:<?php echo htmlspecialchars($dept['email']); ?>" class="text-blue-400 hover:text-blue-700"><?php echo htmlspecialchars($dept['email']); ?></a>
                   </div>
                 <?php endif; ?>
                 <?php if (!empty($dept['telefone'])): ?>
-                  <div class="flex items-center gap-2 text-gray-600">
+                  <div class="flex items-center gap-2 text-white/60">
                     <i class="fas fa-phone text-gray-400"></i>
-                    <a href="tel:<?php echo htmlspecialchars($dept['telefone']); ?>" class="text-blue-600 hover:text-blue-700"><?php echo htmlspecialchars($dept['telefone']); ?></a>
+                    <a href="tel:<?php echo htmlspecialchars($dept['telefone']); ?>" class="text-blue-400 hover:text-blue-700"><?php echo htmlspecialchars($dept['telefone']); ?></a>
                   </div>
                 <?php endif; ?>
               </div>
@@ -165,18 +168,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         
         <!-- General Contact Info -->
-        <div class="bg-white rounded-xl p-6 shadow-md mt-6">
-          <h3 class="font-semibold text-gray-800 mb-4 font-poppins">Informações Gerais</h3>
+        <div class="bg-white/5 border border-white/10 backdrop-blur-sm rounded-xl p-6 shadow-[0_4px_20px_rgb(0,0,0,0.3)] mt-6">
+          <h3 class="font-semibold text-white/90 mb-4 font-poppins">Informações Gerais</h3>
           <div class="space-y-3 text-sm">
-            <div class="flex items-center gap-3 text-gray-600">
+            <div class="flex items-center gap-3 text-white/60">
               <i class="fas fa-map-marker-alt text-gray-400"></i>
               <span>Rua da Escola, 123 - Bairro</span>
             </div>
-            <div class="flex items-center gap-3 text-gray-600">
+            <div class="flex items-center gap-3 text-white/60">
               <i class="fas fa-phone text-gray-400"></i>
               <span>(11) 1234-5678</span>
             </div>
-            <div class="flex items-center gap-3 text-gray-600">
+            <div class="flex items-center gap-3 text-white/60">
               <i class="fas fa-envelope text-gray-400"></i>
               <span>contato@escola.com.br</span>
             </div>
@@ -188,3 +191,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </section>
 
 <?php require_once 'includes/footer.php'; ?>
+
+

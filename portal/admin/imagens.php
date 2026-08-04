@@ -22,7 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         if (in_array($file_type, $allowed_types)) {
             // Definir diretório baseado na categoria
             $upload_dir = '../img/';
-            if ($categoria === 'carousel') {
+            if ($categoria === 'banner_matricula') {
+                $upload_dir = '../img/carousel/';
+                if (!is_dir($upload_dir)) {
+                    mkdir($upload_dir, 0755, true);
+                }
+            } elseif ($categoria === 'carousel') {
                 $upload_dir = '../img/carousel/';
                 if (!is_dir($upload_dir)) {
                     mkdir($upload_dir, 0755, true);
@@ -277,6 +282,9 @@ foreach ($album_dirs as $dir) {
                     <a href="imagens.php?categoria=projetos" class="px-4 py-2 rounded-full text-sm font-medium <?php echo $categoria_filter === 'projetos' ? 'bg-azul-principal text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'; ?>">
                         Projetos
                     </a>
+                    <a href="imagens.php?categoria=banner_matricula" class="px-4 py-2 rounded-full text-sm font-medium <?php echo $categoria_filter === 'banner_matricula' ? 'bg-azul-principal text-white' : 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200'; ?>">
+                        <i class="fas fa-images mr-1"></i> Banner Matrículas
+                    </a>
                     <a href="imagens.php?categoria=fundo" class="px-4 py-2 rounded-full text-sm font-medium <?php echo $categoria_filter === 'fundo' ? 'bg-azul-principal text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'; ?>">
                         Fundo
                     </a>
@@ -342,6 +350,7 @@ foreach ($album_dirs as $dir) {
                         <label class="block text-sm font-semibold text-gray-700 mb-2">Categoria *</label>
                         <select name="categoria" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-azul-principal focus:border-transparent">
                             <option value="">Selecione uma categoria</option>
+                            <option value="banner_matricula">Banner - Matrículas (Hero do Site)</option>
                             <option value="carousel">Carousel (Slides)</option>
                             <option value="projetos">Projetos</option>
                             <option value="fundo">Fundo (Background)</option>

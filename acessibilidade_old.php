@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -22,7 +22,7 @@
         
         .alto-contraste .bg-gray-900,
         .alto-contraste .bg-gray-800,
-        .alto-contraste .bg-white/10,
+        .alto-contraste .bg-white/5 border border-white/10 backdrop-blur-sm/10,
         .alto-contraste .bg-gradient-to-r {
             background-color: var(--bg-secondary) !important;
             color: var(--text-primary) !important;
@@ -33,7 +33,7 @@
         }
         
         .alto-contraste .text-gray-400,
-        .alto-contraste .text-gray-500 {
+        .alto-contraste .text-white/50 {
             color: var(--text-secondary) !important;
         }
         
@@ -118,7 +118,7 @@
 </head>
 <body class="bg-gray-900 min-h-screen">
     <!-- Header -->
-    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-lg sticky top-0 z-40">
+    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-[0_8px_30px_rgb(0,0,0,0.5)] sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <div class="flex items-center gap-3">
@@ -132,7 +132,7 @@
                 </div>
 
                 <div class="flex items-center gap-3">
-                    <a href="index.php" class="px-6 py-2.5 bg-white/20 text-white rounded-full font-semibold hover:bg-white/30 transition-all">
+                    <a href="index.php" class="px-6 py-2.5 bg-white/5 border border-white/10 backdrop-blur-sm/20 text-white rounded-full font-semibold hover:bg-white/5 border border-white/10 backdrop-blur-sm/30 transition-all">
                         <i class="fas fa-arrow-left mr-2"></i>Voltar
                     </a>
                 </div>
@@ -152,12 +152,12 @@
         </div>
 
         <!-- Ferramentas de Acessibilidade -->
-        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-12 border border-white/20">
+        <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 mb-12 border border-white/20">
             <h2 class="text-2xl font-bold text-white mb-6 text-center">
                 <i class="fas fa-tools mr-2 text-amarelo-destaque"></i>Ferramentas de Acessibilidade
             </h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <button onclick="toggleAltoContraste()" class="bg-white/10 rounded-2xl p-6 border border-white/20 hover:border-amarelo-destaque/50 transition-all text-center group">
+                <button onclick="toggleAltoContraste()" class="bg-white/5 border border-white/10 backdrop-blur-sm/10 rounded-2xl p-6 border border-white/20 hover:border-amarelo-destaque/50 transition-all text-center group">
                     <div class="w-16 h-16 bg-gradient-to-br from-black to-gray-800 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                         <i class="fas fa-adjust text-white text-2xl"></i>
                     </div>
@@ -165,7 +165,7 @@
                     <p class="text-gray-400 text-sm">Aumentar contraste de cores</p>
                 </button>
 
-                <button onclick="aumentarFonte()" class="bg-white/10 rounded-2xl p-6 border border-white/20 hover:border-amarelo-destaque/50 transition-all text-center group">
+                <button onclick="aumentarFonte()" class="bg-white/5 border border-white/10 backdrop-blur-sm/10 rounded-2xl p-6 border border-white/20 hover:border-amarelo-destaque/50 transition-all text-center group">
                     <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                         <i class="fas fa-text-height text-white text-2xl"></i>
                     </div>
@@ -173,7 +173,7 @@
                     <p class="text-gray-400 text-sm">Aumentar tamanho do texto</p>
                 </button>
 
-                <button onclick="diminuirFonte()" class="bg-white/10 rounded-2xl p-6 border border-white/20 hover:border-amarelo-destaque/50 transition-all text-center group">
+                <button onclick="diminuirFonte()" class="bg-white/5 border border-white/10 backdrop-blur-sm/10 rounded-2xl p-6 border border-white/20 hover:border-amarelo-destaque/50 transition-all text-center group">
                     <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                         <i class="fas fa-text-height text-white text-2xl"></i>
                     </div>
@@ -181,7 +181,7 @@
                     <p class="text-gray-400 text-sm">Diminuir tamanho do texto</p>
                 </button>
 
-                <button onclick="resetarAcessibilidade()" class="bg-white/10 rounded-2xl p-6 border border-white/20 hover:border-amarelo-destaque/50 transition-all text-center group">
+                <button onclick="resetarAcessibilidade()" class="bg-white/5 border border-white/10 backdrop-blur-sm/10 rounded-2xl p-6 border border-white/20 hover:border-amarelo-destaque/50 transition-all text-center group">
                     <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                         <i class="fas fa-undo text-white text-2xl"></i>
                     </div>
@@ -192,13 +192,13 @@
         </div>
 
         <!-- Libras -->
-        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-12 border border-white/20">
+        <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 mb-12 border border-white/20">
             <h2 class="text-2xl font-bold text-white mb-6 text-center">
                 <i class="fas fa-hands mr-2 text-amarelo-destaque"></i>Tradutor Libras
             </h2>
             <div class="text-center mb-6">
                 <p class="text-gray-400 mb-4">Nossa plataforma oferece suporte à Língua Brasileira de Sinais (Libras) para garantir acessibilidade a todos os usuários.</p>
-                <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full">
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-sm/10 rounded-full">
                     <i class="fas fa-hands text-amarelo-destaque"></i>
                     <span class="text-white text-sm">VLibras Widget disponível em todo o site</span>
                 </div>
@@ -229,22 +229,22 @@
         </div>
 
         <!-- Recursos Adicionais -->
-        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+        <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
             <h2 class="text-2xl font-bold text-white mb-6 text-center">
                 <i class="fas fa-info-circle mr-2 text-amarelo-destaque"></i>Outros Recursos
             </h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-white/5 rounded-xl p-6">
+                <div class="bg-white/5 border border-white/10 backdrop-blur-sm/5 rounded-xl p-6">
                     <i class="fas fa-keyboard text-amarelo-destaque text-2xl mb-3"></i>
                     <h3 class="text-white font-semibold mb-2">Navegação por Teclado</h3>
                     <p class="text-gray-400 text-sm">Todo o site é navegável usando apenas o teclado.</p>
                 </div>
-                <div class="bg-white/5 rounded-xl p-6">
+                <div class="bg-white/5 border border-white/10 backdrop-blur-sm/5 rounded-xl p-6">
                     <i class="fas fa-eye text-amarelo-destaque text-2xl mb-3"></i>
                     <h3 class="text-white font-semibold mb-2">Leitores de Tela</h3>
                     <p class="text-gray-400 text-sm">Compatível com leitores de tela como NVDA e JAWS.</p>
                 </div>
-                <div class="bg-white/5 rounded-xl p-6">
+                <div class="bg-white/5 border border-white/10 backdrop-blur-sm/5 rounded-xl p-6">
                     <i class="fas fa-mobile-alt text-amarelo-destaque text-2xl mb-3"></i>
                     <h3 class="text-white font-semibold mb-2">Responsivo</h3>
                     <p class="text-gray-400 text-sm">Adaptado para diferentes dispositivos e tamanhos de tela.</p>
@@ -318,3 +318,4 @@
     </script>
 </body>
 </html>
+

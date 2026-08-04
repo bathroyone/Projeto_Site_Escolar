@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once 'portal/config.php';
 
 // Criar tabela de projetos se não existir
@@ -65,9 +65,9 @@ $status_projeto = [
 ];
 
 $cores_status = [
-    'em_andamento' => 'bg-blue-100 text-blue-600',
-    'concluido' => 'bg-green-100 text-green-600',
-    'planejado' => 'bg-yellow-100 text-yellow-600'
+    'em_andamento' => 'bg-blue-500/20 text-blue-400',
+    'concluido' => 'bg-green-500/20 text-green-400',
+    'planejado' => 'bg-yellow-500/20 text-yellow-400'
 ];
 ?>
 <!DOCTYPE html>
@@ -82,7 +82,7 @@ $cores_status = [
 </head>
 <body class="bg-gray-900 min-h-screen">
     <!-- Header -->
-    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-lg sticky top-0 z-40">
+    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-[0_8px_30px_rgb(0,0,0,0.5)] sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <div class="flex items-center gap-3">
@@ -96,7 +96,7 @@ $cores_status = [
                 </div>
 
                 <div class="flex items-center gap-3">
-                    <a href="index.php" class="px-6 py-2.5 bg-white/20 text-white rounded-full font-semibold hover:bg-white/30 transition-all">
+                    <a href="index.php" class="px-6 py-2.5 bg-white/5 border border-white/10 backdrop-blur-sm/20 text-white rounded-full font-semibold hover:bg-white/5 border border-white/10 backdrop-blur-sm/30 transition-all">
                         <i class="fas fa-arrow-left mr-2"></i>Voltar
                     </a>
                 </div>
@@ -123,7 +123,7 @@ $cores_status = [
                 </h2>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <?php foreach ($items as $projeto): ?>
-                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20 hover:border-amarelo-destaque/50 transition-all">
+                        <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20 hover:border-amarelo-destaque/50 transition-all">
                             <?php if ($projeto['imagem']): ?>
                                 <div class="h-48 bg-gray-800">
                                     <img src="<?php echo htmlspecialchars($projeto['imagem']); ?>" alt="<?php echo htmlspecialchars($projeto['titulo']); ?>" class="w-full h-full object-cover">
@@ -142,7 +142,7 @@ $cores_status = [
                                 <h3 class="text-white font-semibold text-lg mb-2"><?php echo htmlspecialchars($projeto['titulo']); ?></h3>
                                 <p class="text-gray-400 text-sm mb-4"><?php echo htmlspecialchars(substr($projeto['descricao'], 0, 100)); ?>...</p>
                                 <?php if ($projeto['data_inicio'] && $projeto['data_fim']): ?>
-                                    <div class="flex items-center gap-2 text-gray-500 text-xs">
+                                    <div class="flex items-center gap-2 text-white/50 text-xs">
                                         <i class="fas fa-calendar"></i>
                                         <span><?php echo date('d/m/Y', strtotime($projeto['data_inicio'])); ?> a <?php echo date('d/m/Y', strtotime($projeto['data_fim'])); ?></span>
                                     </div>
@@ -162,7 +162,7 @@ $cores_status = [
         <?php endif; ?>
 
         <!-- Informações -->
-        <div class="mt-16 bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+        <div class="mt-16 bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
             <h2 class="text-2xl font-bold text-white mb-6 text-center">
                 <i class="fas fa-lightbulb mr-2 text-amarelo-destaque"></i>Nossos Pilares
             </h2>
@@ -202,3 +202,4 @@ $cores_status = [
     </footer>
 </body>
 </html>
+

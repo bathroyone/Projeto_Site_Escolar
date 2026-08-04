@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $pageTitle = 'Trabalhe Conosco';
 require_once 'portal/config.php';
 
@@ -73,47 +73,50 @@ $tipos_vaga = [
 ];
 
 $cores_tipos = [
-    'clt' => 'bg-blue-100 text-blue-600',
-    'pj' => 'bg-purple-100 text-purple-600',
-    'estagio' => 'bg-green-100 text-green-600',
+    'clt' => 'bg-blue-500/20 text-blue-400',
+    'pj' => 'bg-purple-500/20 text-purple-400',
+    'estagio' => 'bg-green-500/20 text-green-400',
     'voluntario' => 'bg-orange-100 text-orange-600'
 ];
 ?>
 <?php require_once 'includes/header.php'; ?>
 
 <!-- Hero Section -->
-<section class="bg-gradient-to-br from-indigo-500 via-indigo-600 to-violet-700 py-16">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center text-white">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4 font-poppins">Trabalhe Conosco</h1>
-      <p class="text-xl text-white/90">Faça parte da nossa equipe educacional</p>
-    </div>
-  </div>
-</section>
+
+<?php
+$pageHero = [
+  'title'  => 'Trabalhe Conosco',
+  'sub'    => 'Faça parte do time que transforma vidas através da educação.',
+  'icon'   => 'fas fa-briefcase',
+  'accent' => '#f59e0b',
+  'badge'  => 'Comunidade',
+];
+require_once 'includes/page_hero.php';
+?>
 
 <!-- Main Content -->
-<section class="py-16 bg-gray-50">
+<section class="py-16 bg-[#030814]">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <?php if ($success): ?>
-      <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6">
+      <div class="bg-green-500/20 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6">
         <?php echo htmlspecialchars($success); ?>
       </div>
     <?php endif; ?>
     
     <?php if ($error): ?>
-      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
+      <div class="bg-red-500/20 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
         <?php echo htmlspecialchars($error); ?>
       </div>
     <?php endif; ?>
     
     <!-- Job Listings -->
     <div class="mb-12">
-      <h2 class="text-2xl font-bold text-gray-900 mb-6 font-poppins">Vagas Disponíveis</h2>
+      <h2 class="text-2xl font-bold text-white mb-6 font-poppins">Vagas Disponíveis</h2>
       <div class="grid md:grid-cols-2 gap-6">
         <?php if (!empty($vagas)): ?>
           <?php foreach ($vagas as $vaga): ?>
-            <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all">
+            <div class="bg-white/5 border border-white/10 backdrop-blur-sm rounded-xl p-6 shadow-[0_4px_20px_rgb(0,0,0,0.3)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.5)] transition-all">
               <div class="flex items-start gap-4 mb-4">
                 <div class="w-12 h-12 <?php echo $cores_tipos[$vaga['tipo']]; ?> rounded-lg flex items-center justify-center flex-shrink-0">
                   <i class="fas fa-briefcase text-xl"></i>
@@ -124,9 +127,9 @@ $cores_tipos = [
                       <?php echo $tipos_vaga[$vaga['tipo']]; ?>
                     </span>
                   </div>
-                  <h3 class="font-semibold text-gray-800 mb-2 font-poppins"><?php echo htmlspecialchars($vaga['titulo']); ?></h3>
-                  <p class="text-sm text-gray-600 mb-3"><?php echo htmlspecialchars(substr($vaga['descricao'], 0, 150)); ?>...</p>
-                  <div class="flex items-center gap-4 text-xs text-gray-500">
+                  <h3 class="font-semibold text-white/90 mb-2 font-poppins"><?php echo htmlspecialchars($vaga['titulo']); ?></h3>
+                  <p class="text-sm text-white/60 mb-3"><?php echo htmlspecialchars(substr($vaga['descricao'], 0, 150)); ?>...</p>
+                  <div class="flex items-center gap-4 text-xs text-white/50">
                     <?php if (!empty($vaga['salario'])): ?>
                       <span><i class="fas fa-dollar-sign mr-1"></i><?php echo htmlspecialchars($vaga['salario']); ?></span>
                     <?php endif; ?>
@@ -142,9 +145,9 @@ $cores_tipos = [
             </div>
           <?php endforeach; ?>
         <?php else: ?>
-          <div class="col-span-2 bg-white rounded-xl p-8 text-center">
+          <div class="col-span-2 bg-white/5 border border-white/10 backdrop-blur-sm rounded-xl p-8 text-center">
             <i class="fas fa-briefcase text-4xl text-gray-300 mb-4"></i>
-            <p class="text-gray-600">Nenhuma vaga disponível no momento.</p>
+            <p class="text-white/60">Nenhuma vaga disponível no momento.</p>
           </div>
         <?php endif; ?>
       </div>
@@ -152,10 +155,10 @@ $cores_tipos = [
     
     <!-- Application Form Modal -->
     <div id="application-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
-      <div class="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
+      <div class="bg-white/5 border border-white/10 backdrop-blur-sm rounded-2xl shadow-xl max-w-md w-full p-6">
         <div class="flex items-center justify-between mb-6">
-          <h3 class="text-xl font-bold text-gray-900 font-poppins">Candidatar-se</h3>
-          <button onclick="closeApplicationForm()" class="text-gray-400 hover:text-gray-600">
+          <h3 class="text-xl font-bold text-white font-poppins">Candidatar-se</h3>
+          <button onclick="closeApplicationForm()" class="text-gray-400 hover:text-white/60">
             <i class="fas fa-times text-xl"></i>
           </button>
         </div>
@@ -164,23 +167,23 @@ $cores_tipos = [
           <input type="hidden" name="vaga_id" id="vaga_id" value="">
           
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Nome Completo *</label>
-            <input type="text" name="nome" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-800" placeholder="Digite seu nome">
+            <label class="block text-sm font-semibold text-white/70 mb-2">Nome Completo *</label>
+            <input type="text" name="nome" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-white/90" placeholder="Digite seu nome">
           </div>
           
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Email *</label>
-            <input type="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-800" placeholder="seu@email.com">
+            <label class="block text-sm font-semibold text-white/70 mb-2">Email *</label>
+            <input type="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-white/90" placeholder="seu@email.com">
           </div>
           
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Telefone</label>
-            <input type="tel" name="telefone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-800" placeholder="(11) 12345-6789">
+            <label class="block text-sm font-semibold text-white/70 mb-2">Telefone</label>
+            <input type="tel" name="telefone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-white/90" placeholder="(11) 12345-6789">
           </div>
           
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Mensagem</label>
-            <textarea name="mensagem" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-800" placeholder="Conte um pouco sobre você"></textarea>
+            <label class="block text-sm font-semibold text-white/70 mb-2">Mensagem</label>
+            <textarea name="mensagem" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-white/90" placeholder="Conte um pouco sobre você"></textarea>
           </div>
           
           <button type="submit" class="btn-primary w-full">
@@ -204,3 +207,5 @@ function closeApplicationForm() {
 </script>
 
 <?php require_once 'includes/footer.php'; ?>
+
+

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $pageTitle = 'Newsletter';
 require_once 'portal/config.php';
 
@@ -58,45 +58,48 @@ try {
 <?php require_once 'includes/header.php'; ?>
 
 <!-- Hero Section -->
-<section class="bg-gradient-to-br from-orange-500 via-orange-600 to-amber-700 py-16">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center text-white">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4 font-poppins">Newsletter</h1>
-      <p class="text-xl text-white/90">Receba novidades da escola por email</p>
-    </div>
-  </div>
-</section>
+
+<?php
+$pageHero = [
+  'title'  => 'Newsletter',
+  'sub'    => 'Cadastre-se e receba novidades da escola diretamente no seu e-mail.',
+  'icon'   => 'fas fa-paper-plane',
+  'accent' => '#0284c7',
+  'badge'  => 'Comunicação',
+];
+require_once 'includes/page_hero.php';
+?>
 
 <!-- Main Content -->
-<section class="py-16 bg-gray-50">
+<section class="py-16 bg-[#030814]">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <?php if ($success): ?>
-      <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6">
+      <div class="bg-green-500/20 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6">
         <?php echo htmlspecialchars($success); ?>
       </div>
     <?php endif; ?>
     
     <?php if ($error): ?>
-      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
+      <div class="bg-red-500/20 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
         <?php echo htmlspecialchars($error); ?>
       </div>
     <?php endif; ?>
     
     <div class="grid lg:grid-cols-2 gap-12">
       <!-- Newsletter Form -->
-      <div class="bg-white rounded-2xl shadow-lg p-8">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6 font-poppins">Inscreva-se na Newsletter</h2>
+      <div class="bg-white/5 border border-white/10 backdrop-blur-sm rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.5)] p-8">
+        <h2 class="text-2xl font-bold text-white mb-6 font-poppins">Inscreva-se na Newsletter</h2>
         
         <form method="POST" class="space-y-4">
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Nome Completo *</label>
-            <input type="text" name="nome" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-800" placeholder="Digite seu nome">
+            <label class="block text-sm font-semibold text-white/70 mb-2">Nome Completo *</label>
+            <input type="text" name="nome" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent text-white/90" placeholder="Digite seu nome">
           </div>
           
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Email *</label>
-            <input type="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-800" placeholder="seu@email.com">
+            <label class="block text-sm font-semibold text-white/70 mb-2">Email *</label>
+            <input type="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent text-white/90" placeholder="seu@email.com">
           </div>
           
           <button type="submit" class="btn-primary w-full">
@@ -107,22 +110,22 @@ try {
       
       <!-- Recent Newsletters -->
       <div>
-        <h2 class="text-2xl font-bold text-gray-900 mb-6 font-poppins">Comunicações Recentes</h2>
+        <h2 class="text-2xl font-bold text-white mb-6 font-poppins">Comunicações Recentes</h2>
         <div class="space-y-4">
           <?php if (!empty($newsletters)): ?>
             <?php foreach ($newsletters as $newsletter): ?>
-              <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all">
-                <h3 class="font-semibold text-gray-800 mb-2 font-poppins"><?php echo htmlspecialchars($newsletter['titulo']); ?></h3>
-                <p class="text-sm text-gray-600 mb-3"><?php echo htmlspecialchars(substr($newsletter['conteudo'], 0, 100)); ?>...</p>
-                <div class="text-xs text-gray-500">
+              <div class="bg-white/5 border border-white/10 backdrop-blur-sm rounded-xl p-6 shadow-[0_4px_20px_rgb(0,0,0,0.3)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.5)] transition-all">
+                <h3 class="font-semibold text-white/90 mb-2 font-poppins"><?php echo htmlspecialchars($newsletter['titulo']); ?></h3>
+                <p class="text-sm text-white/60 mb-3"><?php echo htmlspecialchars(substr($newsletter['conteudo'], 0, 100)); ?>...</p>
+                <div class="text-xs text-white/50">
                   <i class="fas fa-calendar-alt mr-1"></i><?php echo date('d/m/Y', strtotime($newsletter['data_envio'])); ?>
                 </div>
               </div>
             <?php endforeach; ?>
           <?php else: ?>
-            <div class="bg-white rounded-xl p-8 text-center">
+            <div class="bg-white/5 border border-white/10 backdrop-blur-sm rounded-xl p-8 text-center">
               <i class="fas fa-newspaper text-4xl text-gray-300 mb-4"></i>
-              <p class="text-gray-600">Nenhuma comunicação recente.</p>
+              <p class="text-white/60">Nenhuma comunicação recente.</p>
             </div>
           <?php endif; ?>
         </div>
@@ -132,3 +135,5 @@ try {
 </section>
 
 <?php require_once 'includes/footer.php'; ?>
+
+

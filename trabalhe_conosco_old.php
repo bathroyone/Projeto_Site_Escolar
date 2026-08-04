@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once 'portal/config.php';
 
 $success = '';
@@ -92,7 +92,7 @@ $cores_tipos = [
 </head>
 <body class="bg-gray-900 min-h-screen">
     <!-- Header -->
-    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-lg sticky top-0 z-40">
+    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-[0_8px_30px_rgb(0,0,0,0.5)] sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <div class="flex items-center gap-3">
@@ -106,7 +106,7 @@ $cores_tipos = [
                 </div>
 
                 <div class="flex items-center gap-3">
-                    <a href="index.php" class="px-6 py-2.5 bg-white/20 text-white rounded-full font-semibold hover:bg-white/30 transition-all">
+                    <a href="index.php" class="px-6 py-2.5 bg-white/5 border border-white/10 backdrop-blur-sm/20 text-white rounded-full font-semibold hover:bg-white/5 border border-white/10 backdrop-blur-sm/30 transition-all">
                         <i class="fas fa-arrow-left mr-2"></i>Voltar
                     </a>
                 </div>
@@ -134,7 +134,7 @@ $cores_tipos = [
             <div class="grid md:grid-cols-2 gap-6">
                 <?php if (count($vagas) > 0): ?>
                     <?php foreach ($vagas as $vaga): ?>
-                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                        <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
                             <div class="flex items-start justify-between mb-4">
                                 <div>
                                     <h3 class="text-white font-semibold text-lg"><?php echo htmlspecialchars($vaga['titulo']); ?></h3>
@@ -176,7 +176,7 @@ $cores_tipos = [
         </div>
 
         <!-- Formulário de Candidatura -->
-        <div id="formulario-candidatura" class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white-20 hidden">
+        <div id="formulario-candidatura" class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 border border-white-20 hidden">
             <h2 class="text-2xl font-bold text-white mb-6 text-center">
                 <i class="fas fa-user-plus mr-2 text-amarelo-destaque"></i>Enviar Currículo
             </h2>
@@ -197,7 +197,7 @@ $cores_tipos = [
                 <div class="space-y-4">
                     <input type="hidden" name="vaga_id" id="vaga_id" value="">
                     
-                    <div class="bg-white/5 rounded-xl p-4 mb-4">
+                    <div class="bg-white/5 border border-white/10 backdrop-blur-sm/5 rounded-xl p-4 mb-4">
                         <p class="text-sm text-gray-400">Vaga selecionada</p>
                         <p class="text-white font-semibold" id="vaga_selecionada"></p>
                     </div>
@@ -205,29 +205,29 @@ $cores_tipos = [
                     <div class="grid md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-semibold text-white mb-2">Nome Completo</label>
-                            <input type="text" name="nome" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="Seu nome">
+                            <input type="text" name="nome" required class="w-full px-4 py-3 bg-white/5 border border-white/10 backdrop-blur-sm/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="Seu nome">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-white mb-2">E-mail</label>
-                            <input type="email" name="email" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="seu@email.com">
+                            <input type="email" name="email" required class="w-full px-4 py-3 bg-white/5 border border-white/10 backdrop-blur-sm/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="seu@email.com">
                         </div>
                     </div>
                     
                     <div>
                         <label class="block text-sm font-semibold text-white mb-2">Telefone</label>
-                        <input type="tel" name="telefone" class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="(00) 00000-0000">
+                        <input type="tel" name="telefone" class="w-full px-4 py-3 bg-white/5 border border-white/10 backdrop-blur-sm/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="(00) 00000-0000">
                     </div>
                     
                     <div>
                         <label class="block text-sm font-semibold text-white mb-2">Mensagem (opcional)</label>
-                        <textarea name="mensagem" rows="3" class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="Conte-nos sobre você"></textarea>
+                        <textarea name="mensagem" rows="3" class="w-full px-4 py-3 bg-white/5 border border-white/10 backdrop-blur-sm/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="Conte-nos sobre você"></textarea>
                     </div>
                     
                     <div class="flex gap-4">
                         <button type="submit" class="flex-1 py-4 bg-gradient-to-r from-amarelo-destaque to-amarelo-claro text-azul-escuro rounded-xl font-bold hover:shadow-xl hover:shadow-yellow-500/30 transition-all duration-300 transform hover:scale-105">
                             <i class="fas fa-paper-plane mr-2"></i>Enviar Currículo
                         </button>
-                        <button type="button" onclick="esconderFormulario()" class="px-6 py-4 bg-white/10 text-white rounded-xl font-semibold hover:bg-white/20 transition-all">
+                        <button type="button" onclick="esconderFormulario()" class="px-6 py-4 bg-white/5 border border-white/10 backdrop-blur-sm/10 text-white rounded-xl font-semibold hover:bg-white/5 border border-white/10 backdrop-blur-sm/20 transition-all">
                             Cancelar
                         </button>
                     </div>
@@ -236,7 +236,7 @@ $cores_tipos = [
         </div>
 
         <!-- Benefícios -->
-        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+        <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
             <h2 class="text-2xl font-bold text-white mb-6 text-center">
                 <i class="fas fa-star mr-2 text-amarelo-destaque"></i>Benefícios
             </h2>
@@ -289,3 +289,4 @@ $cores_tipos = [
     </script>
 </body>
 </html>
+

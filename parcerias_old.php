@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once 'portal/config.php';
 
 // Criar tabela de parcerias se não existir
@@ -65,7 +65,7 @@ $cores_categorias = [
 </head>
 <body class="bg-gray-900 min-h-screen">
     <!-- Header -->
-    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-lg sticky top-0 z-40">
+    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-[0_8px_30px_rgb(0,0,0,0.5)] sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <div class="flex items-center gap-3">
@@ -79,7 +79,7 @@ $cores_categorias = [
                 </div>
 
                 <div class="flex items-center gap-3">
-                    <a href="index.php" class="px-6 py-2.5 bg-white/20 text-white rounded-full font-semibold hover:bg-white/30 transition-all">
+                    <a href="index.php" class="px-6 py-2.5 bg-white/5 border border-white/10 backdrop-blur-sm/20 text-white rounded-full font-semibold hover:bg-white/5 border border-white/10 backdrop-blur-sm/30 transition-all">
                         <i class="fas fa-arrow-left mr-2"></i>Voltar
                     </a>
                 </div>
@@ -106,7 +106,7 @@ $cores_categorias = [
                 </h2>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <?php foreach ($items as $parceria): ?>
-                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:border-amarelo-destaque/50 transition-all">
+                        <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:border-amarelo-destaque/50 transition-all">
                             <div class="flex items-start gap-4 mb-4">
                                 <div class="w-16 h-16 bg-gradient-to-br <?php echo $cores_categorias[$categoria]; ?> rounded-xl flex items-center justify-center flex-shrink-0">
                                     <i class="fas <?php echo $icones_categorias[$categoria]; ?> text-white text-2xl"></i>
@@ -119,7 +119,7 @@ $cores_categorias = [
                                 <p class="text-gray-400 text-sm mb-4"><?php echo htmlspecialchars(substr($parceria['descricao'], 0, 100)); ?>...</p>
                             <?php endif; ?>
                             <?php if ($parceria['website']): ?>
-                                <a href="<?php echo htmlspecialchars($parceria['website']); ?>" target="_blank" class="inline-block px-4 py-2 bg-white/10 text-white rounded-full text-sm hover:bg-white/20 transition-colors">
+                                <a href="<?php echo htmlspecialchars($parceria['website']); ?>" target="_blank" class="inline-block px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-sm/10 text-white rounded-full text-sm hover:bg-white/5 border border-white/10 backdrop-blur-sm/20 transition-colors">
                                     <i class="fas fa-external-link-alt mr-1"></i>Visitar Site
                                 </a>
                             <?php endif; ?>
@@ -137,7 +137,7 @@ $cores_categorias = [
         <?php endif; ?>
 
         <!-- Informações -->
-        <div class="mt-16 bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white-20">
+        <div class="mt-16 bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 border border-white-20">
             <h2 class="text-2xl font-bold text-white mb-6 text-center">
                 <i class="fas fa-info-circle mr-2 text-amarelo-destaque"></i>Seja um Parceiro
             </h2>
@@ -182,3 +182,4 @@ $cores_categorias = [
     </footer>
 </body>
 </html>
+

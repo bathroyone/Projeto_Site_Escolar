@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once 'portal/config.php';
 
 // Criar tabela de FAQ se não existir
@@ -48,7 +48,7 @@ $nomes_categorias = [
 </head>
 <body class="bg-gray-900 min-h-screen">
     <!-- Header -->
-    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-lg sticky top-0 z-40">
+    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-[0_8px_30px_rgb(0,0,0,0.5)] sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <div class="flex items-center gap-3">
@@ -62,7 +62,7 @@ $nomes_categorias = [
                 </div>
 
                 <div class="flex items-center gap-3">
-                    <a href="index.php" class="px-6 py-2.5 bg-white/20 text-white rounded-full font-semibold hover:bg-white/30 transition-all">
+                    <a href="index.php" class="px-6 py-2.5 bg-white/5 border border-white/10 backdrop-blur-sm/20 text-white rounded-full font-semibold hover:bg-white/5 border border-white/10 backdrop-blur-sm/30 transition-all">
                         <i class="fas fa-arrow-left mr-2"></i>Voltar
                     </a>
                 </div>
@@ -84,7 +84,7 @@ $nomes_categorias = [
         <!-- Busca -->
         <div class="mb-12">
             <div class="relative">
-                <input type="text" id="search-faq" placeholder="Digite sua dúvida..." class="w-full px-6 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent">
+                <input type="text" id="search-faq" placeholder="Digite sua dúvida..." class="w-full px-6 py-4 bg-white/5 border border-white/10 backdrop-blur-sm/10 border border-white/20 rounded-2xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent">
                 <i class="fas fa-search absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
             </div>
         </div>
@@ -97,8 +97,8 @@ $nomes_categorias = [
                 </h2>
                 <div class="space-y-4">
                     <?php foreach ($items as $faq): ?>
-                        <div class="faq-item bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 overflow-hidden">
-                            <button onclick="toggleFaq(<?php echo $faq['id']; ?>)" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-white/5 transition-colors">
+                        <div class="faq-item bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl border border-white/20 overflow-hidden">
+                            <button onclick="toggleFaq(<?php echo $faq['id']; ?>)" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-white/5 border border-white/10 backdrop-blur-sm/5 transition-colors">
                                 <span class="text-white font-semibold"><?php echo htmlspecialchars($faq['pergunta']); ?></span>
                                 <i class="fas fa-chevron-down text-amarelo-destaque transition-transform" id="icon-<?php echo $faq['id']; ?>"></i>
                             </button>
@@ -119,7 +119,7 @@ $nomes_categorias = [
         <?php endif; ?>
 
         <!-- Contato para Suporte -->
-        <div class="mt-16 bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+        <div class="mt-16 bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
             <h2 class="text-2xl font-bold text-white mb-6 text-center">
                 <i class="fas fa-headset mr-2 text-amarelo-destaque"></i>Não encontrou sua resposta?
             </h2>
@@ -127,17 +127,17 @@ $nomes_categorias = [
                 Entre em contato com nossa equipe de suporte para obter ajuda personalizada.
             </p>
             <div class="grid md:grid-cols-3 gap-6">
-                <a href="index.php#contact" class="bg-white/5 rounded-xl p-6 text-center hover:bg-white/10 transition-colors">
+                <a href="index.php#contact" class="bg-white/5 border border-white/10 backdrop-blur-sm/5 rounded-xl p-6 text-center hover:bg-white/5 border border-white/10 backdrop-blur-sm/10 transition-colors">
                     <i class="fas fa-phone text-amarelo-destaque text-3xl mb-3"></i>
                     <h3 class="text-white font-semibold mb-1">Telefone</h3>
                     <p class="text-gray-400 text-sm">(00) 0000-0000</p>
                 </a>
-                <a href="mailto:contato@escola.com" class="bg-white/5 rounded-xl p-6 text-center hover:bg-white/10 transition-colors">
+                <a href="mailto:contato@escola.com" class="bg-white/5 border border-white/10 backdrop-blur-sm/5 rounded-xl p-6 text-center hover:bg-white/5 border border-white/10 backdrop-blur-sm/10 transition-colors">
                     <i class="fas fa-envelope text-amarelo-destaque text-3xl mb-3"></i>
                     <h3 class="text-white font-semibold mb-1">E-mail</h3>
                     <p class="text-gray-400 text-sm">contato@escola.com</p>
                 </a>
-                <a href="agendar_visita.php" class="bg-white/5 rounded-xl p-6 text-center hover:bg-white/10 transition-colors">
+                <a href="agendar_visita.php" class="bg-white/5 border border-white/10 backdrop-blur-sm/5 rounded-xl p-6 text-center hover:bg-white/5 border border-white/10 backdrop-blur-sm/10 transition-colors">
                     <i class="fas fa-calendar-check text-amarelo-destaque text-3xl mb-3"></i>
                     <h3 class="text-white font-semibold mb-1">Agendar Visita</h3>
                     <p class="text-gray-400 text-sm">Visite a escola</p>
@@ -183,3 +183,4 @@ $nomes_categorias = [
     </script>
 </body>
 </html>
+

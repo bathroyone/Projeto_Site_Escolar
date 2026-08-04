@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +10,7 @@
 </head>
 <body class="bg-gray-900 min-h-screen">
     <!-- Header -->
-    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-lg sticky top-0 z-40">
+    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-[0_8px_30px_rgb(0,0,0,0.5)] sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <div class="flex items-center gap-3">
@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="flex items-center gap-3">
-                    <a href="index.php" class="px-6 py-2.5 bg-white/20 text-white rounded-full font-semibold hover:bg-white/30 transition-all">
+                    <a href="index.php" class="px-6 py-2.5 bg-white/5 border border-white/10 backdrop-blur-sm/20 text-white rounded-full font-semibold hover:bg-white/5 border border-white/10 backdrop-blur-sm/30 transition-all">
                         <i class="fas fa-arrow-left mr-2"></i>Voltar
                     </a>
                 </div>
@@ -50,7 +50,7 @@
             <!-- 1980 - Fundação -->
             <div class="flex flex-col md:flex-row items-center mb-12">
                 <div class="md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
-                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                    <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
                         <span class="inline-block px-3 py-1 bg-amarelo-destaque text-azul-escuro rounded-full text-sm font-bold mb-3">1980</span>
                         <h3 class="text-white font-semibold text-xl mb-2">Fundação</h3>
                         <p class="text-gray-400 text-sm">A escola foi fundada com o objetivo de oferecer educação de qualidade para a comunidade local.</p>
@@ -65,7 +65,7 @@
                 <div class="md:w-1/2 md:pr-12"></div>
                 <div class="w-8 h-8 bg-amarelo-destaque rounded-full border-4 border-azul-principal z-10 hidden md:block"></div>
                 <div class="md:w-1/2 md:pl-12 mb-4 md:mb-0">
-                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                    <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
                         <span class="inline-block px-3 py-1 bg-amarelo-destaque text-azul-escuro rounded-full text-sm font-bold mb-3">1990</span>
                         <h3 class="text-white font-semibold text-xl mb-2">Expansão</h3>
                         <p class="text-gray-400 text-sm">Ampliação das instalações e abertura de novas turmas para atender a demanda crescente.</p>
@@ -76,7 +76,7 @@
             <!-- 2000 - Modernização -->
             <div class="flex flex-col md:flex-row items-center mb-12">
                 <div class="md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
-                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white-20">
+                    <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-6 border border-white-20">
                         <span class="inline-block px-3 py-1 bg-amarelo-destaque text-azul-escuro rounded-full text-sm font-bold mb-3">2000</span>
                         <h3 class="text-white font-semibold text-xl mb-2">Modernização</h3>
                         <p class="text-gray-400 text-sm">Investimento em tecnologia e infraestrutura moderna para proporcionar um ambiente de ensino inovador.</p>
@@ -91,7 +91,7 @@
                 <div class="md:w-1/2 md:pr-12"></div>
                 <div class="w-8 h-8 bg-amarelo-destaque rounded-full border-4 border-azul-principal z-10 hidden md:block"></div>
                 <div class="md:w-1/2 md:pl-12 mb-4 md:mb-0">
-                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white-20">
+                    <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-6 border border-white-20">
                         <span class="inline-block px-3 py-1 bg-amarelo-destaque text-azul-escuro rounded-full text-sm font-bold mb-3">2010</span>
                         <h3 class="text-white font-semibold text-xl mb-2">Reconhecimento</h3>
                         <p class="text-gray-400 text-sm">Reconhecimento regional pela excelência educacional e inovação pedagógica.</p>
@@ -102,7 +102,7 @@
             <!-- 2020 - Presente -->
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 md:pr-12 md:text-right mb-4 md:mb-0">
-                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white-20">
+                    <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-6 border border-white-20">
                         <span class="inline-block px-3 py-1 bg-amarelo-destaque text-azul-escuro rounded-full text-sm font-bold mb-3">2020 - Presente</span>
                         <h3 class="text-white font-semibold text-xl mb-2">Era Digital</h3>
                         <p class="text-gray-400 text-sm">Transformação digital e implementação de novas metodologias de ensino para preparar os alunos para o futuro.</p>
@@ -115,7 +115,7 @@
 
         <!-- Valores e Missão -->
         <div class="mt-16 grid md:grid-cols-2 gap-6">
-            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white-20">
+            <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 border border-white-20">
                 <h2 class="text-2xl font-bold text-white mb-6 text-center">
                     <i class="fas fa-bullseye mr-2 text-amarelo-destaque"></i>Nossa Missão
                 </h2>
@@ -123,7 +123,7 @@
                     Oferecer educação de excelência, formando cidadãos críticos, criativos e comprometidos com o desenvolvimento sustentável da sociedade.
                 </p>
             </div>
-            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white-20">
+            <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 border border-white-20">
                 <h2 class="text-2xl font-bold text-white mb-6 text-center">
                     <i class="fas fa-eye mr-2 text-amarelo-destaque"></i>Nossa Visão
                 </h2>
@@ -134,7 +134,7 @@
         </div>
 
         <!-- Valores -->
-        <div class="mt-12 bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white-20">
+        <div class="mt-12 bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 border border-white-20">
             <h2 class="text-2xl font-bold text-white mb-6 text-center">
                 <i class="fas fa-heart mr-2 text-amarelo-destaque"></i>Nossos Valores
             </h2>
@@ -181,3 +181,4 @@
     </footer>
 </body>
 </html>
+

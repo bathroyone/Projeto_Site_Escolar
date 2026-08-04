@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $pageTitle = 'Portal dos Pais';
 require_once 'portal/config.php';
 
@@ -53,15 +53,15 @@ try {
 </section>
 
 <!-- Main Content -->
-<section class="py-16 bg-gray-50">
+<section class="py-16 bg-[#030814]">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <?php if (!$isLoggedIn): ?>
       <!-- Login Section -->
-      <div class="bg-white rounded-2xl shadow-lg p-8 mb-12">
+      <div class="bg-white/5 border border-white/10 backdrop-blur-sm rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.5)] p-8 mb-12">
         <div class="text-center mb-8">
-          <h2 class="text-2xl font-bold text-gray-900 mb-2 font-poppins">Acesso ao Portal</h2>
-          <p class="text-gray-600">Faça login para acessar as informações do aluno</p>
+          <h2 class="text-2xl font-bold text-white mb-2 font-poppins">Acesso ao Portal</h2>
+          <p class="text-white/60">Faça login para acessar as informações do aluno</p>
         </div>
         <div class="max-w-md mx-auto">
           <a href="portal/login.php" class="btn-primary w-full text-center block">
@@ -72,24 +72,24 @@ try {
     <?php else: ?>
       <!-- Student Info Section -->
       <?php if ($aluno_info): ?>
-        <div class="bg-white rounded-2xl shadow-lg p-8 mb-12">
-          <h2 class="text-2xl font-bold text-gray-900 mb-6 font-poppins">Informações do Aluno</h2>
+        <div class="bg-white/5 border border-white/10 backdrop-blur-sm rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.5)] p-8 mb-12">
+          <h2 class="text-2xl font-bold text-white mb-6 font-poppins">Informações do Aluno</h2>
           <div class="grid md:grid-cols-2 gap-6">
             <div>
-              <p class="text-sm text-gray-600 mb-1">Nome</p>
-              <p class="font-semibold text-gray-800"><?php echo htmlspecialchars($aluno_info['nome']); ?></p>
+              <p class="text-sm text-white/60 mb-1">Nome</p>
+              <p class="font-semibold text-white/90"><?php echo htmlspecialchars($aluno_info['nome']); ?></p>
             </div>
             <div>
-              <p class="text-sm text-gray-600 mb-1">Matrícula</p>
-              <p class="font-semibold text-gray-800"><?php echo htmlspecialchars($aluno_info['matricula']); ?></p>
+              <p class="text-sm text-white/60 mb-1">Matrícula</p>
+              <p class="font-semibold text-white/90"><?php echo htmlspecialchars($aluno_info['matricula']); ?></p>
             </div>
             <div>
-              <p class="text-sm text-gray-600 mb-1">Turma</p>
-              <p class="font-semibold text-gray-800"><?php echo htmlspecialchars($aluno_info['turma']); ?></p>
+              <p class="text-sm text-white/60 mb-1">Turma</p>
+              <p class="font-semibold text-white/90"><?php echo htmlspecialchars($aluno_info['turma']); ?></p>
             </div>
             <div>
-              <p class="text-sm text-gray-600 mb-1">Série</p>
-              <p class="font-semibold text-gray-800"><?php echo htmlspecialchars($aluno_info['serie']); ?></p>
+              <p class="text-sm text-white/60 mb-1">Série</p>
+              <p class="font-semibold text-white/90"><?php echo htmlspecialchars($aluno_info['serie']); ?></p>
             </div>
           </div>
         </div>
@@ -98,48 +98,48 @@ try {
     
     <!-- Comunicados Section -->
     <div class="mb-12">
-      <h2 class="text-2xl font-bold text-gray-900 mb-6 font-poppins">Comunicados Recentes</h2>
+      <h2 class="text-2xl font-bold text-white mb-6 font-poppins">Comunicados Recentes</h2>
       <div class="space-y-4">
         <?php if (!empty($comunicados)): ?>
           <?php foreach ($comunicados as $comunicado): ?>
-            <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all">
+            <div class="bg-white/5 border border-white/10 backdrop-blur-sm rounded-xl p-6 shadow-[0_4px_20px_rgb(0,0,0,0.3)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.5)] transition-all">
               <div class="flex items-start gap-4">
-                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <i class="fas fa-bullhorn text-blue-600"></i>
+                <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <i class="fas fa-bullhorn text-blue-400"></i>
                 </div>
                 <div class="flex-1">
-                  <h3 class="font-semibold text-gray-800 mb-2 font-poppins"><?php echo htmlspecialchars($comunicado['titulo']); ?></h3>
-                  <p class="text-sm text-gray-600 mb-2"><?php echo htmlspecialchars(substr($comunicado['conteudo'], 0, 150)); ?>...</p>
-                  <p class="text-xs text-gray-500"><?php echo date('d/m/Y H:i', strtotime($comunicado['data_envio'])); ?></p>
+                  <h3 class="font-semibold text-white/90 mb-2 font-poppins"><?php echo htmlspecialchars($comunicado['titulo']); ?></h3>
+                  <p class="text-sm text-white/60 mb-2"><?php echo htmlspecialchars(substr($comunicado['conteudo'], 0, 150)); ?>...</p>
+                  <p class="text-xs text-white/50"><?php echo date('d/m/Y H:i', strtotime($comunicado['data_envio'])); ?></p>
                 </div>
               </div>
             </div>
           <?php endforeach; ?>
         <?php else: ?>
-          <p class="text-gray-600">Nenhum comunicado recente.</p>
+          <p class="text-white/60">Nenhum comunicado recente.</p>
         <?php endif; ?>
       </div>
     </div>
     
     <!-- Eventos Section -->
     <div>
-      <h2 class="text-2xl font-bold text-gray-900 mb-6 font-poppins">Próximos Eventos</h2>
+      <h2 class="text-2xl font-bold text-white mb-6 font-poppins">Próximos Eventos</h2>
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         <?php if (!empty($eventos)): ?>
           <?php foreach ($eventos as $evento): ?>
-            <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all">
+            <div class="bg-white/5 border border-white/10 backdrop-blur-sm rounded-xl p-6 shadow-[0_4px_20px_rgb(0,0,0,0.3)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.5)] transition-all">
               <div class="flex items-center gap-2 mb-3">
-                <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                  <i class="fas fa-calendar text-green-600"></i>
+                <div class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
+                  <i class="fas fa-calendar text-green-400"></i>
                 </div>
-                <span class="text-sm text-gray-600"><?php echo date('d/m/Y', strtotime($evento['data_evento'])); ?></span>
+                <span class="text-sm text-white/60"><?php echo date('d/m/Y', strtotime($evento['data_evento'])); ?></span>
               </div>
-              <h3 class="font-semibold text-gray-800 mb-2 font-poppins"><?php echo htmlspecialchars($evento['titulo']); ?></h3>
-              <p class="text-sm text-gray-600"><?php echo htmlspecialchars(substr($evento['descricao'], 0, 100)); ?>...</p>
+              <h3 class="font-semibold text-white/90 mb-2 font-poppins"><?php echo htmlspecialchars($evento['titulo']); ?></h3>
+              <p class="text-sm text-white/60"><?php echo htmlspecialchars(substr($evento['descricao'], 0, 100)); ?>...</p>
             </div>
           <?php endforeach; ?>
         <?php else: ?>
-          <p class="text-gray-600 col-span-3">Nenhum evento próximo.</p>
+          <p class="text-white/60 col-span-3">Nenhum evento próximo.</p>
         <?php endif; ?>
       </div>
     </div>
@@ -153,7 +153,7 @@ try {
                     <p class="text-gray-400 text-sm">Biblioteca virtual</p>
                 </a>
 
-                <a href="agendar_visita.php" class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:border-amarelo-destaque/50 transition-all group">
+                <a href="agendar_visita.php" class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:border-amarelo-destaque/50 transition-all group">
                     <div class="w-12 h-12 bg-gradient-to-br from-amarelo-destaque to-orange-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                         <i class="fas fa-calendar-check text-azul-escuro text-xl"></i>
                     </div>
@@ -168,7 +168,7 @@ try {
             <h2 class="text-2xl font-bold text-white mb-6">
                 <i class="fas fa-bullhorn mr-2 text-amarelo-destaque"></i>Comunicados Recentes
             </h2>
-            <div class="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 overflow-hidden">
+            <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl border border-white/20 overflow-hidden">
                 <?php if (count($comunicados) > 0): ?>
                     <?php foreach ($comunicados as $comunicado): ?>
                         <div class="p-6 border-b border-white/10 last:border-b-0">
@@ -177,7 +177,7 @@ try {
                                     <h3 class="text-white font-semibold mb-2"><?php echo htmlspecialchars($comunicado['titulo']); ?></h3>
                                     <p class="text-gray-400 text-sm"><?php echo htmlspecialchars(substr($comunicado['mensagem'], 0, 150)) . '...'; ?></p>
                                 </div>
-                                <span class="text-gray-500 text-xs whitespace-nowrap ml-4"><?php echo date('d/m/Y', strtotime($comunicado['data_envio'])); ?></span>
+                                <span class="text-white/50 text-xs whitespace-nowrap ml-4"><?php echo date('d/m/Y', strtotime($comunicado['data_envio'])); ?></span>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -198,7 +198,7 @@ try {
             <div class="grid md:grid-cols-2 gap-4">
                 <?php if (count($eventos) > 0): ?>
                     <?php foreach ($eventos as $evento): ?>
-                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                        <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
                             <div class="flex items-center gap-4">
                                 <div class="bg-gradient-to-br from-azul-principal to-verde-complementar rounded-xl p-4 text-center min-w-[70px]">
                                     <span class="text-white font-bold text-2xl block"><?php echo date('d', strtotime($evento['data_evento'])); ?></span>
@@ -212,7 +212,7 @@ try {
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <div class="col-span-2 bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 text-center text-gray-400">
+                    <div class="col-span-2 bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 text-center text-gray-400">
                         <i class="fas fa-calendar-alt text-4xl mb-4"></i>
                         <p>Nenhum evento próximo.</p>
                     </div>
@@ -226,19 +226,19 @@ try {
                 <i class="fas fa-link mr-2 text-amarelo-destaque"></i>Links Úteis
             </h2>
             <div class="grid md:grid-cols-3 gap-4">
-                <a href="index.php#contact" class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:border-amarelo-destaque/50 transition-all">
+                <a href="index.php#contact" class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:border-amarelo-destaque/50 transition-all">
                     <i class="fas fa-phone text-amarelo-destaque text-2xl mb-3"></i>
                     <h3 class="text-white font-semibold mb-1">Contato</h3>
                     <p class="text-gray-400 text-sm">Entre em contato conosco</p>
                 </a>
 
-                <a href="pre_matricula.php" class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:border-amarelo-destaque/50 transition-all">
+                <a href="pre_matricula.php" class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:border-amarelo-destaque/50 transition-all">
                     <i class="fas fa-user-graduate text-amarelo-destaque text-2xl mb-3"></i>
                     <h3 class="text-white font-semibold mb-1">Pré-Matrícula</h3>
                     <p class="text-gray-400 text-sm">Faça a pré-matrícula online</p>
                 </a>
 
-                <a href="index.php" class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:border-amarelo-destaque/50 transition-all">
+                <a href="index.php" class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:border-amarelo-destaque/50 transition-all">
                     <i class="fas fa-home text-amarelo-destaque text-2xl mb-3"></i>
                     <h3 class="text-white font-semibold mb-1">Site Principal</h3>
                     <p class="text-gray-400 text-sm">Voltar ao site da escola</p>
@@ -272,3 +272,4 @@ try {
     </script>
 </body>
 </html>
+

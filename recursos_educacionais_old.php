@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once 'portal/config.php';
 
 // Criar tabela de recursos educacionais se não existir
@@ -66,7 +66,7 @@ $cores_categorias = [
 </head>
 <body class="bg-gray-900 min-h-screen">
     <!-- Header -->
-    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-lg sticky top-0 z-40">
+    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-[0_8px_30px_rgb(0,0,0,0.5)] sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <div class="flex items-center gap-3">
@@ -80,7 +80,7 @@ $cores_categorias = [
                 </div>
 
                 <div class="flex items-center gap-3">
-                    <a href="index.php" class="px-6 py-2.5 bg-white/20 text-white rounded-full font-semibold hover:bg-white/30 transition-all">
+                    <a href="index.php" class="px-6 py-2.5 bg-white/5 border border-white/10 backdrop-blur-sm/20 text-white rounded-full font-semibold hover:bg-white/5 border border-white/10 backdrop-blur-sm/30 transition-all">
                         <i class="fas fa-arrow-left mr-2"></i>Voltar
                     </a>
                 </div>
@@ -107,7 +107,7 @@ $cores_categorias = [
                 </h2>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <?php foreach ($items as $recurso): ?>
-                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:border-amarelo-destaque/50 transition-all">
+                        <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:border-amarelo-destaque/50 transition-all">
                             <div class="flex items-start gap-4">
                                 <div class="w-12 h-12 bg-gradient-to-br <?php echo $cores_categorias[$categoria]; ?> rounded-xl flex items-center justify-center flex-shrink-0">
                                     <i class="fas <?php echo $icones_categorias[$categoria]; ?> text-white text-xl"></i>
@@ -118,7 +118,7 @@ $cores_categorias = [
                                         <p class="text-gray-400 text-sm mb-3"><?php echo htmlspecialchars(substr($recurso['descricao'], 0, 80)); ?></p>
                                     <?php endif; ?>
                                     <?php if ($recurso['serie']): ?>
-                                        <span class="inline-block px-2 py-1 bg-white/10 rounded-full text-xs text-gray-300 mb-3">
+                                        <span class="inline-block px-2 py-1 bg-white/5 border border-white/10 backdrop-blur-sm/10 rounded-full text-xs text-gray-300 mb-3">
                                             <?php echo htmlspecialchars($recurso['serie']); ?>
                                         </span>
                                     <?php endif; ?>
@@ -129,7 +129,7 @@ $cores_categorias = [
                                             </a>
                                         <?php endif; ?>
                                         <?php if ($recurso['arquivo']): ?>
-                                            <a href="<?php echo htmlspecialchars($recurso['arquivo']); ?>" download class="px-4 py-2 bg-white/10 text-white rounded-full font-semibold text-sm hover:bg-white/20 transition-colors">
+                                            <a href="<?php echo htmlspecialchars($recurso['arquivo']); ?>" download class="px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-sm/10 text-white rounded-full font-semibold text-sm hover:bg-white/5 border border-white/10 backdrop-blur-sm/20 transition-colors">
                                                 <i class="fas fa-download mr-1"></i>Baixar
                                             </a>
                                         <?php endif; ?>
@@ -150,7 +150,7 @@ $cores_categorias = [
         <?php endif; ?>
 
         <!-- Dicas de Estudo -->
-        <div class="mt-16 bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+        <div class="mt-16 bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
             <h2 class="text-2xl font-bold text-white mb-6 text-center">
                 <i class="fas fa-lightbulb mr-2 text-amarelo-destaque"></i>Dicas de Estudo
             </h2>
@@ -190,3 +190,4 @@ $cores_categorias = [
     </footer>
 </body>
 </html>
+

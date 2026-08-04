@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $pageTitle = 'Avaliações';
 require_once 'portal/config.php';
 
@@ -55,10 +55,10 @@ $tipos_avaliacao = [
 ];
 
 $cores_tipos = [
-    'aluno' => 'bg-blue-100 text-blue-600',
-    'responsavel' => 'bg-green-100 text-green-600',
-    'ex_aluno' => 'bg-purple-100 text-purple-600',
-    'visitante' => 'bg-gray-100 text-gray-600'
+    'aluno' => 'bg-blue-500/20 text-blue-400',
+    'responsavel' => 'bg-green-500/20 text-green-400',
+    'ex_aluno' => 'bg-purple-500/20 text-purple-400',
+    'visitante' => 'bg-gray-100 text-white/60'
 ];
 ?>
 <?php require_once 'includes/header.php'; ?>
@@ -74,35 +74,35 @@ $cores_tipos = [
 </section>
 
 <!-- Main Content -->
-<section class="py-16 bg-gray-50">
+<section class="py-16 bg-[#030814]">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <?php if ($success): ?>
-      <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6">
+      <div class="bg-green-500/20 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6">
         <?php echo htmlspecialchars($success); ?>
       </div>
     <?php endif; ?>
     
     <?php if ($error): ?>
-      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
+      <div class="bg-red-500/20 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
         <?php echo htmlspecialchars($error); ?>
       </div>
     <?php endif; ?>
     
     <div class="grid lg:grid-cols-2 gap-12">
       <!-- Evaluation Form -->
-      <div class="bg-white rounded-2xl shadow-lg p-8">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6 font-poppins">Deixe sua Avaliação</h2>
+      <div class="bg-white/5 border border-white/10 backdrop-blur-sm rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.5)] p-8">
+        <h2 class="text-2xl font-bold text-white mb-6 font-poppins">Deixe sua Avaliação</h2>
         
         <form method="POST" class="space-y-4">
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Nome *</label>
-            <input type="text" name="nome" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent text-gray-800" placeholder="Digite seu nome">
+            <label class="block text-sm font-semibold text-white/70 mb-2">Nome *</label>
+            <input type="text" name="nome" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent text-white/90" placeholder="Digite seu nome">
           </div>
           
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Tipo *</label>
-            <select name="tipo" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent text-gray-800">
+            <label class="block text-sm font-semibold text-white/70 mb-2">Tipo *</label>
+            <select name="tipo" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent text-white/90">
               <?php foreach ($tipos_avaliacao as $tipo_key => $tipo_nome): ?>
                 <option value="<?php echo $tipo_key; ?>"><?php echo $tipo_nome; ?></option>
               <?php endforeach; ?>
@@ -110,7 +110,7 @@ $cores_tipos = [
           </div>
           
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Avaliação *</label>
+            <label class="block text-sm font-semibold text-white/70 mb-2">Avaliação *</label>
             <div class="flex gap-2">
               <?php for ($i = 1; $i <= 5; $i++): ?>
                 <label class="cursor-pointer">
@@ -122,8 +122,8 @@ $cores_tipos = [
           </div>
           
           <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Comentário</label>
-            <textarea name="comentario" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent text-gray-800" placeholder="Conte sua experiência"></textarea>
+            <label class="block text-sm font-semibold text-white/70 mb-2">Comentário</label>
+            <textarea name="comentario" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent text-white/90" placeholder="Conte sua experiência"></textarea>
           </div>
           
           <button type="submit" class="btn-primary w-full">
@@ -134,18 +134,18 @@ $cores_tipos = [
       
       <!-- Reviews List -->
       <div>
-        <h2 class="text-2xl font-bold text-gray-900 mb-6 font-poppins">Avaliações Recentes</h2>
+        <h2 class="text-2xl font-bold text-white mb-6 font-poppins">Avaliações Recentes</h2>
         <div class="space-y-4">
           <?php if (!empty($avaliacoes)): ?>
             <?php foreach ($avaliacoes as $avaliacao): ?>
-              <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all">
+              <div class="bg-white/5 border border-white/10 backdrop-blur-sm rounded-xl p-6 shadow-[0_4px_20px_rgb(0,0,0,0.3)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.5)] transition-all">
                 <div class="flex items-start gap-4">
-                  <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <i class="fas fa-user text-amber-600 text-xl"></i>
+                  <div class="w-12 h-12 bg-amber-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-user text-amber-400 text-xl"></i>
                   </div>
                   <div class="flex-1">
                     <div class="flex items-center gap-2 mb-2">
-                      <h3 class="font-semibold text-gray-800 font-poppins"><?php echo htmlspecialchars($avaliacao['nome']); ?></h3>
+                      <h3 class="font-semibold text-white/90 font-poppins"><?php echo htmlspecialchars($avaliacao['nome']); ?></h3>
                       <span class="px-3 py-1 rounded-full text-xs font-medium <?php echo $cores_tipos[$avaliacao['tipo']]; ?>">
                         <?php echo $tipos_avaliacao[$avaliacao['tipo']]; ?>
                       </span>
@@ -156,9 +156,9 @@ $cores_tipos = [
                       <?php endfor; ?>
                     </div>
                     <?php if (!empty($avaliacao['comentario'])): ?>
-                      <p class="text-sm text-gray-600"><?php echo htmlspecialchars($avaliacao['comentario']); ?></p>
+                      <p class="text-sm text-white/60"><?php echo htmlspecialchars($avaliacao['comentario']); ?></p>
                     <?php endif; ?>
-                    <div class="text-xs text-gray-500 mt-2">
+                    <div class="text-xs text-white/50 mt-2">
                       <?php echo date('d/m/Y', strtotime($avaliacao['data_avaliacao'])); ?>
                     </div>
                   </div>
@@ -166,9 +166,9 @@ $cores_tipos = [
               </div>
             <?php endforeach; ?>
           <?php else: ?>
-            <div class="bg-white rounded-xl p-8 text-center">
+            <div class="bg-white/5 border border-white/10 backdrop-blur-sm rounded-xl p-8 text-center">
               <i class="fas fa-star text-4xl text-gray-300 mb-4"></i>
-              <p class="text-gray-600">Nenhuma avaliação cadastrada ainda.</p>
+              <p class="text-white/60">Nenhuma avaliação cadastrada ainda.</p>
             </div>
           <?php endif; ?>
         </div>
@@ -178,3 +178,4 @@ $cores_tipos = [
 </section>
 
 <?php require_once 'includes/footer.php'; ?>
+

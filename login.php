@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();
 require_once 'portal/config.php';
 
@@ -114,3 +114,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     echo json_encode(['success' => false, 'message' => 'Método não permitido.']);
 }
+

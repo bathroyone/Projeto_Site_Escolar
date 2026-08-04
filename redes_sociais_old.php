@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +10,7 @@
 </head>
 <body class="bg-gray-900 min-h-screen">
     <!-- Header -->
-    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-lg sticky top-0 z-40">
+    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-[0_8px_30px_rgb(0,0,0,0.5)] sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <div class="flex items-center gap-3">
@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="flex items-center gap-3">
-                    <a href="index.php" class="px-6 py-2.5 bg-white/20 text-white rounded-full font-semibold hover:bg-white/30 transition-all">
+                    <a href="index.php" class="px-6 py-2.5 bg-white/5 border border-white/10 backdrop-blur-sm/20 text-white rounded-full font-semibold hover:bg-white/5 border border-white/10 backdrop-blur-sm/30 transition-all">
                         <i class="fas fa-arrow-left mr-2"></i>Voltar
                     </a>
                 </div>
@@ -45,7 +45,7 @@
 
         <!-- Redes Sociais -->
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            <a href="https://facebook.com" target="_blank" class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:border-blue-500/50 transition-all group">
+            <a href="https://facebook.com" target="_blank" class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:border-blue-500/50 transition-all group">
                 <div class="flex items-center gap-4 mb-4">
                     <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                         <i class="fab fa-facebook-f text-white text-3xl"></i>
@@ -58,7 +58,7 @@
                 <p class="text-gray-400 text-sm">Compartilhe novidades, fotos e eventos da nossa comunidade escolar.</p>
             </a>
 
-            <a href="https://instagram.com" target="_blank" class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:border-pink-500/50 transition-all group">
+            <a href="https://instagram.com" target="_blank" class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:border-pink-500/50 transition-all group">
                 <div class="flex items-center gap-4 mb-4">
                     <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                         <i class="fab fa-instagram text-white text-3xl"></i>
@@ -71,7 +71,7 @@
                 <p class="text-gray-400 text-sm">Momentos especiais, fotos do dia a dia e stories da escola.</p>
             </a>
 
-            <a href="https://youtube.com" target="_blank" class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:border-red-500/50 transition-all group">
+            <a href="https://youtube.com" target="_blank" class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:border-red-500/50 transition-all group">
                 <div class="flex items-center gap-4 mb-4">
                     <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                         <i class="fab fa-youtube text-white text-3xl"></i>
@@ -84,7 +84,7 @@
                 <p class="text-gray-400 text-sm">Vídeos de eventos, aulas e conteúdo institucional.</p>
             </a>
 
-            <a href="https://twitter.com" target="_blank" class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:border-sky-500/50 transition-all group">
+            <a href="https://twitter.com" target="_blank" class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:border-sky-500/50 transition-all group">
                 <div class="flex items-center gap-4 mb-4">
                     <div class="w-16 h-16 bg-gradient-to-br from-sky-500 to-sky-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                         <i class="fab fa-twitter text-white text-3xl"></i>
@@ -97,7 +97,7 @@
                 <p class="text-gray-400 text-sm">Avisos rápidos e notícias em tempo real.</p>
             </a>
 
-            <a href="https://linkedin.com" target="_blank" class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:border-blue-700/50 transition-all group">
+            <a href="https://linkedin.com" target="_blank" class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:border-blue-700/50 transition-all group">
                 <div class="flex items-center gap-4 mb-4">
                     <div class="w-16 h-16 bg-gradient-to-br from-blue-700 to-blue-800 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                         <i class="fab fa-linkedin-in text-white text-3xl"></i>
@@ -110,7 +110,7 @@
                 <p class="text-gray-400 text-sm">Vagas de emprego e networking profissional.</p>
             </a>
 
-            <a href="https://tiktok.com" target="_blank" class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:border-black/50 transition-all group">
+            <a href="https://tiktok.com" target="_blank" class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:border-black/50 transition-all group">
                 <div class="flex items-center gap-4 mb-4">
                     <div class="w-16 h-16 bg-gradient-to-br from-black to-gray-800 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                         <i class="fab fa-tiktok text-white text-3xl"></i>
@@ -125,7 +125,7 @@
         </div>
 
         <!-- Widget de Feed -->
-        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white-20">
+        <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 border border-white-20">
             <h2 class="text-2xl font-bold text-white mb-6 text-center">
                 <i class="fas fa-hashtag mr-2 text-amarelo-destaque"></i>Siga-nos
             </h2>
@@ -136,7 +136,7 @@
                     </div>
                     <h3 class="text-white font-semibold mb-2">Instagram</h3>
                     <p class="text-gray-400 text-sm mb-4">Veja nosso feed</p>
-                    <a href="https://instagram.com" target="_blank" class="inline-block px-6 py-2 bg-white/10 text-white rounded-full font-semibold hover:bg-white/20 transition-colors">
+                    <a href="https://instagram.com" target="_blank" class="inline-block px-6 py-2 bg-white/5 border border-white/10 backdrop-blur-sm/10 text-white rounded-full font-semibold hover:bg-white/5 border border-white/10 backdrop-blur-sm/20 transition-colors">
                         Acessar
                     </a>
                 </div>
@@ -146,7 +146,7 @@
                     </div>
                     <h3 class="text-white font-semibold mb-2">Facebook</h3>
                     <p class="text-gray-400 text-sm mb-4">Curta nossa página</p>
-                    <a href="https://facebook.com" target="_blank" class="inline-block px-6 py-2 bg-white/10 text-white rounded-full font-semibold hover:bg-white/20 transition-colors">
+                    <a href="https://facebook.com" target="_blank" class="inline-block px-6 py-2 bg-white/5 border border-white/10 backdrop-blur-sm/10 text-white rounded-full font-semibold hover:bg-white/5 border border-white/10 backdrop-blur-sm/20 transition-colors">
                         Acessar
                     </a>
                 </div>
@@ -156,7 +156,7 @@
                     </div>
                     <h3 class="text-white font-semibold mb-2">YouTube</h3>
                     <p class="text-gray-400 text-sm mb-4">Inscreva-se</p>
-                    <a href="https://youtube.com" target="_blank" class="inline-block px-6 py-2 bg-white/10 text-white rounded-full font-semibold hover:bg-white/20 transition-colors">
+                    <a href="https://youtube.com" target="_blank" class="inline-block px-6 py-2 bg-white/5 border border-white/10 backdrop-blur-sm/10 text-white rounded-full font-semibold hover:bg-white/5 border border-white/10 backdrop-blur-sm/20 transition-colors">
                         Acessar
                     </a>
                 </div>
@@ -174,3 +174,4 @@
     </footer>
 </body>
 </html>
+

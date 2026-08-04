@@ -13,478 +13,868 @@ $userType = $_SESSION['tipo_usuario'] ?? '';
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?php echo isset($pageTitle) ? $pageTitle . ' | ' : ''; ?>Site Institucional Moderno e Sistema de Gestão Escolar</title>
+  <title><?php echo isset($pageTitle) ? $pageTitle . ' | ' : ''; ?>Colégio de Excelência</title>
   <meta name="description" content="Site institucional moderno e sistema de gestão escolar completo para instituições educacionais.">
   <link rel="stylesheet" href="css/output.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    * {
+    *, *::before, *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+    html { scroll-behavior: smooth; }
     body {
-      font-family: 'Inter', system-ui, sans-serif;
+      font-family: 'Outfit', 'Inter', system-ui, sans-serif;
       background: #f8f9fa;
       min-height: 100vh;
       overflow-x: hidden;
     }
-    
-    /* Header */
-    .top-bar {
-      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
-      padding: 8px 0;
-    }
-    
+
+    /* ── HEADER ─────────────────────────────────── */
     .main-header {
-      background: #ffffff;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      background: rgba(5, 12, 26, 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.08), 0 8px 32px rgba(0,0,0,0.4);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 200;
     }
-    
-    /* Navigation */
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      height: 76px;
+      gap: 0;
+    }
+
+    /* Logo */
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      flex-shrink: 0;
+      margin-right: 24px;
+    }
+    .logo-area img { height: 52px; width: auto; }
+    .logo-text-wrap { display: none; }
+    @media(min-width: 640px){ .logo-text-wrap { display: block; } }
+    .logo-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+      white-space: nowrap;
+      letter-spacing: -0.02em;
+    }
+    .logo-tag {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.5);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+      text-transform: uppercase;
+    }
+
+    /* Nav */
+    .main-nav {
+      display: none;
+      align-items: center;
+      gap: 2px;
+      flex: 1;
+    }
+    @media(min-width: 1024px){ .main-nav { display: flex; } }
+
     .nav-link {
-      color: #1e293b;
-      font-weight: 500;
-      padding: 0.5rem 1rem;
-      transition: all 0.3s ease;
+      color: rgba(255,255,255,0.75);
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 0.5rem 0.8rem;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      text-decoration: none;
       position: relative;
     }
-    .nav-link:hover {
-      color: #2563eb;
-    }
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background: #2563eb;
-      transition: all 0.3s ease;
-      transform: translateX(-50%);
-    }
-    .nav-link:hover::after {
-      width: 80%;
-    }
-    
+    .nav-link:hover { color: #ffffff; background: rgba(255,255,255,0.08); }
+
     /* Dropdown */
-    .dropdown {
-      position: relative;
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-trigger {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
     }
-    .dropdown-menu {
+    .nav-dropdown-trigger .chev {
+      font-size: 0.65rem;
+      transition: transform 0.25s ease;
+      color: #94a3b8;
+    }
+    .nav-dropdown:hover .chev { transform: rotate(180deg); }
+
+    .nav-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%) translateY(6px);
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.1);
+      min-width: 240px;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
+      padding: 8px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+      pointer-events: none;
+    }
+    .nav-dropdown::after {
+      content: '';
       position: absolute;
       top: 100%;
       left: 0;
-      background: white;
-      min-width: 220px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-      border-radius: 8px;
-      padding: 0.5rem 0;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(10px);
-      transition: all 0.3s ease;
-      border: 1px solid #e2e8f0;
+      width: 100%;
+      height: 15px; /* Invisible bridge to prevent hover loss */
     }
-    .dropdown:hover .dropdown-menu {
+    .nav-dropdown:hover .nav-dropdown-menu {
       opacity: 1;
       visibility: visible;
-      transform: translateY(0);
+      transform: translateX(-50%) translateY(0);
+      pointer-events: all;
     }
-    .dropdown-item {
-      display: block;
-      padding: 0.5rem 1rem;
-      color: #1e293b;
+    .nav-dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
       transition: all 0.2s ease;
     }
-    .dropdown-item:hover {
-      background: #f1f5f9;
-      color: #2563eb;
-    }
-    
-    /* Buttons */
-    .btn-primary {
-      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border-radius: 0.5rem;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
-    }
-    
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 12px rgba(59, 130, 246, 0.4);
-    }
-    
-    .btn-secondary {
-      background: white;
-      color: #1e3a8a;
-      padding: 0.75rem 1.5rem;
-      border-radius: 0.5rem;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      border: 2px solid #e2e8f0;
-    }
-    
-    .btn-secondary:hover {
-      border-color: #3b82f6;
-      color: #3b82f6;
-    }
-    
-    /* Mobile Menu */
-    .mobile-menu {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: 280px;
-      height: 100vh;
-      background: white;
-      z-index: 1001;
-      transition: right 0.3s ease;
-      box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
-    }
-    .mobile-menu.active {
-      right: 0;
-    }
-    .mobile-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 1000;
+    .nav-dropdown-item:hover { background: rgba(255,255,255,0.08); color: #ffffff; }
+    .nav-dropdown-item i { width: 20px; text-align: center; color: rgba(255,255,255,0.4); font-size: 0.85rem; transition: color 0.2s; }
+    .nav-dropdown-item:hover i { color: #8b5cf6; }
+
+    /* Header right buttons */
+    .header-actions {
       display: none;
+      align-items: center;
+      gap: 10px;
+      margin-left: 20px;
+      flex-shrink: 0;
     }
-    .mobile-overlay.active {
-      display: block;
+    @media(min-width: 768px){ .header-actions { display: flex; } }
+
+    .btn-lib {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.9);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
     }
-    
-    /* Social Icons */
-    .social-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
+    .btn-lib:hover { background: rgba(255,255,255,0.15); color: #ffffff; border-color: rgba(255,255,255,0.3); }
+
+    .btn-acesso {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 20px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(135deg, #1d4ed8, #4f46e5);
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(29,78,216,0.35);
+    }
+    .btn-acesso:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(29,78,216,0.45);
+    }
+
+    .mobile-toggle {
       display: flex;
       align-items: center;
       justify-content: center;
+      margin-left: auto;
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      cursor: pointer;
+      color: rgba(255,255,255,0.9);
+      font-size: 1.2rem;
+      transition: all 0.2s;
+    }
+    .mobile-toggle:hover { background: rgba(255,255,255,0.15); color: #ffffff; }
+    @media(min-width: 1024px){ .mobile-toggle { display: none; } }
+
+    .mobile-drawer {
+      position: fixed;
+      top: 0; right: -100%;
+      width: 320px; height: 100vh;
+      background: #050c1a;
+      border-left: 1px solid rgba(255,255,255,0.1);
+      z-index: 1001;
+      transition: right 0.3s cubic-bezier(0.4,0,0.2,1);
+      box-shadow: -8px 0 40px rgba(0,0,0,0.5);
+      overflow-y: auto;
+    }
+    .mobile-drawer.open { right: 0; }
+    .mobile-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 1000;
+      backdrop-filter: blur(4px);
+      display: none;
+    }
+    .mobile-overlay.open { display: block; }
+
+    .mobile-nav-link {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 18px;
+      border-radius: 12px;
+      color: rgba(255,255,255,0.8);
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .mobile-nav-link:hover { background: rgba(255,255,255,0.08); color: #ffffff; }
+    .mobile-nav-link i { color: rgba(255,255,255,0.4); }
+
+    /* Social icon */
+    .social-icon {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
       color: white;
       transition: all 0.3s ease;
     }
-    .social-icon:hover {
-      transform: translateY(-3px);
+    .social-icon:hover { transform: translateY(-3px); }
+
+    /* ── LOGIN MODAL ─────────────────────────────── */
+    .login-overlay {
+      position: fixed; inset: 0;
+      background: rgba(15,23,42,0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
-    
-    /* Modern Typography */
-    h1, h2, h3, h4, h5, h6 {
-      font-family: 'Poppins', sans-serif;
+    .login-overlay.show { display: flex; }
+    .login-overlay.visible { opacity: 1; }
+
+    .login-card {
+      background: white;
+      border-radius: 24px;
+      width: 100%;
+      max-width: 440px;
+      overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.1);
+      transform: translateY(20px) scale(0.97);
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
     }
+    .login-overlay.visible .login-card {
+      transform: translateY(0) scale(1);
+    }
+
+    .login-header-bar {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1d4ed8 100%);
+      padding: 32px 32px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .login-header-bar::before {
+      content: '';
+      position: absolute;
+      top: -30px; right: -30px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+    }
+    .login-header-bar::after {
+      content: '';
+      position: absolute;
+      bottom: -20px; left: 40px;
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+    }
+    .login-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 100px;
+      padding: 4px 12px;
+      color: rgba(255,255,255,0.85);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .login-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 4px;
+    }
+    .login-subtitle {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.875rem;
+    }
+    .login-close-btn {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.8);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+    .login-close-btn:hover { background: rgba(255,255,255,0.22); color: white; }
+
+    .login-body { padding: 28px 32px 32px; }
+
+    .login-type-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .login-type-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 8px;
+      border-radius: 12px;
+      border: 2px solid #e2e8f0;
+      background: white;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #64748b;
+      transition: all 0.2s ease;
+    }
+    .login-type-btn i { font-size: 1.2rem; color: #94a3b8; }
+    .login-type-btn:hover { border-color: #bfdbfe; background: #f0f9ff; color: #1d4ed8; }
+    .login-type-btn:hover i { color: #3b82f6; }
+    .login-type-btn.active {
+      border-color: #3b82f6;
+      background: linear-gradient(135deg, #eff6ff, #e0f2fe);
+      color: #1d4ed8;
+    }
+    .login-type-btn.active i { color: #1d4ed8; }
+
+    .login-field { margin-bottom: 16px; }
+    .login-field label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 6px;
+    }
+    .login-input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      color: #1e293b;
+      background: #f8fafc;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+    .login-input:focus {
+      border-color: #3b82f6;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+    }
+    .login-input-wrap { position: relative; }
+    .login-input-wrap .login-input { padding-left: 40px; }
+    .login-input-icon {
+      position: absolute;
+      left: 13px; top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    .login-submit-btn {
+      width: 100%;
+      padding: 13px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, #1d4ed8 0%, #4f46e5 100%);
+      color: white;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 16px rgba(29,78,216,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .login-submit-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(29,78,216,0.45);
+    }
+    .login-error-msg {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: #dc2626;
+      font-size: 0.825rem;
+      font-weight: 500;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .login-error-msg.show { display: flex; }
+
+    .login-footer-note {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.78rem;
+      color: #94a3b8;
+    }
+    .login-footer-note a { color: #3b82f6; text-decoration: none; font-weight: 600; }
+
+    /* Dropdown & btn resets (kept for compat) */
+    .btn-primary {
+      background: linear-gradient(135deg,#1d4ed8,#4f46e5);
+      color: white; padding: .75rem 1.5rem;
+      border-radius: .5rem; font-weight: 600;
+      transition: all .3s ease;
+      box-shadow: 0 4px 6px rgba(29,78,216,.3);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 12px rgba(29,78,216,.4); }
+    .btn-secondary {
+      background: white; color: #1e3a8a;
+      padding: .75rem 1.5rem; border-radius: .5rem; font-weight: 600;
+      transition: all .3s ease; border: 2px solid #e2e8f0;
+    }
+    .btn-secondary:hover { border-color: #3b82f6; color: #3b82f6; }
+    h1,h2,h3,h4,h5,h6 { font-family: 'Outfit', sans-serif; }
+    .login-card { font-family: 'Outfit', sans-serif !important; }
+    .login-card *:not(i) { font-family: 'Outfit', sans-serif !important; }
+    .login-input { font-family: 'Outfit', sans-serif !important; }
   </style>
 </head>
 <body class="text-gray-800">
-  
-  <!-- Main Header -->
+
+  <!-- ══════════ MAIN HEADER ══════════ -->
   <header class="main-header">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-auto min-h-[5rem] py-3 flex-wrap lg:flex-nowrap gap-4">
-        <a href="index.php" class="flex items-center gap-3 shrink-0">
-          <img src="img/logo.jpg" alt="Logo" class="h-12 sm:h-14 w-auto shrink-0">
-          <div class="hidden sm:block shrink-0">
-            <h1 class="text-lg sm:text-xl font-bold text-gray-800 font-poppins leading-tight whitespace-nowrap">Nome da Escola</h1>
-            <p class="text-xs text-gray-500 whitespace-nowrap">Educação de Excelência</p>
-          </div>
-        </a>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 header-inner">
 
-        <nav class="hidden lg:flex items-center gap-1 shrink-1 overflow-x-auto">
-          <a href="index.php" class="nav-link whitespace-nowrap">Início</a>
-          
-          <div class="dropdown">
-            <a href="#" class="nav-link flex items-center gap-1 whitespace-nowrap">
-              Instituição <i class="fas fa-chevron-down text-xs"></i>
-            </a>
-            <div class="dropdown-menu">
-              <a href="historico.php" class="dropdown-item">História</a>
-              <a href="tour_virtual.php" class="dropdown-item">Tour Virtual 360°</a>
-              <a href="transparencia.php" class="dropdown-item">Transparência</a>
-            </div>
-          </div>
-          
-          <div class="dropdown">
-            <a href="#" class="nav-link flex items-center gap-1 whitespace-nowrap">
-              Ensino <i class="fas fa-chevron-down text-xs"></i>
-            </a>
-            <div class="dropdown-menu">
-              <a href="educacao_infantil.php" class="dropdown-item">Educação Infantil</a>
-              <a href="ensino_fundamental_i.php" class="dropdown-item">Ensino Fundamental I</a>
-              <a href="ensino_fundamental_ii.php" class="dropdown-item">Ensino Fundamental II</a>
-              <a href="ensino_medio.php" class="dropdown-item">Ensino Médio</a>
-            </div>
-          </div>
-          
-          <div class="dropdown">
-            <a href="#" class="nav-link flex items-center gap-1 whitespace-nowrap">
-              Serviços <i class="fas fa-chevron-down text-xs"></i>
-            </a>
-            <div class="dropdown-menu">
-              <a href="biblioteca.php" class="dropdown-item">Biblioteca</a>
-              <a href="transporte.php" class="dropdown-item">Transporte</a>
-              <a href="formularios.php" class="dropdown-item">Formulários</a>
-              <a href="calendario_escolar.php" class="dropdown-item">Calendário Escolar</a>
-            </div>
-          </div>
-          
-          <div class="dropdown">
-            <a href="#" class="nav-link flex items-center gap-1 whitespace-nowrap">
-              Comunidade <i class="fas fa-chevron-down text-xs"></i>
-            </a>
-            <div class="dropdown-menu">
-              <a href="portal_pais.php" class="dropdown-item">Portal dos Pais</a>
-              <a href="ex_alunos.php" class="dropdown-item">Ex-Alunos</a>
-              <a href="parcerias.php" class="dropdown-item">Parcerias</a>
-              <a href="trabalhe_conosco.php" class="dropdown-item">Trabalhe Conosco</a>
-              <a href="doacoes.php" class="dropdown-item">Doações</a>
-            </div>
-          </div>
-          
-          <div class="dropdown">
-            <a href="#" class="nav-link flex items-center gap-1 whitespace-nowrap">
-              Recursos <i class="fas fa-chevron-down text-xs"></i>
-            </a>
-            <div class="dropdown-menu">
-              <a href="projetos.php" class="dropdown-item">Projetos</a>
-              <a href="recursos_educacionais.php" class="dropdown-item">Recursos Educacionais</a>
-              <a href="album/index.php" class="dropdown-item">Álbum de Fotos</a>
-              <a href="galeria_videos.php" class="dropdown-item">Galeria de Vídeos</a>
-            </div>
-          </div>
-          
-          <a href="contato_departamentos.php" class="nav-link whitespace-nowrap">Contato</a>
-        </nav>
+      <!-- Logo -->
+      <a href="index.php" class="logo-area">
+        <img src="img/logo.jpg" alt="Logo da Escola">
+        <div class="logo-text-wrap">
+          <div class="logo-name">Nome da Escola</div>
+          <div class="logo-tag">Educação de Excelência</div>
+        </div>
+      </a>
 
-        <div class="hidden md:flex items-center gap-2 shrink-0">
-          <a href="biblioteca.php" class="btn-secondary text-sm inline-flex items-center justify-center whitespace-nowrap">
-            <i class="fas fa-book mr-2"></i>Biblioteca
-          </a>
-          
-          <?php if ($isLoggedIn): ?>
-            <div class="relative">
-              <button id="user-menu-btn" class="btn-primary text-sm flex items-center gap-2">
-                <i class="fas fa-user"></i>
-                <span><?php echo htmlspecialchars(substr($userName, 0, 10)); ?></span>
-              </button>
-              <div id="user-menu-dropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-2 hidden z-50 border">
-                <div class="px-4 py-2 border-b border-gray-100">
-                  <p class="text-xs text-gray-500">Logado como</p>
-                  <p class="text-sm font-semibold text-gray-800"><?php echo htmlspecialchars($userName); ?></p>
-                  <p class="text-xs text-blue-600 font-medium capitalize"><?php echo htmlspecialchars($userType); ?></p>
-                </div>
-                <?php if ($userType === 'admin'): ?>
-                  <a href="portal/admin/index.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Painel Admin</a>
-                <?php elseif ($userType === 'professor'): ?>
-                  <a href="portal/professor/index.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Painel Professor</a>
-                <?php elseif ($userType === 'aluno'): ?>
-                  <a href="portal/aluno/index.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Painel Aluno</a>
-                <?php elseif ($userType === 'secretaria'): ?>
-                  <a href="portal/secretaria/index.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Painel Secretaria</a>
-                <?php endif; ?>
-                <div class="border-t border-gray-100 mt-2 pt-2">
-                  <a href="portal/logout.php" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50">Sair</a>
-                </div>
-              </div>
-            </div>
-          <?php else: ?>
-            <button id="acesso-sistema-btn" class="btn-primary text-sm inline-flex items-center justify-center whitespace-nowrap">
-              <i class="fas fa-sign-in-alt mr-2"></i>Acesso ao Sistema
-            </button>
-          <?php endif; ?>
+      <!-- Desktop Nav -->
+      <nav class="main-nav">
+        <a href="index.php" class="nav-link">Início</a>
+
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link nav-dropdown-trigger">Instituição <i class="fas fa-chevron-down chev"></i></a>
+          <div class="nav-dropdown-menu">
+            <a href="historico.php" class="nav-dropdown-item"><i class="fas fa-landmark"></i>História</a>
+            <a href="tour_virtual.php" class="nav-dropdown-item"><i class="fas fa-vr-cardboard"></i>Tour Virtual 360°</a>
+            <a href="transparencia.php" class="nav-dropdown-item"><i class="fas fa-file-alt"></i>Transparência</a>
+          </div>
         </div>
 
-        <button id="mobile-menu-btn" class="lg:hidden p-2 text-gray-600 hover:text-gray-800">
-          <i class="fas fa-bars text-xl"></i>
-        </button>
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link nav-dropdown-trigger">Ensino <i class="fas fa-chevron-down chev"></i></a>
+          <div class="nav-dropdown-menu">
+            <a href="educacao_infantil.php" class="nav-dropdown-item"><i class="fas fa-child"></i>Educação Infantil</a>
+            <a href="ensino_fundamental_i.php" class="nav-dropdown-item"><i class="fas fa-star"></i>Ensino Fundamental I</a>
+            <a href="ensino_fundamental_ii.php" class="nav-dropdown-item"><i class="fas fa-atom"></i>Ensino Fundamental II</a>
+            <a href="ensino_medio.php" class="nav-dropdown-item"><i class="fas fa-graduation-cap"></i>Ensino Médio</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link nav-dropdown-trigger">Serviços <i class="fas fa-chevron-down chev"></i></a>
+          <div class="nav-dropdown-menu">
+            <a href="biblioteca.php" class="nav-dropdown-item"><i class="fas fa-book"></i>Biblioteca</a>
+            <a href="transporte.php" class="nav-dropdown-item"><i class="fas fa-bus"></i>Transporte</a>
+            <a href="formularios.php" class="nav-dropdown-item"><i class="fas fa-file-download"></i>Formulários</a>
+            <a href="calendario_escolar.php" class="nav-dropdown-item"><i class="fas fa-calendar"></i>Calendário Escolar</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link nav-dropdown-trigger">Comunidade <i class="fas fa-chevron-down chev"></i></a>
+          <div class="nav-dropdown-menu">
+            <a href="portal_pais.php" class="nav-dropdown-item"><i class="fas fa-users"></i>Portal dos Pais</a>
+            <a href="ex_alunos.php" class="nav-dropdown-item"><i class="fas fa-user-tie"></i>Ex-Alunos</a>
+            <a href="parcerias.php" class="nav-dropdown-item"><i class="fas fa-handshake"></i>Parcerias</a>
+            <a href="trabalhe_conosco.php" class="nav-dropdown-item"><i class="fas fa-briefcase"></i>Trabalhe Conosco</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link nav-dropdown-trigger">Recursos <i class="fas fa-chevron-down chev"></i></a>
+          <div class="nav-dropdown-menu">
+            <a href="projetos.php" class="nav-dropdown-item"><i class="fas fa-lightbulb"></i>Projetos</a>
+            <a href="recursos_educacionais.php" class="nav-dropdown-item"><i class="fas fa-laptop"></i>Recursos Educacionais</a>
+            <a href="album/index.php" class="nav-dropdown-item"><i class="fas fa-images"></i>Álbum de Fotos</a>
+            <a href="galeria_videos.php" class="nav-dropdown-item"><i class="fas fa-video"></i>Galeria de Vídeos</a>
+          </div>
+        </div>
+
+        <a href="contato_departamentos.php" class="nav-link">Contato</a>
+      </nav>
+
+      <!-- Desktop Action Buttons -->
+      <div class="header-actions">
+        <a href="biblioteca.php" class="btn-lib">
+          <i class="fas fa-book-open"></i> Biblioteca
+        </a>
+
+        <?php if ($isLoggedIn): ?>
+          <div style="position:relative;">
+            <button id="user-menu-btn" class="btn-acesso">
+              <i class="fas fa-user-circle"></i>
+              <span><?php echo htmlspecialchars(substr($userName, 0, 12)); ?></span>
+              <i class="fas fa-chevron-down" style="font-size:0.65rem; opacity:0.7;"></i>
+            </button>
+            <div id="user-menu-dropdown" style="position:absolute; right:0; top:calc(100% + 8px); width:200px; background:white; border-radius:14px; box-shadow:0 12px 40px rgba(0,0,0,0.14), 0 0 0 1px rgba(0,0,0,0.05); padding:8px; display:none; z-index:300;">
+              <div style="padding:10px 12px 8px; border-bottom:1px solid #f1f5f9; margin-bottom:4px;">
+                <p style="font-size:0.7rem; color:#94a3b8; margin-bottom:2px;">Logado como</p>
+                <p style="font-size:0.875rem; font-weight:600; color:#1e293b;"><?php echo htmlspecialchars($userName); ?></p>
+                <p style="font-size:0.75rem; color:#3b82f6; font-weight:500; text-transform:capitalize;"><?php echo htmlspecialchars($userType); ?></p>
+              </div>
+              <?php if ($userType === 'admin'): ?>
+                <a href="portal/admin/index.php" style="display:flex; align-items:center; gap:8px; padding:9px 12px; border-radius:8px; color:#374151; font-size:0.85rem; text-decoration:none; transition:background 0.15s;" onmouseover="this.style.background='#f0f9ff'" onmouseout="this.style.background='transparent'"><i class="fas fa-shield-alt" style="width:16px; color:#94a3b8;"></i>Painel Admin</a>
+              <?php elseif ($userType === 'professor'): ?>
+                <a href="portal/professor/index.php" style="display:flex; align-items:center; gap:8px; padding:9px 12px; border-radius:8px; color:#374151; font-size:0.85rem; text-decoration:none; transition:background 0.15s;" onmouseover="this.style.background='#f0f9ff'" onmouseout="this.style.background='transparent'"><i class="fas fa-chalkboard-teacher" style="width:16px; color:#94a3b8;"></i>Painel Professor</a>
+              <?php elseif ($userType === 'aluno'): ?>
+                <a href="portal/aluno/index.php" style="display:flex; align-items:center; gap:8px; padding:9px 12px; border-radius:8px; color:#374151; font-size:0.85rem; text-decoration:none; transition:background 0.15s;" onmouseover="this.style.background='#f0f9ff'" onmouseout="this.style.background='transparent'"><i class="fas fa-user-graduate" style="width:16px; color:#94a3b8;"></i>Painel Aluno</a>
+              <?php elseif ($userType === 'secretaria'): ?>
+                <a href="portal/secretaria/index.php" style="display:flex; align-items:center; gap:8px; padding:9px 12px; border-radius:8px; color:#374151; font-size:0.85rem; text-decoration:none; transition:background 0.15s;" onmouseover="this.style.background='#f0f9ff'" onmouseout="this.style.background='transparent'"><i class="fas fa-building" style="width:16px; color:#94a3b8;"></i>Painel Secretaria</a>
+              <?php endif; ?>
+              <div style="border-top:1px solid #f1f5f9; margin-top:4px; padding-top:4px;">
+                <a href="portal/logout.php" style="display:flex; align-items:center; gap:8px; padding:9px 12px; border-radius:8px; color:#dc2626; font-size:0.85rem; text-decoration:none; transition:background 0.15s;" onmouseover="this.style.background='#fef2f2'" onmouseout="this.style.background='transparent'"><i class="fas fa-sign-out-alt" style="width:16px;"></i>Sair</a>
+              </div>
+            </div>
+          </div>
+        <?php else: ?>
+          <button id="acesso-sistema-btn" class="btn-acesso">
+            <i class="fas fa-lock" style="font-size:0.8rem;"></i> Acesso ao Sistema
+          </button>
+        <?php endif; ?>
       </div>
+
+      <!-- Mobile toggle -->
+      <button id="mobile-toggle-btn" class="mobile-toggle">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
   </header>
 
-  <!-- Mobile Menu -->
-  <div id="mobile-menu" class="mobile-menu">
-    <div class="p-6">
-      <div class="flex items-center justify-between mb-8">
-        <img src="img/logo.jpg" alt="Logo" class="h-12">
-        <button id="close-menu" class="p-2 text-gray-600 hover:text-gray-800">
-          <i class="fas fa-times text-xl"></i>
+  <!-- ══════════ MOBILE DRAWER ══════════ -->
+  <div id="mobile-drawer" class="mobile-drawer">
+    <div style="padding:24px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:32px;">
+        <a href="index.php" style="display:flex; align-items:center; gap:12px; text-decoration:none;">
+          <img src="img/logo.jpg" alt="Logo" style="height:48px; border-radius:12px;">
+          <span style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:white;">Nome da Escola</span>
+        </a>
+        <button id="close-drawer" style="width:40px; height:40px; border-radius:12px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.05); cursor:pointer; font-size:1.1rem; color:rgba(255,255,255,0.8); transition:all 0.2s;">
+          <i class="fas fa-times"></i>
         </button>
       </div>
-      <nav class="flex flex-col gap-4">
-        <a href="index.php" class="text-gray-700 font-semibold hover:text-blue-600">Início</a>
-        <a href="historico.php" class="text-gray-700 font-semibold hover:text-blue-600">História</a>
-        <a href="tour_virtual.php" class="text-gray-700 font-semibold hover:text-blue-600">Tour Virtual</a>
-        <a href="biblioteca.php" class="text-gray-700 font-semibold hover:text-blue-600">Biblioteca</a>
-        <a href="portal_pais.php" class="text-gray-700 font-semibold hover:text-blue-600">Portal dos Pais</a>
-        <a href="calendario_escolar.php" class="text-gray-700 font-semibold hover:text-blue-600">Calendário</a>
-        <a href="contato_departamentos.php" class="text-gray-700 font-semibold hover:text-blue-600">Contato</a>
-        <div class="border-t border-gray-200 pt-4 mt-4 space-y-3">
-          <a href="biblioteca.php" class="block w-full btn-secondary text-center text-sm">Biblioteca</a>
-          <?php if ($isLoggedIn): ?>
-            <div class="bg-gray-50 rounded-lg p-3">
-              <p class="text-xs text-gray-500 mb-1">Logado como</p>
-              <p class="text-sm font-semibold text-gray-800"><?php echo htmlspecialchars(substr($userName, 0, 20)); ?></p>
-              <p class="text-xs text-blue-600 font-medium capitalize"><?php echo htmlspecialchars($userType); ?></p>
-            </div>
-            <a href="portal/logout.php" class="block w-full text-center py-2 text-red-600 hover:bg-red-50 rounded-lg text-sm">Sair</a>
-          <?php else: ?>
-            <button id="acesso-sistema-btn-mobile" class="block w-full btn-primary text-sm">Acesso ao Sistema</button>
-          <?php endif; ?>
-        </div>
+      <nav style="display:flex; flex-direction:column; gap:2px;">
+        <a href="index.php" class="mobile-nav-link"><i class="fas fa-home" style="width:18px; color:#94a3b8;"></i>Início</a>
+        <a href="historico.php" class="mobile-nav-link"><i class="fas fa-landmark" style="width:18px; color:#94a3b8;"></i>História</a>
+        <a href="educacao_infantil.php" class="mobile-nav-link"><i class="fas fa-child" style="width:18px; color:#94a3b8;"></i>Educação Infantil</a>
+        <a href="ensino_fundamental_i.php" class="mobile-nav-link"><i class="fas fa-star" style="width:18px; color:#94a3b8;"></i>Ensino Fundamental I</a>
+        <a href="ensino_fundamental_ii.php" class="mobile-nav-link"><i class="fas fa-atom" style="width:18px; color:#94a3b8;"></i>Ensino Fundamental II</a>
+        <a href="ensino_medio.php" class="mobile-nav-link"><i class="fas fa-graduation-cap" style="width:18px; color:#94a3b8;"></i>Ensino Médio</a>
+        <a href="biblioteca.php" class="mobile-nav-link"><i class="fas fa-book" style="width:18px; color:#94a3b8;"></i>Biblioteca</a>
+        <a href="portal_pais.php" class="mobile-nav-link"><i class="fas fa-users" style="width:18px; color:#94a3b8;"></i>Portal dos Pais</a>
+        <a href="calendario_escolar.php" class="mobile-nav-link"><i class="fas fa-calendar" style="width:18px; color:#94a3b8;"></i>Calendário</a>
+        <a href="contato_departamentos.php" class="mobile-nav-link"><i class="fas fa-envelope" style="width:18px; color:#94a3b8;"></i>Contato</a>
       </nav>
+      <div style="margin-top:20px; padding-top:20px; border-top:1px solid #f1f5f9; display:flex; flex-direction:column; gap:10px;">
+        <a href="biblioteca.php" class="btn-lib" style="justify-content:center;">
+          <i class="fas fa-book-open"></i> Biblioteca
+        </a>
+        <?php if ($isLoggedIn): ?>
+          <a href="portal/logout.php" style="display:flex; align-items:center; justify-content:center; gap:8px; padding:11px; border-radius:10px; background:#fef2f2; color:#dc2626; font-weight:600; font-size:0.875rem; text-decoration:none;">
+            <i class="fas fa-sign-out-alt"></i> Sair
+          </a>
+        <?php else: ?>
+          <button id="acesso-sistema-btn-mobile" class="btn-acesso" style="width:100%; justify-content:center; padding:12px;">
+            <i class="fas fa-lock" style="font-size:0.8rem;"></i> Acesso ao Sistema
+          </button>
+        <?php endif; ?>
+      </div>
     </div>
   </div>
   <div id="mobile-overlay" class="mobile-overlay"></div>
 
-  <!-- Login Modal -->
-  <div id="login-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center opacity-0 transition-opacity duration-300" style="z-index: 9999;">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden transform scale-95 transition-transform duration-300">
-      <div class="bg-gradient-to-r from-blue-600 to-indigo-700 p-6 text-white flex justify-between items-center">
-        <h3 class="text-xl font-bold font-poppins">Acesso ao Sistema</h3>
-        <button id="close-login" class="text-white/80 hover:text-white"><i class="fas fa-times text-xl"></i></button>
+  <!-- ══════════ LOGIN MODAL ══════════ -->
+  <div id="login-modal" class="login-overlay">
+    <div class="login-card">
+
+      <div class="login-header-bar">
+        <button id="close-login" class="login-close-btn"><i class="fas fa-times"></i></button>
+        <div class="login-badge"><i class="fas fa-shield-alt"></i> Área Restrita</div>
+        <div class="login-title">Acesso ao Sistema</div>
+        <div class="login-subtitle">Selecione seu perfil e entre com suas credenciais</div>
       </div>
-      <div class="p-6">
-        <form id="login-form" class="space-y-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de Acesso</label>
-            <select name="tipo" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none bg-white">
-              <option value="aluno">Aluno / Responsável</option>
-              <option value="professor">Professor</option>
-              <option value="secretaria">Secretaria</option>
-              <option value="admin">Administrador</option>
-            </select>
+
+      <div class="login-body">
+
+        <!-- Type selector -->
+        <div class="login-type-grid" id="tipo-grid">
+          <button class="login-type-btn active" data-tipo="aluno">
+            <i class="fas fa-user-graduate"></i>Aluno / Responsável
+          </button>
+          <button class="login-type-btn" data-tipo="professor">
+            <i class="fas fa-chalkboard-teacher"></i>Professor
+          </button>
+          <button class="login-type-btn" data-tipo="secretaria">
+            <i class="fas fa-building"></i>Secretaria
+          </button>
+          <button class="login-type-btn" data-tipo="admin">
+            <i class="fas fa-shield-alt"></i>Administrador
+          </button>
+        </div>
+
+        <input type="hidden" id="login-tipo-val" value="aluno">
+
+        <!-- Error -->
+        <div id="login-error-box" class="login-error-msg">
+          <i class="fas fa-exclamation-circle"></i>
+          <span id="login-error-text"></span>
+        </div>
+
+        <!-- Form -->
+        <form id="login-form">
+          <div class="login-field">
+            <label id="login-user-label" for="login-user">CPF do Responsável</label>
+            <div class="login-input-wrap">
+              <i class="fas fa-user login-input-icon"></i>
+              <input type="text" id="login-user" name="usuario" class="login-input" placeholder="Digite seu usuário...">
+            </div>
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Usuário / CPF / Matrícula</label>
-            <input type="text" name="usuario" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+          <div class="login-field">
+            <label for="login-pass">Senha</label>
+            <div class="login-input-wrap">
+              <i class="fas fa-lock login-input-icon"></i>
+              <input type="password" id="login-pass" name="senha" class="login-input" placeholder="••••••••">
+            </div>
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Senha</label>
-            <input type="password" name="senha" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
-          </div>
-          <div id="login-error" class="text-red-500 text-sm hidden"></div>
-          <button type="submit" class="w-full btn-primary flex justify-center items-center py-2 mt-2">
-            <span>Entrar</span>
-            <i class="fas fa-spinner fa-spin ml-2 hidden" id="login-loading"></i>
+
+          <button type="submit" class="login-submit-btn" id="login-submit-btn">
+            <span>Entrar na plataforma</span>
+            <i class="fas fa-arrow-right" id="login-btn-icon"></i>
+            <i class="fas fa-spinner fa-spin" id="login-spinner" style="display:none;"></i>
           </button>
         </form>
+
+        <div class="login-footer-note">
+          Problemas para acessar? <a href="contato_departamentos.php">Fale com a secretaria</a>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    // Mobile menu functionality
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const closeMenuBtn = document.getElementById('close-menu');
-    const mobileMenu = document.getElementById('mobile-menu');
+    // ── Mobile drawer ──
+    const mobileToggle = document.getElementById('mobile-toggle-btn');
+    const closeDrawer  = document.getElementById('close-drawer');
+    const mobileDrawer = document.getElementById('mobile-drawer');
     const mobileOverlay = document.getElementById('mobile-overlay');
-    
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenu.classList.add('active');
-      mobileOverlay.classList.add('active');
-    });
-    
-    closeMenuBtn.addEventListener('click', () => {
-      mobileMenu.classList.remove('active');
-      mobileOverlay.classList.remove('active');
-    });
-    
-    mobileOverlay.addEventListener('click', () => {
-      mobileMenu.classList.remove('active');
-      mobileOverlay.classList.remove('active');
-    });
-    
-    // User menu dropdown
-    const userMenuBtn = document.getElementById('user-menu-btn');
-    const userMenuDropdown = document.getElementById('user-menu-dropdown');
-    
-    if (userMenuBtn) {
-      userMenuBtn.addEventListener('click', () => {
-        userMenuDropdown.classList.toggle('hidden');
-      });
+
+    function openDrawer(){
+      mobileDrawer.classList.add('open');
+      mobileOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
     }
-    
-    // Close dropdown when clicking outside
+    function closeDrawerFn(){
+      mobileDrawer.classList.remove('open');
+      mobileOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    mobileToggle?.addEventListener('click', openDrawer);
+    closeDrawer?.addEventListener('click', closeDrawerFn);
+    mobileOverlay?.addEventListener('click', closeDrawerFn);
+
+    // ── User dropdown ──
+    const userMenuBtn  = document.getElementById('user-menu-btn');
+    const userDropdown = document.getElementById('user-menu-dropdown');
+    userMenuBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const vis = userDropdown.style.display;
+      userDropdown.style.display = vis === 'block' ? 'none' : 'block';
+    });
     document.addEventListener('click', (e) => {
-      if (userMenuBtn && !userMenuBtn.contains(e.target) && !userMenuDropdown.contains(e.target)) {
-        userMenuDropdown.classList.add('hidden');
+      if (userDropdown && !userMenuBtn?.contains(e.target)) {
+        userDropdown.style.display = 'none';
       }
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
-      // Login Modal functionality
-      const loginModal = document.getElementById('login-modal');
-      const closeLoginBtn = document.getElementById('close-login');
-      const loginForm = document.getElementById('login-form');
-      const loginError = document.getElementById('login-error');
-      const loginLoading = document.getElementById('login-loading');
-      
-      const acessoBtns = document.querySelectorAll('#acesso-sistema-btn, #acesso-sistema-btn-mobile');
-      
-      acessoBtns.forEach(btn => {
-        if (btn) {
-          btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            if(mobileMenu) mobileMenu.classList.remove('active');
-            if(mobileOverlay) mobileOverlay.classList.remove('active');
-            
-            loginModal.classList.remove('hidden');
-            loginModal.classList.add('flex');
-            setTimeout(() => {
-              loginModal.classList.remove('opacity-0');
-              loginModal.querySelector('div').classList.remove('scale-95');
-            }, 10);
-          });
-        }
+    // ── Login modal ──
+    const loginModal   = document.getElementById('login-modal');
+    const closeBtnLgn  = document.getElementById('close-login');
+    const loginForm    = document.getElementById('login-form');
+    const tipoGrid     = document.getElementById('tipo-grid');
+    const tipoVal      = document.getElementById('login-tipo-val');
+    const errorBox     = document.getElementById('login-error-box');
+    const errorText    = document.getElementById('login-error-text');
+    const submitBtn    = document.getElementById('login-submit-btn');
+    const btnIcon      = document.getElementById('login-btn-icon');
+    const spinner      = document.getElementById('login-spinner');
+    const userLabel    = document.getElementById('login-user-label');
+    const userInput    = document.getElementById('login-user');
+
+    const userLabels = {
+      aluno:      'CPF do Responsável',
+      professor:  'Matrícula Funcional',
+      secretaria: 'Login de Usuário',
+      admin:      'Login de Administrador'
+    };
+    const userPlaceholders = {
+      aluno:      '000.000.000-00',
+      professor:  'Ex: PROF2026',
+      secretaria: 'Ex: sec.maria',
+      admin:      'Ex: admin'
+    };
+
+    // Type buttons
+    tipoGrid?.querySelectorAll('.login-type-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        tipoGrid.querySelectorAll('.login-type-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const tipo = btn.dataset.tipo;
+        tipoVal.value = tipo;
+        userLabel.textContent = userLabels[tipo];
+        userInput.placeholder = userPlaceholders[tipo];
+        errorBox.classList.remove('show');
       });
-      
-      if (closeLoginBtn) {
-        closeLoginBtn.addEventListener('click', () => {
-          loginModal.classList.add('opacity-0');
-          loginModal.querySelector('div').classList.add('scale-95');
-          setTimeout(() => {
-            loginModal.classList.add('hidden');
-            loginModal.classList.remove('flex');
-          }, 300);
-        });
-      }
-      
-      if (loginForm) {
-        loginForm.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          loginError.classList.add('hidden');
-          loginLoading.classList.remove('hidden');
-          
-          try {
-            const formData = new FormData(loginForm);
-            const response = await fetch('login.php', {
-              method: 'POST',
-              body: formData
-            });
-            const data = await response.json();
-            
-            if (data.success) {
-              window.location.href = data.redirect;
-            } else {
-              loginError.textContent = data.message;
-              loginError.classList.remove('hidden');
-            }
-          } catch (error) {
-            loginError.textContent = 'Erro ao conectar. Tente novamente.';
-            loginError.classList.remove('hidden');
-          } finally {
-            loginLoading.classList.add('hidden');
-          }
-        });
+    });
+
+    function showModal(){
+      loginModal.classList.add('show');
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => loginModal.classList.add('visible'));
+      });
+      document.body.style.overflow = 'hidden';
+    }
+    function hideModal(){
+      loginModal.classList.remove('visible');
+      setTimeout(() => {
+        loginModal.classList.remove('show');
+        document.body.style.overflow = '';
+        loginForm?.reset();
+        errorBox.classList.remove('show');
+        // reset tipo
+        tipoGrid.querySelectorAll('.login-type-btn').forEach(b => b.classList.remove('active'));
+        tipoGrid.querySelector('[data-tipo="aluno"]').classList.add('active');
+        tipoVal.value = 'aluno';
+        userLabel.textContent = userLabels['aluno'];
+        userInput.placeholder = userPlaceholders['aluno'];
+      }, 300);
+    }
+
+    loginModal?.addEventListener('click', (e) => {
+      if (e.target === loginModal) hideModal();
+    });
+    closeBtnLgn?.addEventListener('click', hideModal);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && loginModal.classList.contains('show')) hideModal();
+    });
+
+    document.querySelectorAll('#acesso-sistema-btn, #acesso-sistema-btn-mobile').forEach(btn => {
+      btn?.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeDrawerFn();
+        showModal();
+      });
+    });
+
+    // Form submit
+    loginForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorBox.classList.remove('show');
+      submitBtn.disabled = true;
+      btnIcon.style.display = 'none';
+      spinner.style.display = 'inline-block';
+
+      try {
+        const fd = new FormData();
+        fd.append('tipo',    tipoVal.value);
+        fd.append('usuario', document.getElementById('login-user').value);
+        fd.append('senha',   document.getElementById('login-pass').value);
+
+        const res  = await fetch('login.php', { method: 'POST', body: fd });
+        const data = await res.json();
+
+        if (data.success) {
+          window.location.href = data.redirect;
+        } else {
+          errorText.textContent = data.message;
+          errorBox.classList.add('show');
+        }
+      } catch(err) {
+        errorText.textContent = 'Erro de conexão. Tente novamente.';
+        errorBox.classList.add('show');
+      } finally {
+        submitBtn.disabled = false;
+        btnIcon.style.display = 'inline-block';
+        spinner.style.display = 'none';
       }
     });
   </script>
+

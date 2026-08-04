@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once 'portal/config.php';
 
 // Criar tabela de vídeos se não existir
@@ -64,7 +64,7 @@ $cores_categorias = [
 </head>
 <body class="bg-gray-900 min-h-screen">
     <!-- Header -->
-    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-lg sticky top-0 z-40">
+    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-[0_8px_30px_rgb(0,0,0,0.5)] sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <div class="flex items-center gap-3">
@@ -78,7 +78,7 @@ $cores_categorias = [
                 </div>
 
                 <div class="flex items-center gap-3">
-                    <a href="index.php" class="px-6 py-2.5 bg-white/20 text-white rounded-full font-semibold hover:bg-white/30 transition-all">
+                    <a href="index.php" class="px-6 py-2.5 bg-white/5 border border-white/10 backdrop-blur-sm/20 text-white rounded-full font-semibold hover:bg-white/5 border border-white/10 backdrop-blur-sm/30 transition-all">
                         <i class="fas fa-arrow-left mr-2"></i>Voltar
                     </a>
                 </div>
@@ -105,7 +105,7 @@ $cores_categorias = [
                 </h2>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <?php foreach ($items as $video): ?>
-                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20 hover:border-amarelo-destaque/50 transition-all">
+                        <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20 hover:border-amarelo-destaque/50 transition-all">
                             <div class="relative aspect-video bg-gray-800">
                                 <?php if ($video['thumbnail']): ?>
                                     <img src="<?php echo htmlspecialchars($video['thumbnail']); ?>" alt="<?php echo htmlspecialchars($video['titulo']); ?>" class="w-full h-full object-cover">
@@ -115,7 +115,7 @@ $cores_categorias = [
                                     </div>
                                 <?php endif; ?>
                                 <a href="<?php echo htmlspecialchars($video['url']); ?>" target="_blank" class="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-black/30 transition-colors">
-                                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                                    <div class="w-16 h-16 bg-white/5 border border-white/10 backdrop-blur-sm/20 rounded-full flex items-center justify-center backdrop-blur-sm">
                                         <i class="fas fa-play text-white text-2xl ml-1"></i>
                                     </div>
                                 </a>
@@ -126,11 +126,11 @@ $cores_categorias = [
                                     <p class="text-gray-400 text-sm mb-3"><?php echo htmlspecialchars(substr($video['descricao'], 0, 80)); ?>...</p>
                                 <?php endif; ?>
                                 <div class="flex items-center justify-between">
-                                    <span class="text-gray-500 text-xs">
+                                    <span class="text-white/50 text-xs">
                                         <i class="fas fa-eye mr-1"></i><?php echo $video['visualizacoes']; ?> visualizações
                                     </span>
                                     <?php if ($video['data_publicacao']): ?>
-                                        <span class="text-gray-500 text-xs"><?php echo date('d/m/Y', strtotime($video['data_publicacao'])); ?></span>
+                                        <span class="text-white/50 text-xs"><?php echo date('d/m/Y', strtotime($video['data_publicacao'])); ?></span>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -148,7 +148,7 @@ $cores_categorias = [
         <?php endif; ?>
 
         <!-- Informações -->
-        <div class="mt-16 bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+        <div class="mt-16 bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
             <h2 class="text-2xl font-bold text-white mb-6 text-center">
                 <i class="fas fa-info-circle mr-2 text-amarelo-destaque"></i>Informações
             </h2>
@@ -188,3 +188,4 @@ $cores_categorias = [
     </footer>
 </body>
 </html>
+

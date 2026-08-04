@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once 'portal/config.php';
 
 $success = '';
@@ -69,7 +69,7 @@ try {
 </head>
 <body class="bg-gray-900 min-h-screen">
     <!-- Header -->
-    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-lg sticky top-0 z-40">
+    <header class="bg-gradient-to-r from-azul-principal to-verde-complementar shadow-[0_8px_30px_rgb(0,0,0,0.5)] sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <div class="flex items-center gap-3">
@@ -83,7 +83,7 @@ try {
                 </div>
 
                 <div class="flex items-center gap-3">
-                    <a href="index.php" class="px-6 py-2.5 bg-white/20 text-white rounded-full font-semibold hover:bg-white/30 transition-all">
+                    <a href="index.php" class="px-6 py-2.5 bg-white/5 border border-white/10 backdrop-blur-sm/20 text-white rounded-full font-semibold hover:bg-white/5 border border-white/10 backdrop-blur-sm/30 transition-all">
                         <i class="fas fa-arrow-left mr-2"></i>Voltar
                     </a>
                 </div>
@@ -103,14 +103,14 @@ try {
         </div>
 
         <!-- Estatísticas -->
-        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-12 border border-white/20">
+        <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 mb-12 border border-white/20">
             <div class="grid md:grid-cols-3 gap-6 text-center">
                 <div>
                     <div class="text-5xl font-bold text-amarelo-destaque mb-2"><?php echo $media_geral; ?></div>
                     <p class="text-white font-semibold">Média Geral</p>
                     <div class="flex justify-center mt-2">
                         <?php for ($i = 1; $i <= 5; $i++): ?>
-                            <i class="fas fa-star <?php echo $i <= round($media_geral) ? 'text-amarelo-destaque' : 'text-gray-600'; ?>"></i>
+                            <i class="fas fa-star <?php echo $i <= round($media_geral) ? 'text-amarelo-destaque' : 'text-white/60'; ?>"></i>
                         <?php endfor; ?>
                     </div>
                 </div>
@@ -128,7 +128,7 @@ try {
         </div>
 
         <!-- Formulário de Avaliação -->
-        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-12 border border-white/20">
+        <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-8 mb-12 border border-white/20">
             <h2 class="text-2xl font-bold text-white mb-6 text-center">
                 <i class="fas fa-pen mr-2 text-amarelo-destaque"></i>Deixe sua Avaliação
             </h2>
@@ -149,12 +149,12 @@ try {
                 <div class="space-y-4">
                     <div>
                         <label class="block text-sm font-semibold text-white mb-2">Nome</label>
-                        <input type="text" name="nome" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="Seu nome">
+                        <input type="text" name="nome" required class="w-full px-4 py-3 bg-white/5 border border-white/10 backdrop-blur-sm/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="Seu nome">
                     </div>
                     
                     <div>
                         <label class="block text-sm font-semibold text-white mb-2">Você é</label>
-                        <select name="tipo" required class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent">
+                        <select name="tipo" required class="w-full px-4 py-3 bg-white/5 border border-white/10 backdrop-blur-sm/10 border border-white/20 rounded-xl text-white focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent">
                             <option value="visitante">Visitante</option>
                             <option value="responsavel">Responsável de Aluno</option>
                             <option value="aluno">Aluno</option>
@@ -168,7 +168,7 @@ try {
                             <?php for ($i = 1; $i <= 5; $i++): ?>
                                 <label class="cursor-pointer">
                                     <input type="radio" name="avaliacao" value="<?php echo $i; ?>" required class="hidden peer">
-                                    <i class="fas fa-star text-3xl text-gray-600 peer-checked:text-amarelo-destaque transition-colors"></i>
+                                    <i class="fas fa-star text-3xl text-white/60 peer-checked:text-amarelo-destaque transition-colors"></i>
                                 </label>
                             <?php endfor; ?>
                         </div>
@@ -176,7 +176,7 @@ try {
                     
                     <div>
                         <label class="block text-sm font-semibold text-white mb-2">Comentário (opcional)</label>
-                        <textarea name="comentario" rows="4" class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="Conte-nos sobre sua experiência"></textarea>
+                        <textarea name="comentario" rows="4" class="w-full px-4 py-3 bg-white/5 border border-white/10 backdrop-blur-sm/10 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-amarelo-destaque focus:border-transparent" placeholder="Conte-nos sobre sua experiência"></textarea>
                     </div>
                     
                     <button type="submit" class="w-full py-4 bg-gradient-to-r from-amarelo-destaque to-amarelo-claro text-azul-escuro rounded-xl font-bold hover:shadow-xl hover:shadow-yellow-500/30 transition-all duration-300 transform hover:scale-105">
@@ -195,7 +195,7 @@ try {
             <div class="grid md:grid-cols-2 gap-6">
                 <?php if (count($avaliacoes) > 0): ?>
                     <?php foreach ($avaliacoes as $avaliacao): ?>
-                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                        <div class="bg-white/5 border border-white/10 backdrop-blur-sm/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
                             <div class="flex items-start gap-4 mb-4">
                                 <div class="w-12 h-12 bg-gradient-to-br from-azul-principal to-verde-complementar rounded-full flex items-center justify-center flex-shrink-0">
                                     <i class="fas fa-user text-white text-xl"></i>
@@ -207,13 +207,13 @@ try {
                             </div>
                             <div class="flex gap-1 mb-3">
                                 <?php for ($i = 1; $i <= 5; $i++): ?>
-                                    <i class="fas fa-star <?php echo $i <= $avaliacao['avaliacao'] ? 'text-amarelo-destaque' : 'text-gray-600'; ?>"></i>
+                                    <i class="fas fa-star <?php echo $i <= $avaliacao['avaliacao'] ? 'text-amarelo-destaque' : 'text-white/60'; ?>"></i>
                                 <?php endfor; ?>
                             </div>
                             <?php if ($avaliacao['comentario']): ?>
                                 <p class="text-gray-300 text-sm">"<?php echo htmlspecialchars($avaliacao['comentario']); ?>"</p>
                             <?php endif; ?>
-                            <span class="text-gray-500 text-xs mt-3 block"><?php echo date('d/m/Y', strtotime($avaliacao['data_avaliacao'])); ?></span>
+                            <span class="text-white/50 text-xs mt-3 block"><?php echo date('d/m/Y', strtotime($avaliacao['data_avaliacao'])); ?></span>
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
@@ -236,3 +236,4 @@ try {
     </footer>
 </body>
 </html>
+
